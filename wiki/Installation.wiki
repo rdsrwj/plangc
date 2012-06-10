@@ -1,4 +1,4 @@
-#summary Установка pLan OpenVPN Edition.
+#summary Пошаговая установка pLan OpenVPN Edition
 = Пошаговая установка pLan OpenVPN Edition =
 
 Установка pLan OpenVPN должна производиться с правами Администратора системы.
