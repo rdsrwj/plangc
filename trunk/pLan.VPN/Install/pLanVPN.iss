@@ -38,8 +38,8 @@ Name: "{group}\{#AppName}";       Filename: "{app}\{#AppExeName}"; WorkingDir: "
 Name: "{userdesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"; Tasks: "desktopicon"
 
 [Languages]
-Name: "en"; MessagesFile: "compiler:Default.isl";           LicenseFile: "eula_en.rtf"; InfoBeforeFile: "info_en.rtf" 
-Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"; LicenseFile: "eula_ru.rtf"; InfoBeforeFile: "info_ru.rtf"
+Name: "en"; MessagesFile: "compiler:Default.isl";           InfoBeforeFile: "info_en.rtf" 
+Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl"; InfoBeforeFile: "info_ru.rtf"
 
 [Run]
 Filename: "{app}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: postinstall nowait skipifsilent
