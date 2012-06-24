@@ -1,0 +1,43 @@
+package Needed;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'pLan Components'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  indy,
+  acntD7_R,
+  designide,
+  vclactnband,
+  vclx;
+
+contains
+  ChatClient in 'ChatClient.pas',
+  ChatServer in 'ChatServer.pas',
+  OpenVPNManager in 'OpenVPNManager.pas',
+  sRichEditURL in 'sRichEditURL.pas';
+
+end.

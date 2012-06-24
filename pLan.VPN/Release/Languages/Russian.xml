@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<language name="ru" version="1.0.7">
+	<messages
+		msgCantEstablishConnection="Невозможно установить соединение с комнатой"
+		msgRoomHasNoPing="Комната не отвечает на запрос пинга. Всё равно продолжить?"
+		msgCantCreateServer="Ошибка создания сервера"
+		msgYourReportText="Если у Вас имеются проблемы с использованием программы, то отправьте отчёт разработчикам по адресу team@plangc.ru с Вашими комментариями. Ваш отчёт находится в файле "
+		msgYourReportCaption="Формирование отчёта закончено"
+		msgWarning="Предупреждение"
+		msgYouNeedToRestart="Вам необходимо перезагрузить pLan для смены языка"
+		msgYouNeedToSelectIP="Выберите IP-адрес"
+		msgError="Ошибка"
+		msgRetrievingNews="Получение новостей"
+		msgRetrievingVersion="Проверка версии"
+		msgUpdatingGameList="Получение обновленного списка игр"
+		msgUpdatingProgram="Получение обновленной программы"
+		msgAdd="Добавить"
+		msgDelete="Удалить"
+		msgEdit="Править"
+		msgConfirmDelete="Подтвердите удаление элемента"
+		msgPing="Пинг"
+		msgGame="Название игры"
+		msgRoomName="Название комнаты"
+		msgPlayersCount="Игроки"
+		msgRoomIP="Адрес комнаты"
+		msgRoomPort="Порт комнаты"
+		msgOpenVPNIP="Адрес OpenVPN"
+		msgOpenVPNPort="Порт OpenVPN"
+		msgPlayers="Игроки"
+		msgYourIP="Ваш IP"
+		msgUptime="Время работы"
+		msgChannel="Канал"
+		msgRoomsCount="Количество комнат"
+		msgConfirmQuit="Завершить работу программы?"
+	/>
+	<window Name="UpdateForm" Caption="Проверка обновлений"/>
+	<window Name="ConfigForm" Caption="Настройки">
+		<label ComponentName="ChkIgnoreJoinsOnIRC" Caption="в общем чате IRC"/>
+		<label ComponentName="ChkIgnoreJoinsOnRoom" Caption="в комнате"/>
+		<label ComponentName="sButton1" Caption="OK"/>
+		<label ComponentName="sButton2" Caption="Отмена"/>
+		<label ComponentName="sTabSheet1" Caption="Основные настройки"/>
+		<label ComponentName="sLabel1" Caption="Имя:"/>
+		<label ComponentName="ChkStartOnSystemBoot" Caption="Запуск вместе с системой"/>
+		<label ComponentName="ChkMinimizeOnStartup" Caption="Запуск в свернутом виде"/>
+		<label ComponentName="sGroupBox2" Caption="Звуковые оповещения"/>
+		<label ComponentName="sGroupBox3" Caption="Не отображать Join/Part"/>
+		<label ComponentName="ChkSoundNotifyOnInterestingGame" Caption="Создана комната с интересующей игрой"/>
+		<label ComponentName="ChkSoundNotifyOnUserJoined" Caption="Присоединен пользователь (в режиме 'свернуто в трей')"/>
+		<label ComponentName="ChkAutomaticIP" Caption="Автоматический адрес"/>
+		<label ComponentName="sButton6" Caption="Сетевые подключения"/>
+		<label ComponentName="sLabel16" Caption="Оформление:"/>
+		<label ComponentName="sTabSheet2" Caption="Подключение"/>
+		<label ComponentName="sGroupBox1" Caption="Экспертные"/>
+		<label ComponentName="sLabel3" Caption="Порт для OpenVPN:"/>
+		<label ComponentName="sLabel4" Caption="Порт для комнаты:"/>
+		<label ComponentName="sLabel5" Caption="Указанный адрес:"/>
+		<label ComponentName="sLabel6" Caption="IP-адрес OpenVPN интерфейса:"/>
+		<label ComponentName="sLabel7" Caption="IP-сеть OpenVPN интерфейса:"/>
+		<label ComponentName="sLabel8" Caption="Исполняемый файл OpenVPN:"/>
+		<label ComponentName="Button1" Caption="..."/>
+		<label ComponentName="sTabSheet3" Caption="Оповещения"/>
+		<label ComponentName="sLabel13" Caption="Список оповещений:"/>
+		<label ComponentName="sLabel14" Caption="Опрашивать каждые"/>
+		<label ComponentName="sLabel15" Caption="минут"/>
+		<label ComponentName="ChkAutoNotifies" Caption="Обновлять сводный список серверов"/>
+		<label ComponentName="sButton3" Caption="..."/>
+		<label ComponentName="sTabSheet5" Caption="О программе"/>
+	</window>
+	<window Name="ShowRoomsForm" Caption="pLan OpenVPN Edition">
+		<label ComponentName="TsRoomList" Caption="Список комнат"/>
+		<label ComponentName="TsNews" Caption="Новости"/>
+		<label ComponentName="TsMainChat" Caption="Общий чат IRC"/>
+		<label ComponentName="TsRoom" Caption="Комната"/>
+		<label ComponentName="TsMyGames" Caption="Мои игры"/>
+		<label ComponentName="LblServerInfo" Caption="Информация о комнате:"/>
+		<button ComponentName="BtnQuit" Caption="Выход"/>
+		<button ComponentName="BtnConnect" Caption="Подключиться к комнате"/>
+		<button ComponentName="BtnCreateRoom" Caption="Создать комнату"/>
+		<button ComponentName="BtnRefresh" Caption="Обновить список комнат"/>
+		<button ComponentName="BtnGetInfo" Caption="Отчёт о системе"/>
+		<button ComponentName="BtnSettings" Caption="Настройки"/>
+		<button ComponentName="BtnChatSend" Caption="Send"/>
+	</window>
+	<window Name="CreateRoomForm" Caption="Создание комнаты">
+		<label ComponentName="LblRoomName" Caption="Название комнаты:"/>
+		<label ComponentName="LblGameName" Caption="Название игры:"/>
+		<label ComponentName="LblRoomChannel" Caption="Канал игры:"/>
+		<button ComponentName="BtnOK" Caption="OK"/>
+		<button ComponentName="BtnCancel" Caption="Отмена"/>
+	</window>
+	<window Name="OVPNInitForm" Caption="Инициализация OpenVPN">
+		<label ComponentName="LblInit" Caption="Пожалуйста, подождите..."/>
+	</window>
+	<window Name="FileOpenForm" Caption="Выбор файла">
+		<label ComponentName="LblFileName" Caption="Exe-файл:"/>
+		<label ComponentName="LblCaption" Caption="Название:"/>
+		<label ComponentName="ChkUseForceBindIP" Caption="Использовать ForceBindIP"/>
+		<label ComponentName="ChkInjectIntoProcess" Caption="Внедряться в процесс"/>
+		<label ComponentName="ChkWaitAWhile" Caption="Перед запуском ожидать внедрения в процесс"/>
+		<label ComponentName="ChkCompatibility" Caption="Запустить программу в режиме совместимости"/>
+		<button ComponentName="BtnOK" Caption="OK"/>
+		<button ComponentName="BtnCancel" Caption="Отмена"/>
+	</window>
+	<window Name="DetailedErrorForm" Caption="Информация об ошибке">
+		<button ComponentName="BtnExit" Caption="Закрыть"/>
+	</window>
+</language>

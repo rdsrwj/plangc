@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<language name="de" version="1.0.3">
+	<messages
+		msgCantEstablishConnection="kann keine verbindung herstellen werden"
+		msgRoomHasNoPing="The room has no ping. Are you sure want to continue?"
+		msgCantCreateServer="Fehler beim Server erstellen"
+		msgYourReportText="Wenn Sie Problemi mit pLan habe senden sie Fehler an team@plangc.ru "
+		msgYourReportCaption="Report generated successfully"
+		msgWarning="Warnung"
+		msgYouNeedToRestart="Sie müssen Plan neu starten, um die Sprache zu ändern"
+		msgYouNeedToSelectIP="Wählen Sie die IP-Adresse"
+		msgError="Fehler"
+		msgRetrievingNews="Abruf der Nachrichten"
+		msgRetrievingVersion="Version wird überprüft"
+		msgUpdatingGameList="Aktualisierung von spiel zimmer"
+		msgUpdatingProgram="Abrufen von Update-Programm"
+		msgAdd="Hinzufügen"
+		msgDelete="Löschen"
+		msgEdit="Bearbeiten"
+		msgConfirmDelete="Bestätigen Sie den Löschvorgang"
+		msgPing="Ping"
+		msgGame="Spiel-Namen"
+		msgRoomName="Name des Spielzimmers"
+		msgPlayersCount="Spieler"
+		msgRoomIP="Zimmer IP"
+		msgRoomPort="Zimmer-Port"
+		msgOpenVPNIP="OpenVPN IP"
+		msgOpenVPNPort="OpenVPN port"
+		msgPlayers="Spieler"
+		msgYourIP="Your IP"
+		msgUptime="Uptime"
+		msgChannel="Channel"
+		msgRoomsCount="Rooms count"
+		msgConfirmQuit="Are you sure want to exit?"
+	/>
+	<window Name="UpdateForm" Caption="Suche nach Updates"/>
+	<window Name="ConfigForm" Caption="Einstellungen">
+		<label ComponentName="ChkIgnoreJoinsOnIRC" Caption="im IRC"/>
+		<label ComponentName="ChkIgnoreJoinsOnRoom" Caption="im Zimmer"/>
+		<label ComponentName="sButton1" Caption="OK"/>
+		<label ComponentName="sButton2" Caption="Cancel"/>
+		<label ComponentName="sTabSheet1" Caption="Allgemeine Einstellungen"/>
+		<label ComponentName="sLabel1" Caption="Name:"/>
+		<label ComponentName="ChkStartOnSystemBoot" Caption="Mit Windows Start ausführen"/>
+		<label ComponentName="ChkMinimizeOnStartup" Caption="Minimieren beim Start"/>
+		<label ComponentName="sGroupBox2" Caption="Sound-Benachrichtigungen"/>
+		<label ComponentName="sGroupBox3" Caption="Nicht mehr anzeigen join/part"/>
+		<label ComponentName="ChkSoundNotifyOnInterestingGame" Caption="Erstellt ein Spielzimmer mit Interessierte spiel"/>
+		<label ComponentName="ChkSoundNotifyOnUserJoined" Caption="Anmeldedatum (in den Tray-Modus minimiert)"/>
+		<label ComponentName="ChkAutomaticIP" Caption="Auto IP"/>
+		<label ComponentName="sButton6" Caption="Network connections"/>
+		<label ComponentName="sLabel16" Caption="Skin:"/>
+		<label ComponentName="sTabSheet2" Caption="Verbindung"/>
+		<label ComponentName="sGroupBox1" Caption="Fortgeschritten"/>
+		<label ComponentName="sLabel3" Caption="OpenVPN Port:"/>
+		<label ComponentName="sLabel4" Caption="Zimmer-Port:"/>
+		<label ComponentName="sLabel5" Caption="Öffentliches Netzwerk-Adresse:"/>
+		<label ComponentName="sLabel6" Caption="OpenVPN IP:"/>
+		<label ComponentName="sLabel7" Caption="OpenVPN maske:"/>
+		<label ComponentName="sLabel8" Caption="OpenVPN ziel:"/>
+		<label ComponentName="Button1" Caption="..."/>
+		<label ComponentName="sTabSheet3" Caption="Benachrichtigungen"/>
+		<label ComponentName="sLabel13" Caption="Benachrichtigungsliste:"/>
+		<label ComponentName="sLabel14" Caption="überprüfen jede"/>
+		<label ComponentName="sLabel15" Caption="Minute(n)"/>
+		<label ComponentName="ChkAutoNotifies" Caption="Benachrichtigungen aktivieren"/>
+		<label ComponentName="sButton3" Caption="..."/>
+		<label ComponentName="sTabSheet5" Caption="Über"/>
+	</window>
+	<window Name="ShowRoomsForm" Caption="pLan OpenVPN Edition">
+		<label ComponentName="TsRoomList" Caption="Raumliste"/>
+		<label ComponentName="TsNews" Caption="News"/>
+		<label ComponentName="TsMainChat" Caption="IRC client"/>
+		<label ComponentName="TsRoom" Caption="Room"/>
+		<label ComponentName="TsMyGames" Caption="My games"/>
+		<label ComponentName="LblServerInfo" Caption="Zimmer info:"/>
+		<button ComponentName="BtnQuit" Caption="Exit"/>
+		<button ComponentName="BtnConnect" Caption="Verbindeung"/>
+		<button ComponentName="BtnCreateRoom" Caption="Create room"/>
+		<button ComponentName="BtnRefresh" Caption="Refresh"/>
+		<button ComponentName="BtnGetInfo" Caption="System-Bericht"/>
+		<button ComponentName="BtnSettings" Caption="Einstellungen"/>
+		<button ComponentName="BtnChatSend" Caption="Senden"/>
+	</window>
+	<window Name="CreateRoomForm" Caption="Raum erstellen">
+		<label ComponentName="LblRoomName" Caption="Raum Name:"/>
+		<label ComponentName="LblGameName" Caption="Spiel:"/>
+		<label ComponentName="LblRoomChannel" Caption="Room channel:"/>
+		<button ComponentName="BtnOK" Caption="OK"/>
+		<button ComponentName="BtnCancel" Caption="Cancel"/>
+	</window>
+	<window Name="OVPNInitForm" Caption="Initialisierung OpenVPN">
+		<label ComponentName="LblInit" Caption="Please, wait..."/>
+	</window>
+	<window Name="FileOpenForm" Caption="Wählen Sie Datei">
+		<label ComponentName="LblFileName" Caption="Datei:"/>
+		<label ComponentName="LblCaption" Caption="Name:"/>
+		<label ComponentName="ChkUseForceBindIP" Caption="Use ForceBindIP"/>
+		<label ComponentName="ChkInjectIntoProcess" Caption="Aufschalten in den Prozess"/>
+		<label ComponentName="ChkWaitAWhile" Caption="Verzögerter Start"/>
+		<label ComponentName="ChkCompatibility" Caption="Run program with compatibility mode"/>
+		<button ComponentName="BtnOK" Caption="OK"/>
+		<button ComponentName="BtnCancel" Caption="Cancel"/>
+	</window>
+	<window Name="DetailedErrorForm" Caption="Informationen über den Fehler">
+		<button ComponentName="BtnExit" Caption="Schließen"/>
+	</window>
+</language>

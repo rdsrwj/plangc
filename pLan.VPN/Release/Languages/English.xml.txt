@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<language name="en" version="1.0.8">
+	<messages
+		msgCantEstablishConnection="Can't establish connection"
+		msgRoomHasNoPing="The room has no ping. Are you sure want to continue?"
+		msgCantCreateServer="Can't create server"
+		msgYourReportText="If you encounter any problems with program, please send report to team@plangc.ru. Log can be found at "
+		msgYourReportCaption="Report generated successfully"
+		msgWarning="Warning"
+		msgYouNeedToRestart="You need to restart application to change language"
+		msgYouNeedToSelectIP="Please select your public IP"
+		msgError="Error"
+		msgRetrievingNews="Retrieving news"
+		msgRetrievingVersion="Retrieving version"
+		msgUpdatingGameList="Retrieving gamelist"
+		msgUpdatingProgram="Retriving updated program"
+		msgAdd="Add"
+		msgDelete="Delete"
+		msgEdit="Edit"
+		msgConfirmDelete="Confirm deletion"
+		msgPing="Ping"
+		msgGame="Game name"
+		msgRoomName="Room name"
+		msgPlayersCount="Players"
+		msgRoomIP="Room IP"
+		msgRoomPort="Room port"
+		msgOpenVPNIP="OpenVPN IP"
+		msgOpenVPNPort="OpenVPN port"
+		msgPlayers="Players"
+		msgYourIP="Your IP"
+		msgUptime="Uptime"
+		msgChannel="Channel"
+		msgRoomsCount="Rooms count"
+		msgConfirmQuit="Are you sure want to exit?"
+	/>
+	<window Name="UpdateForm" Caption="Checking for updates"/>
+	<window Name="ConfigForm" Caption="Settings">
+		<label ComponentName="ChkIgnoreJoinsOnIRC" Caption="in IRC"/>
+		<label ComponentName="ChkIgnoreJoinsOnRoom" Caption="in Room"/>
+		<label ComponentName="sButton1" Caption="OK"/>
+		<label ComponentName="sButton2" Caption="Cancel"/>
+		<label ComponentName="sTabSheet1" Caption="General settings"/>
+		<label ComponentName="sLabel1" Caption="Nick:"/>
+		<label ComponentName="ChkStartOnSystemBoot" Caption="Run on Windows startup"/>
+		<label ComponentName="ChkMinimizeOnStartup" Caption="Minimize on startup"/>
+		<label ComponentName="sGroupBox2" Caption="Sound notifications"/>
+		<label ComponentName="sGroupBox3" Caption="Do not show Join/Part"/>
+		<label ComponentName="ChkSoundNotifyOnInterestingGame" Caption="Room for interesting game is created"/>
+		<label ComponentName="ChkSoundNotifyOnUserJoined" Caption="User joined (in minimized to tray mode)"/>
+		<label ComponentName="ChkAutomaticIP" Caption="Auto IP"/>
+		<label ComponentName="sButton6" Caption="Network connections"/>
+		<label ComponentName="sLabel16" Caption="Skin:"/>
+		<label ComponentName="sTabSheet2" Caption="Connection"/>
+		<label ComponentName="sGroupBox1" Caption="Advanced"/>
+		<label ComponentName="sLabel3" Caption="OpenVPN Port:"/>
+		<label ComponentName="sLabel4" Caption="Room Port:"/>
+		<label ComponentName="sLabel5" Caption="Public network address:"/>
+		<label ComponentName="sLabel6" Caption="OpenVPN IP:"/>
+		<label ComponentName="sLabel7" Caption="OpenVPN mask:"/>
+		<label ComponentName="sLabel8" Caption="OpenVPN executable:"/>
+		<label ComponentName="Button1" Caption="..."/>
+		<label ComponentName="sTabSheet3" Caption="Notifications"/>
+		<label ComponentName="sLabel13" Caption="Notification list:"/>
+		<label ComponentName="sLabel14" Caption="Check every"/>
+		<label ComponentName="sLabel15" Caption="minute(s)"/>
+		<label ComponentName="ChkAutoNotifies" Caption="Enable notifications"/>
+		<label ComponentName="sButton3" Caption="..."/>
+		<label ComponentName="sTabSheet5" Caption="About"/>
+	</window>
+	<window Name="ShowRoomsForm" Caption="pLan OpenVPN Edition">
+		<label ComponentName="TsRoomList" Caption="Room list"/>
+		<label ComponentName="TsNews" Caption="News"/>
+		<label ComponentName="TsMainChat" Caption="IRC Chat"/>
+		<label ComponentName="TsRoom" Caption="Room"/>
+		<label ComponentName="TsMyGames" Caption="My games"/>
+		<label ComponentName="LblServerInfo" Caption="Room info:"/>
+		<button ComponentName="BtnQuit" Caption="Exit"/>
+		<button ComponentName="BtnConnect" Caption="Connect"/>
+		<button ComponentName="BtnCreateRoom" Caption="Create room"/>
+		<button ComponentName="BtnRefresh" Caption="Refresh"/>
+		<button ComponentName="BtnGetInfo" Caption="System report"/>
+		<button ComponentName="BtnSettings" Caption="Settings"/>
+		<button ComponentName="BtnChatSend" Caption="Send"/>
+	</window>
+	<window Name="CreateRoomForm" Caption="Room creation">
+		<label ComponentName="LblRoomName" Caption="Room name:"/>
+		<label ComponentName="LblGameName" Caption="Game name:"/>
+		<label ComponentName="LblRoomChannel" Caption="Room channel:"/>
+		<button ComponentName="BtnOK" Caption="OK"/>
+		<button ComponentName="BtnCancel" Caption="Cancel"/>
+	</window>
+	<window Name="OVPNInitForm" Caption="Initialization of OpenVPN">
+		<label ComponentName="LblInit" Caption="Please, wait..."/>
+	</window>
+	<window Name="FileOpenForm" Caption="Creating shortcut">
+		<label ComponentName="LblFileName" Caption="Executable:"/>
+		<label ComponentName="LblCaption" Caption="Caption:"/>
+		<label ComponentName="ChkUseForceBindIP" Caption="Use ForceBindIP"/>
+		<label ComponentName="ChkInjectIntoProcess" Caption="Inject into process"/>
+		<label ComponentName="ChkWaitAWhile" Caption="Wait a while before injecting into game"/>
+		<label ComponentName="ChkCompatibility" Caption="Run program with compatibility mode"/>
+		<button ComponentName="BtnOK" Caption="OK"/>
+		<button ComponentName="BtnCancel" Caption="Cancel"/>
+	</window>
+	<window Name="DetailedErrorForm" Caption="Error info">
+		<button ComponentName="BtnExit" Caption="Close"/>
+	</window>
+</language>
