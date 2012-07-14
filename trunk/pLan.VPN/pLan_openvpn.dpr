@@ -11,7 +11,6 @@ uses
   ChatServer in 'Components\ChatServer.pas',
   ChatClient in 'Components\ChatClient.pas',
   OpenVPNManager in 'Components\OpenVPNManager.pas',
-  FileContainer in 'Components\FileContainer.pas',
   AdaptItems in 'AdaptItems.pas',
   PrevInst in 'PrevInst.pas',
   frmShowRooms in 'frmShowRooms.pas' {ShowRoomsForm},
