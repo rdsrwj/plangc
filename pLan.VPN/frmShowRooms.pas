@@ -604,7 +604,9 @@ begin
   LvRoomsList.Items.Clear;
   ReRoomInfo.Clear;
 
-  HTTPVpnGet.URL := UGlobal.URLTracker + '?do=vpn_get&ver=3';
+  //HTTPVpnGet.URL := UGlobal.URLTracker + '?do=vpn_get&ver=3';
+  HTTPVpnGet.URL := UGlobal.URLTracker;
+  HTTPVpnGet.PostQuery := 'do=vpn_get&ver=3';
   HTTPVpnGet.GetString;
 end;
 
@@ -1032,7 +1034,9 @@ end;
 
 procedure TShowRoomsForm.TimerVpnGetShortTimer(Sender: TObject);
 begin
-  HTTPVpnGetShort.URL := UGlobal.URLTracker + '?do=vpn_getshort';
+  //HTTPVpnGetShort.URL := UGlobal.URLTracker + '?do=vpn_getshort';
+  HTTPVpnGetShort.URL := UGlobal.URLTracker;
+  HTTPVpnGetShort.PostQuery := 'do=vpn_getshort';
   HTTPVpnGetShort.GetString;
 end;
 
@@ -1945,7 +1949,9 @@ begin
   else
     Addr := CheckAndFixString(Settings.NetworkIP);
 
-  S := UGlobal.URLTracker + '?do=vpn_add'
+  HTTPVpnAdd.URL := UGlobal.URLTracker;
+
+  S := 'do=vpn_add'
     + '&addr='         + Addr
     + '&port='         + IntToStr(Settings.RoomPort)
     + '&vpnip=0.0.0.0'
@@ -1962,8 +1968,9 @@ begin
 
   S := S + '&playerlist=' + CheckAndFixString(PL);
 
+  HTTPVpnAdd.PostQuery := S;
+
   try
-    HTTPVpnAdd.URL := S;
     HTTPVpnAdd.GetString;
   except
   end;
@@ -1972,7 +1979,9 @@ end;
 procedure TShowRoomsForm.TimerGetNewsTimer(Sender: TObject);
 begin
   TimerGetNews.Enabled := False;
-  HTTPGetNews.URL := URLTracker + '?do=getnews&lang=' + Language.Code;
+  //HTTPGetNews.URL := URLTracker + '?do=getnews&lang=' + Language.Code;
+  HTTPGetNews.URL := URLTracker;
+  HTTPGetNews.PostQuery := 'do=getnews&lang=' + Language.Code;
   HTTPGetNews.GetString;
 end;
 
