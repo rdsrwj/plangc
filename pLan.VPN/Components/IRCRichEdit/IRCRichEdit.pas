@@ -17,10 +17,11 @@ const
   TAG_COLOR     : Char = #3;
   TAG_INVERSE   : Char = #22;
   TAG_UNDERLINE : Char = #31;
-  
+
 const
   MAX_SMILES_INFO = 100;
-  IRCPalette: array[0..15] of TColor = (clWhite, clBlack, clNavy, clGreen,
+
+  IRC_PALETTE: array[0..15] of TColor = (clWhite, clBlack, clNavy, clGreen,
     clRed, clMaroon, clPurple, TColor($007FFC){RGB(20,240,120)}, clYellow,
     clLime, clTeal, clAqua, clBlue, clFuchsia, clGray, clSilver);
 
@@ -65,21 +66,21 @@ type
     cTabCount: Smallint;
     rgxTabs: array [0..MAX_TAB_STOPS - 1] of Longint;
     { new fields in version 2.0 }
-    dySpaceBefore: Longint;     { Vertical spacing before paragraph      }
-    dySpaceAfter: Longint;      { Vertical spacing after paragraph       }
-    dyLineSpacing: Longint;     { Line spacing depending on Rule         }
-    sStyle: Smallint;           { Style handle                           }
-    bLineSpacingRule: Byte;     { Rule for line spacing (see tom.doc)    }
-    bCRC: Byte;                 { Reserved for CRC for rapid searching   }
-    wShadingWeight: Word;       { Shading in hundredths of a per cent    }
-    wShadingStyle: Word;        { Nibble 0: style, 1: cfpat, 2: cbpat    }
-    wNumberingStart: Word;      { Starting value for numbering           }
-    wNumberingStyle: Word;      { Alignment, roman/arabic, (), ), ., etc.}
-    wNumberingTab: Word;        { Space bet 1st indent and 1st-line text }
-    wBorderSpace: Word;         { Space between border and text (twips)  }
-    wBorderWidth: Word;         { Border pen width (twips)               }
-    wBorders: Word;             { Byte 0: bits specify which borders     }
-                                { Nibble 2: border style, 3: color index }
+    dySpaceBefore: Longint;          { Vertical spacing before paragraph       }
+    dySpaceAfter: Longint;           { Vertical spacing after paragraph        }
+    dyLineSpacing: Longint;          { Line spacing depending on Rule          }
+    sStyle: Smallint;                { Style handle                            }
+    bLineSpacingRule: Byte;          { Rule for line spacing (see tom.doc)     }
+    bCRC: Byte;                      { Reserved for CRC for rapid searching    }
+    wShadingWeight: Word;            { Shading in hundredths of a per cent     }
+    wShadingStyle: Word;             { Nibble 0: style, 1: cfpat, 2: cbpat     }
+    wNumberingStart: Word;           { Starting value for numbering            }
+    wNumberingStyle: Word;           { Alignment, roman/arabic, (), ), ., etc. }
+    wNumberingTab: Word;             { Space bet 1st indent and 1st-line text  }
+    wBorderSpace: Word;              { Space between border and text (twips)   }
+    wBorderWidth: Word;              { Border pen width (twips)                }
+    wBorders: Word;                  { Byte 0: bits specify which borders      }
+                                     { Nibble 2: border style, 3: color index  }
   end;
 
 {$ENDIF RX_D3}
@@ -95,11 +96,15 @@ type
   { TIRCTextAttributes }
 
   TIRCAttributeType = (atDefaultText, atSelected, atWord);
+
   TIRCConsistentAttribute = (caBold, caColor, caFace, caItalic, caSize,
     caStrikeOut, caUnderline, caProtected, caOffset, caHidden, caLink,
     caBackColor, caDisabled, caWeight, caSubscript, caRevAuthor);
+
   TIRCConsistentAttributes = set of TIRCConsistentAttribute;
+
   TSubscriptStyle = (ssNone, ssSubscript, ssSuperscript);
+
   TUnderlineType = (utNone, utSolid, utWord, utDouble, utDotted, utWave);
 
   TIRCTextAttributes = class(TPersistent)
@@ -180,11 +185,16 @@ type
 
   TIRCNumbering = (nsNone, nsBullet, nsArabicNumbers, nsLoCaseLetter,
     nsUpCaseLetter, nsLoCaseRoman, nsUpCaseRoman);
+
   TIRCNumberingStyle = (nsParenthesis, nsPeriod, nsEnclosed, nsSimple);
+
   TParaAlignment = (paLeftJustify, paRightJustify, paCenter, paJustify);
+
   TLineSpacingRule = (lsSingle, lsOneAndHalf, lsDouble, lsSpecifiedOrMore,
     lsSpecified, lsMultiple);
+
   THeadingStyle = 0..9;
+
   TParaTableStyle = (tsNone, tsTableRow, tsTableCellEnd, tsTableCell);
 
   TIRCParaAttributes = class(TPersistent)
@@ -261,22 +271,35 @@ type
   { TIRCCustomRichEdit }
 
   TUndoName = (unUnknown, unTyping, unDelete, unDragDrop, unCut, unPaste);
+
   TRichSearchType = (stWholeWord, stMatchCase, stBackward, stSetSelection);
+
   TRichSearchTypes = set of TRichSearchType;
+
   TRichSelection = (stText, stObject, stMultiChar, stMultiObject);
+
   TRichSelectionType = set of TRichSelection;
+
   TRichLangOption = (rlAutoKeyboard, rlAutoFont, rlImeCancelComplete,
     rlImeAlwaysSendNotify);
+
   TRichLangOptions = set of TRichLangOption;
+
   TRichStreamFormat = (sfDefault, sfRichText, sfPlainText);
+
   TRichStreamMode = (smSelection, smPlainRtf, smNoObjects, smUnicode);
+
   TRichStreamModes = set of TRichStreamMode;
+
   TRichEditURLClickEvent = procedure(Sender: TObject; const URLText: String;
     Button: TMouseButton) of object;
+
   TRichEditProtectChangeEx = procedure(Sender: TObject; const Message: TMessage;
     StartPos, EndPos: Integer; var AllowChange: Boolean) of object;
+
   TRichEditFindErrorEvent = procedure(Sender: TObject;
     const FindText: String) of object;
+
 {$IFDEF RX_D3}
   TRichEditFindCloseEvent = procedure(Sender: TObject;
     Dialog: TFindDialog) of object;
@@ -541,7 +564,7 @@ type
   public
     SmilesInfo: array[0..MAX_SMILES_INFO - 1] of TSmileInfo;
     property Smiles: TImageList read FSmiles write SetSmiles;
-    function AddFormatedString(Mess: AnsiString): String;
+    function AddFormatedString(Mess: AnsiString; WithTime: Boolean = True): String;
     procedure SelAttrsDefault;
   published
     property Align;
@@ -5117,7 +5140,7 @@ begin
     begin
       CS := {Copy(Mess, P1, 1)}Mess[P1];
       ColorNumberStr := '';
-      if CS in ['0'..'9'] then
+      if (CS in ['0'..'9']) then
       begin
         Delete(Mess, P1, 1);
         ColorNumberStr := ColorNumberStr + CS;
@@ -5125,7 +5148,7 @@ begin
       if (ColorNumberStr = '0') then
       begin
         CS := {Copy(Mess, P1, 1)}Mess[P1];
-        if CS in ['0'..'9'] then
+        if (CS in ['0'..'9']) then
         begin
           Delete(Mess, P1, 1);
           ColorNumberStr := ColorNumberStr + CS;
@@ -5134,7 +5157,7 @@ begin
       else if (ColorNumberStr = '1') then
       begin
         CS := {Copy(Mess, P1, 1)}Mess[P1];
-        if CS in ['0'..'5'] then
+        if (CS in ['0'..'5']) then
         begin
           Delete(Mess, P1, 1);
           ColorNumberStr := ColorNumberStr + CS;
@@ -5145,9 +5168,9 @@ begin
       if (ColorNumberStr <> '') then
       begin
         Val(ColorNumberStr, ColorNumber, Code);
-        if Code = 0 then
+        if (Code = 0) then
         begin
-          _Formated[Count_Formated].color := IRCPalette[ColorNumber];
+          _Formated[Count_Formated].color := IRC_PALETTE[ColorNumber];
         end;
       end
       else
@@ -5163,7 +5186,7 @@ begin
         ColorNumberStr := '';
         CS := {Copy(Mess, P1, 1)}Mess[P1];
         ColorNumberStr := '';
-        if CS in ['0'..'9'] then
+        if (CS in ['0'..'9']) then
         begin
           Delete(Mess, P1, 1);
           ColorNumberStr := ColorNumberStr + CS;
@@ -5171,7 +5194,7 @@ begin
         if (ColorNumberStr = '0') then
         begin
           CS := {Copy(Mess, P1, 1)}Mess[P1];
-          if CS in ['0'..'9'] then
+          if (CS in ['0'..'9']) then
           begin
             Delete(Mess, P1, 1);
             ColorNumberStr := ColorNumberStr + CS;
@@ -5180,7 +5203,7 @@ begin
         else if (ColorNumberStr = '1') then
         begin
           CS := {Copy(Mess, P1, 1)}Mess[P1];
-          if CS in ['0'..'5'] then
+          if (CS in ['0'..'5']) then
           begin
             Delete(Mess, P1, 1);
             ColorNumberStr := ColorNumberStr + CS;
@@ -5189,9 +5212,9 @@ begin
         if (ColorNumberStr <> '') then
         begin
           Val(ColorNumberStr, ColorNumber, Code);
-          if Code = 0 then
+          if (Code = 0) then
           begin
-            _Formated[Count_Formated].bgcolor := IRCPalette[ColorNumber];
+            _Formated[Count_Formated].bgcolor := IRC_PALETTE[ColorNumber];
             bgColor := _Formated[Count_Formated].bgcolor;
           end;
         end;
@@ -5218,7 +5241,7 @@ begin
     cpMin := StartPos;
     cpMax := cpMin + Abs(Length);
   end;
-  if RichEditVersion >= 2 then
+  if (RichEditVersion >= 2) then
   begin
     if not (stBackward in Options) then
       Flags := FT_DOWN
@@ -5230,9 +5253,9 @@ begin
     Options := Options - [stBackward];
     Flags := 0;
   end;
-  if stWholeWord in Options then
+  if (stWholeWord in Options) then
     Flags := Flags or FT_WHOLEWORD;
-  if stMatchCase in Options then
+  if (stMatchCase in Options) then
     Flags := Flags or FT_MATCHCASE;
   Find.lpstrText := PChar(SearchStr);
   Result := SendMessage(Handle, EM_FINDTEXTEX, Flags, Longint(@Find));
@@ -5568,7 +5591,8 @@ begin
   SelLength := 0;
 end;
 
-function TIRCRichEdit.AddFormatedString(Mess: AnsiString): String;
+function TIRCRichEdit.AddFormatedString(Mess: AnsiString;
+  WithTime: Boolean = True): String;
 var
   _Formated: TFormated;
   Count_Formated: Integer;
@@ -5586,7 +5610,8 @@ var
   Anss: AnsiString;
   FlgBold, FlgUnderline, FlgInvert: Boolean;
 begin
-  Mess := TAG_COLOR + '14' + TimeToStr(Now) + ': ' + Mess;
+  if WithTime then
+    Mess := TAG_COLOR + '14' + TimeToStr(Now) + ': ' + Mess;
 
   FlgBold := False;
   FlgUnderline := False;
