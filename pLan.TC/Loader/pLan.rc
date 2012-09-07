@@ -1,0 +1,349 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1251)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "idr_main.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PLAN_DIALOG DIALOGEX 0, 0, 320, 214
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE
+EXSTYLE WS_EX_APPWINDOW
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "News",IDC_FRAME_NEWS,0,0,318,168
+    EDITTEXT        IDC_EDIT1,6,12,306,150,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Update progress",IDC_FRAME_UPDATE_PROGRESS,0,168,318,42
+    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",PBS_SMOOTH | WS_BORDER,6,192,306,14
+    LTEXT           "Static",IDC_PROGRESSINFO,6,180,306,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_PLAN_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 313
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 207
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Neutral resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_DISABLED            ICON                    "icon1.ico"
+IDI_ENABLED             ICON                    "ico00001.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_MAIN DIALOGEX 0, 0, 326, 246
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "pLan Tracker Client"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TAB_MAIN,"SysTabControl32",0x0,1,1,324,227
+    CTEXT           "Home page",IDC_HOMEPAGE,6,234,318,8,SS_NOTIFY | WS_TABSTOP
+END
+
+IDD_DIALOG_GAMELIST DIALOGEX 0, 0, 320, 214
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Visible Game Servers",IDC_GAME_BORDER,0,0,318,210
+    CONTROL         "",IDC_LIST_GAMES,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,6,12,306,174
+    PUSHBUTTON      "Refresh",IDC_BUTTON1,6,192,306,14,WS_DISABLED
+END
+
+IDD_DIALOG_NOTIFY DIALOGEX 0, 0, 320, 214
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Setup Game Notifications",IDC_GAME_BORDER,0,0,318,210
+    CONTROL         "",IDC_LIST_GAMES,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,6,12,306,195
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOG_MAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 319
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 239
+    END
+
+    IDD_DIALOG_GAMELIST, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 313
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 207
+    END
+
+    IDD_DIALOG_NOTIFY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 313
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 207
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\pLan.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_TRAYMENU MENU 
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "Internet",                    ID_MENU_INTERNET
+        MENUITEM "UA-IX",                       ID_MENU_UA
+        MENUITEM "Local Network",               ID_MENU_VOLIA
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        ID_MENU_EXIT
+    END
+END
+
+IDR_MENU_GAMELIST MENU 
+BEGIN
+    POPUP "GameList"
+    BEGIN
+        MENUITEM "Delete association",          ID_GAMELIST_DELETEASSOCIATION
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_TRAY_CAPTION        "pLan Client"
+    IDS_PLAN_IS_WORKING     "pLan is working."
+    IDS_PLAN_FAILED_TO_INITIALIZE "pLan failed to initialize."
+    IDS_RECEIVING_NEWS      "Receiving news..."
+    IDS_FAILED_TO_RECEIVE_NEWS "Failed to receive news."
+    IDS_CHECKING_FOR_UPDATE "Checking for update..."
+    IDS_DOWNLOADING_UPDATE_INFORMATION "Downloading update information..."
+    IDS_FAILED_TO_DOWNLOAD_UPDATE_FILE "Failed to download update file."
+    IDS_UNABLE_TO_DOWNLOAD_FILE "Unable to download file."
+    IDS_CLIENT_UPDATE       "To continue work, it is required to download updated client for pLan.\nNow a browser window will be opened, which will load project page.\nPlease follow the instructions on opened page."
+    IDS_IMPORTANT_INFORMATION "Important information!"
+    IDS_UNABLE_TO_DOWNLOAD_DLL_FILE 
+                            "Update failed, unable to download DLL file. Idle."
+    IDS_UNABLE_TO_UPDATE_DLL "Update failed, unable to update DLL file. Idle."
+    IDS_UPDATE_SUCCESSFULLY_FINISHED "Update successfully finished. Idle."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_UPDATE_ABORTED_FAILED_TO_PARSE_UPDATE_INFORMATION 
+                            "Update aborted. Failed to parse update information."
+    IDS_FRAME_NEWS          "News"
+    IDS_FRAME_UPDATE_PROGRESS "Update progress"
+    IDS_TRACKER_HOST        "plangc.ru"
+    IDS_TRACKER_PATH        "/tracker/"
+    IDS_TRACKER_PORT        "80"
+    IDS_LOCATION            "1"
+    IDS_CLIENT_RESTART_REQUIRED "Loader was updated. Restart is required."
+    IDS_RECEIVING_UPDATED_LOADER "Receiving updated loader..."
+    IDS_FAILED_TO_RESTART_LOADER 
+                            "Failed to start updated loader. Please execute it manually."
+    IDS_UPDATE              "Update"
+    IDS_GAMES               "Games"
+    IDS_VISIBLE_GAME_SERVERS "Game servers"
+    IDS_GAME                "Game"
+    IDS_SERVERS             "Servers"
+    IDS_NEXT_UPDATE_IN      "Next update in"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_SECONDS             "seconds."
+    IDS_UPDATING            "Updating..."
+    IDS_NOTIFICATION_WINDOW "Setup Notifications"
+    IDS_ENABLE_NOTIFICATION "Status"
+    IDS_NOTIFICATIONS       "Notifications"
+    IDS_NEWGAMES            "New games"
+END
+
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,3
+ PRODUCTVERSION 1,0,0,3
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "pLan Team"
+            VALUE "FileDescription", "pLan Tracker Client"
+            VALUE "FileVersion", "1.0.0.3"
+            VALUE "InternalName", "pLan.exe"
+            VALUE "OriginalFilename", "pLan.exe"
+            VALUE "ProductName", "pLan Tracker Client"
+            VALUE "ProductVersion", "1.0.0.3"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\pLan.rc2"  // non-Microsoft Visual C++ edited resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

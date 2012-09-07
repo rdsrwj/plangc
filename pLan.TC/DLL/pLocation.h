@@ -1,0 +1,6 @@
+#pragma once
+
+#define	PLAN_LOCATION_INTERNET	0
+#define	PLAN_LOCATION_UAIX		1
+#define	PLAN_LOCATION_VOLIAIX	2
+#define	PLAN_LOCATION_COUNT		3

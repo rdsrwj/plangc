@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A87B47D-ED35-4E74-8BDE-422F2B277740}"
+	ProjectSection(SolutionItems) = preProject
+		changes.txt = changes.txt
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pLan", "DLL\pLan.vcproj", "{0AD2153D-15A6-4789-B3B8-118145599CD7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Loader", "Loader\Loader.vcproj", "{43863DBC-2E15-4846-A6D7-18EE5A617AB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AD2153D-15A6-4789-B3B8-118145599CD7}.Debug|Win32.ActiveCfg = Release|Win32
+		{0AD2153D-15A6-4789-B3B8-118145599CD7}.Debug|Win32.Build.0 = Release|Win32
+		{0AD2153D-15A6-4789-B3B8-118145599CD7}.Release|Win32.ActiveCfg = Release|Win32
+		{0AD2153D-15A6-4789-B3B8-118145599CD7}.Release|Win32.Build.0 = Release|Win32
+		{43863DBC-2E15-4846-A6D7-18EE5A617AB5}.Debug|Win32.ActiveCfg = Release|Win32
+		{43863DBC-2E15-4846-A6D7-18EE5A617AB5}.Debug|Win32.Build.0 = Release|Win32
+		{43863DBC-2E15-4846-A6D7-18EE5A617AB5}.Release|Win32.ActiveCfg = Release|Win32
+		{43863DBC-2E15-4846-A6D7-18EE5A617AB5}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
