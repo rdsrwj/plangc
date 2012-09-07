@@ -1,0 +1,139 @@
+8.11.2005 Joes
+- Added ability to specify default server port. If there is auth packets specified, they will be sent only
+  to default server port. (SW:BF2 fix)
+- Added broadcast emulation (SW:BF2 fix)
+- Added ability to force outgoing port for emulated broadcasts
+
+9.11.2005 Joes
+- Rewrote socket server (server detection thread)
+- Cleaned up hooking code
+- Rewrote broadcast emulation
+- Broadcast emulation no longer count local IP addresses (except of socket server)
+- Implemented broadcast tunneling
+- Fixed dead lock issue
+- Fixed sock thread termination issue
+- Fixed tunneling for NAT clients
+
+10.11.2005 Joes
+- Added ability to fake source address for incoming tunneled packets
+- Added switch to disable local broadcast in broadcast emulation mode
+- Fixed bug where packets will be transmitted to all servers in tracker list in server mode.
+- Added ability to force client outgoing broadcast port (use it from original packet)
+- Added ability to notify servers with dummy packet (for use with tunneled mode)
+- Tested and fixed bugs
+- [Loader] Updated error checking in update routines
+- [Loader] Added localization capabilities to loader
+- [Loader] Translated interface to russian
+- [Loader] Cleaned up code a bit
+- [Loader] Fixed trayicon disappearing when client update is required.
+
+11.11.2005 Joes
+- Implemented game hooking functionality
+- Cleaned up code
+- Server list is fetched every 30 seconds in background
+- Tested and fixed bugs
+- Initial SW:BF2 support
+
+12.11.2005 Joes
+- Fixed lots of bugs
+- Introduced support for SW:BF2, Call of Duty 2
+- Updated hooking routines
+- Introduced support for Serious Sam 2
+
+13.11.2005 Joes
+- Add ability to catch reply without need of sending request (required for Rag Doll Kung Fu server detection)
+- Inroduced support for Rag Doll Kung Fu
+- [Loader] Fixed .DLL deletion
+- [Loader] Fixed progress bar
+- [Loader] Added popup menu
+- [Loader] Added game area selection in loader
+- Implemented area selection in DLL
+- Updated tracker (fixed bugs and introduced area selection)
+
+17.11.2005 Joes
+- Changed way pLan updates tracker. IP list will be received every 30 seconds as well as server update.
+- [Loader] Loader is now able to update itself without additional user steps
+
+18.11.2005 Joes
+- Converted project to Visual Studio 2005
+- Cleaned up code a bit
+- Added ability to turn on/off traffic logging during debug logging
+- Implemented delayed game checking (for encrypted .exe's)
+- Wrapped WSAGetLastError correctly (pLan does not interfere with WSAGetLastError anymore)
+- Fixed DLL searching and patching routines
+- Added ability to blacklist DNS resolves
+- Added initial support for Vietcong 2
+
+19.11.2005 Joes
+- Fixed notification over tunneled socket
+- Rewrote recvfrom routines (usage of local buffer)
+- Added support for NFS:U2
+
+19.11.2005 DKTigra
+- Fixed server list processing procedure
+
+21.11.2005 Joes
+- Added ability to specify wildcards for packets (reply and broadcast)
+- Cleaned up code a bit
+- Removed delayed signature checking
+- Added ability to create delayed patches
+- Changed way patch determine that it was not removed (due to DLL unload, for example)
+- Updated recvfrom routines (buffer security check + lots of small fixes)
+
+22.11.2005 Joes
+- Rewrote address faking routine
+- Rewrote recvfrom functions
+- Fixed overlapped emulation
+- Rewrote recvfrom routines, changed way IP addresses faked
+
+1.12.2005 Joes
+- [Tracker] Added alot of functions to game tracker
+
+6.12.2005 Joes
+- [Loader] Moved WinInet functions to separate class
+- [Loader] Added tabs
+- [Loader] Added game list
+- [Loader] Added game icon downloading and displaying in game list
+- [Loader] Fixed some translation glitches
+- [Tracker] Updated tracker to support game list downloading.
+- [Loader] Incremented version number.
+
+9.12.2005 Joes
+- When LAN game is created, LAN ip address is reported
+
+10.12.2005 Joes
+- [Loader] Removed autoupdate of game servers, added refresh button
+- [Loader] Added ability to start game pressing double click
+
+11.12.2005 Joes
+- Added ability to fake incoming/outgoing addresses (using LAN subrange, COD2 no longer need patch)
+- Lots of small fixes in rewritten address faking routines
+
+12.12.2005 Joes
+- Added local address faking (additional LAN ip appears)
+- Added some initial changes to address faking routines to support (partially) local fake address. (bind, send, etc)
+- Added ability to force bind address
+
+4.02.2006 Joes
+- Added ability to specify more than one name for executable game
+- Added game mod support
+- [Loader] Added game notifications
+- [Loader] pLan now works directly (not using any preconfigured Internet Explorer proxies)
+- [Loader] Added icon animations
+
+5.02.2006 Joes
+- [Loader] Fixed game refresh timeout
+- [Loader] Removed VOLIA-IX
+- [Tracker] Removed VOLIA-IX
+- [Tracker] Added MOD support
+- [Tracker] Redid tracker database queries
+- [Tracker] Added nice formatting for games with mods
+
+6.02.2006 Joes
+- [Tracker] Added admin pages for editing static servers and mods
+- [Tracker] Added trees to server list
+
+TODO:
+- Callback routine support for overlapped sockets (?)
+- [Tracker] Update design when ready
+- [Tracker] Show game icons in tracker game list window
