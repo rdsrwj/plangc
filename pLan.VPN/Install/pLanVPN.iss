@@ -1,6 +1,6 @@
 #define AppName        "pLan OpenVPN Edition"
 #define AppExeName     "pLan_openvpn.exe"
-#define AppVersion     "0.6.0.58"
+#define AppVersion     GetFileVersion('..\Release\pLan_openvpn.exe')
 #define OpenVPNExeName "openvpn-2.2.2-install.exe"
 
 [Setup]
@@ -9,7 +9,7 @@ AppPublisher="pLan DevTeam"
 AppVerName="{#AppName}"
 DefaultDirName="{pf}\pLan"
 DefaultGroupName="{#AppName}"
-OutputBaseFilename="pLanVPN"
+OutputBaseFilename="pLanVPN-{#AppVersion}"
 OutputDir="."
 PrivilegesRequired="none"
 SetupIconFile="setup-icon.ico"
