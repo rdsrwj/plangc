@@ -18,9 +18,9 @@ const
   IRCUsername    = 'plangc';
 
   // URL's
-  URLTracker     = 'http://plangc.ru/tracker/index.php';
-  URLGamelist    = 'http://plangc.ru/tracker/updates/planovpn/gamelist.txt';
-  URLUpdateExe   = 'http://plangc.ru/tracker/updates/planovpn/pLan_openvpn.exe';
+  URLTracker     = 'http://tracker.plangc.ru/index.php';
+  URLGamelist    = 'http://tracker.plangc.ru/updates/planvpn/gamelist.txt';
+  URLUpdateExe   = 'http://tracker.plangc.ru/updates/planvpn/pLan_openvpn.exe';
 
 type
   TChatMessage = (cmNormal, cmPrivate, cmSystem, cmMyMessage);
