@@ -28,7 +28,8 @@ package acntD7_R;
 requires
   vcl,
   vclx,
-  vcljpg;
+  vcljpg,
+  rtl;
 
 contains
   sEdit in 'sEdit.pas',
@@ -118,6 +119,7 @@ contains
   acAlphaHints in 'acAlphaHints.pas',
   acThdTimer in 'acThdTimer.pas',
   acGlow in 'acGlow.pas',
-  acZLibEx in 'acZLibEx.pas';
+  acZLibEx in 'acZLibEx.pas',
+  acTitleBar in 'acTitleBar.pas';
 
 end.

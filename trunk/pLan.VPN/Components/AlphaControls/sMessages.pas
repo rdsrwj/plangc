@@ -63,6 +63,7 @@ const
   AC_AFTERSCROLL                = 52;
   AC_GETAPPLICATION             = 60;
   AC_PARENTCLOFFSET             = 61;
+  AC_NCPAINT                    = 62;
 
   WM_DRAWMENUBORDER       = CN_NOTIFY + 101;
   WM_DRAWMENUBORDER2      = CN_NOTIFY + 102;

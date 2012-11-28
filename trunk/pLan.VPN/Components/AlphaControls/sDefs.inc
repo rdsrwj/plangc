@@ -11,6 +11,7 @@
 
 // >> 3rdparty support finish >>
 
+{.$DEFINE ADDWEBBROWSER} // Support of the TWebBrowser
 {.$DEFINE DISABLEPREVIEWMODE} // If key is enabled then preview code is excluded 
 {.$DEFINE NOWNDANIMATION} // Disable animation effects for dialogs and forms
 {.$DEFINE CHANGEFORMSINDESIGN} // Changing the forms colors in design-time
@@ -25,6 +26,22 @@
 { ---- End defs by Serge V. Goncharov ---- }
 
 {$DEFINE ALPHASKINS}
+
+{$IFDEF VER240}
+  {$DEFINE DELPHI_XE3}
+  {$DEFINE DELPHI_XE2}
+  {$DEFINE D2011}
+  {$DEFINE D2010}
+  {$DEFINE D2009}
+  {$DEFINE D2007}
+  {$DEFINE D2006}
+  {$DEFINE D2005}
+  {$DEFINE DELPHI6UP}
+  {$DEFINE DELPHI7UP}
+  {$WARN UNIT_PLATFORM OFF}
+  {$WARN SYMBOL_PLATFORM OFF}
+  {$DEFINE SPLASH}
+{$ENDIF}
 
 {$IFDEF VER230}
   {$DEFINE DELPHI_XE2}
@@ -227,4 +244,8 @@
 {$ENDIF}
 {$IFDEF TNTUNICODE}
   {$DEFINE WIDETEXT}
+{$ENDIF}
+
+{$IFNDEF DELPHI6UP}
+  {$UNDEF ADDWEBBROWSER} // WebBrowser does not exists in D5
 {$ENDIF}

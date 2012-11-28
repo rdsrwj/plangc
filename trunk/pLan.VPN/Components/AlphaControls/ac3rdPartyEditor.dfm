@@ -140,11 +140,6 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
       'List of controls which will be skinned automatically (register s' +
       'ensitive):'
     BoundLabel.Indent = 2
-    BoundLabel.Font.Charset = DEFAULT_CHARSET
-    BoundLabel.Font.Color = clWindowText
-    BoundLabel.Font.Height = -11
-    BoundLabel.Font.Name = 'MS Sans Serif'
-    BoundLabel.Font.Style = []
     BoundLabel.Layout = sclTopLeft
     BoundLabel.MaxWidth = 0
     BoundLabel.UseSkinColor = True
@@ -158,11 +153,6 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
         AutoSize = True
         Caption = 'Type of skin'
       end>
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
     HideSelection = False
     MultiSelect = True
     ReadOnly = True
@@ -201,17 +191,17 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
       Height = 13
       Caption = 'Change group :'
       ParentFont = False
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
     end
     object sListBox1: TsListBox
       Left = 16
       Top = 28
       Width = 129
       Height = 405
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
       ItemHeight = 13
       Items.Strings = (
         'Standard VCL'
@@ -222,7 +212,7 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
         'EhLib'
         'Fast/Quick Report'
         'RXLib'
-        'JvEdits'
+        'JVCL'
         'TMS edits'
         'SynEdits'
         'mxEdits'
@@ -234,7 +224,6 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
       BoundLabel.Caption = 'Packages :'
       BoundLabel.Indent = 0
       BoundLabel.Font.Charset = DEFAULT_CHARSET
-      BoundLabel.Font.Color = clWindowText
       BoundLabel.Font.Height = -11
       BoundLabel.Font.Name = 'MS Sans Serif'
       BoundLabel.Font.Style = []
@@ -249,16 +238,17 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
       Width = 129
       Height = 387
       BorderStyle = bsSingle
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
       ItemHeight = 13
+      ParentFont = False
       TabOrder = 1
       BoundLabel.Active = True
       BoundLabel.Caption = 'Supported controls :'
       BoundLabel.Indent = 0
-      BoundLabel.Font.Charset = DEFAULT_CHARSET
-      BoundLabel.Font.Color = clWindowText
-      BoundLabel.Font.Height = -11
-      BoundLabel.Font.Name = 'MS Sans Serif'
-      BoundLabel.Font.Style = []
       BoundLabel.Layout = sclTopLeft
       BoundLabel.MaxWidth = 0
       BoundLabel.UseSkinColor = True
@@ -268,8 +258,8 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
       Tag = 1
       Left = 246
       Top = 423
-      Width = 20
-      Height = 20
+      Width = 21
+      Height = 19
       Checked = True
       State = cbChecked
       TabOrder = 2
@@ -281,8 +271,8 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
     object sCheckBox2: TsCheckBox
       Left = 268
       Top = 423
-      Width = 20
-      Height = 20
+      Width = 21
+      Height = 19
       TabOrder = 3
       OnClick = sCheckBox1Click
       SkinData.SkinSection = 'CHECKBOX'

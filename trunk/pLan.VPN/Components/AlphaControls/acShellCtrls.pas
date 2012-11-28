@@ -593,7 +593,6 @@ type
     procedure DblClick; override;
   end;
 
-function G_ValidateMask(const S, Mask: string; MaskChar: Char = 'X'): Boolean;
 function G_ValidateWildText(const S, Mask: string; MaskChar: Char = '?'; WildCard: Char = '*'): Boolean;
 function G_CharPos(C: Char; const S: string; StartPos: Integer = 1): Integer; overload;
 procedure DisposePIDL(PIDL: PItemIDList);
@@ -3518,55 +3517,6 @@ begin
   OnDblClick(Self);
 end;
 
-function G_ValidateMask(const S, Mask: string; MaskChar: Char = 'X'): Boolean;
-asm
-        TEST    EAX,EAX
-        JE      @@qt2
-        PUSH    EBX
-        TEST    EDX,EDX
-        JE      @@qt1
-        MOV     EBX,[EAX-4]
-        CMP     EBX,[EDX-4]
-        JE      @@01
-@@qt1:  XOR     EAX,EAX
-        POP     EBX
-@@qt2:  RET
-@@01:   DEC     EBX
-        JS      @@07
-@@lp:   MOV     CH,BYTE PTR [EDX+EBX]
-        CMP     CL,CH
-        JNE     @@cm
-        DEC     EBX
-        JS      @@eq
-        MOV     CH,BYTE PTR [EDX+EBX]
-        CMP     CL,CH
-        JNE     @@cm
-        DEC     EBX
-        JS      @@eq
-        MOV     CH,BYTE PTR [EDX+EBX]
-        CMP     CL,CH
-        JNE     @@cm
-        DEC     EBX
-        JS      @@eq
-        MOV     CH,BYTE PTR [EDX+EBX]
-        CMP     CL,CH
-        JNE     @@cm
-        DEC     EBX
-        JNS     @@lp
-@@eq:   MOV     EAX,1
-        POP     EBX
-        RET
-@@cm:   CMP     CH,BYTE PTR [EAX+EBX]
-        JNE     @@07
-        DEC     EBX
-        JNS     @@lp
-        MOV     EAX,1
-        POP     EBX
-        RET
-@@07:   XOR     EAX,EAX
-        POP     EBX
-end;
-
 function G_ValidateWildText(const S, Mask: string; MaskChar, WildCard: Char): Boolean;
 const
   ToUpperChars: array[0..255] of Char =
@@ -3667,22 +3617,42 @@ function G_CharPos(C: Char; const S: string; StartPos: Integer): Integer;
 asm
         TEST    EDX,EDX
         JE      @@qt
+{$IFDEF WIN64}
+        PUSH    RDI
+{$ELSE}
         PUSH    EDI
+{$ENDIF}
         MOV     EDI,EDX
         LEA     EDX,[ECX-1]
         MOV     ECX,[EDI-4]
         SUB     ECX,EDX
         JLE     @@m1
+{$IFDEF WIN64}
+        PUSH    RDI
+{$ELSE}
         PUSH    EDI
+{$ENDIF}
         ADD     EDI,EDX
+{$IFDEF WIN64}
+        POP     RDX
+{$ELSE}
         POP     EDX
+{$ENDIF}
         REPNE   SCASB
         JNE     @@m1
         MOV     EAX,EDI
         SUB     EAX,EDX
+{$IFDEF WIN64}
+        POP     RDI
+{$ELSE}
         POP     EDI
+{$ENDIF}
         RET
+{$IFDEF WIN64}
+@@m1:   POP     RDI
+{$ELSE}
 @@m1:   POP     EDI
+{$ENDIF}
 @@qt:   XOR     EAX,EAX
 end;
 

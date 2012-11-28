@@ -5,12 +5,12 @@ interface
 
 uses
   Classes, sScrollBar, sLabel, sButton, sBitBtn, sSpeedButton, sPanel,
-  sListBox,
+  sListBox, acTitleBar,
 {$IFNDEF ALITE}
   sHintManager, sToolBar, sColorSelect, sDialogs, sCurrencyEdit, sSpinEdit, sRadioButton,
   sComboEdit, sPageControl, sCurrEdit, sToolEdit, sMonthCalendar, sBevel, sGroupBox, sStatusBar,
   sTrackBar, sCalculator, sMaskEdit, sComboBoxes, sSplitter, sTabControl, sFontCtrls,
-  sScrollBox, sRichEdit, sFileCtrl, sTreeView, sFrameAdapter, sUpDown,
+  sScrollBox, sRichEdit, sFileCtrl, sTreeView, sFrameAdapter, sUpDown, 
   sFrameBar, acShellCtrls, acCoolBar, acProgressBar, acNotebook, acAlphaHints, acHeaderControl, acMagn,
 {$ENDIF}
   sListView, sGauge, sEdit, sSkinManager, sSkinProvider, sComboBox, sCheckBox, acAlphaImageList, sMemo, sCheckListBox;
@@ -34,7 +34,7 @@ begin
   Bmp := TBitmap.Create;
   Bmp.LoadFromResourceName(hInstance, 'ACLOGO');
   try
-    SplashScreenServices.AddPluginBitmap('AlphaControls 2010', Bmp.Handle, False,
+    SplashScreenServices.AddPluginBitmap('AlphaControls 2013', Bmp.Handle, False,
 {$IFNDEF ALITE}
       {$IFDEF RUNIDEONLY}'Trial edition'{$ELSE}'Registered'{$ENDIF},
 {$ELSE}
@@ -54,15 +54,6 @@ begin
 {$ENDIF}
 
 {$IFNDEF ALITE}
-  // Remove AlphaLite palette if was installed earlier
-  DeleteRegParam(HKEY_CURRENT_USER, 'Software\Borland\Delphi\5.0\Palette', s_AlphaLite);
-  DeleteRegParam(HKEY_CURRENT_USER, 'Software\Borland\Delphi\6.0\Palette', s_AlphaLite);
-  DeleteRegParam(HKEY_CURRENT_USER, 'Software\Borland\Delphi\7.0\Palette', s_AlphaLite);
-  DeleteRegParam(HKEY_CURRENT_USER, 'Software\Borland\BDS\3.0\ToolForm\Mapping', s_AlphaLite);
-  DeleteRegParam(HKEY_CURRENT_USER, 'Software\Borland\BDS\4.0\ToolForm\Mapping', s_AlphaLite);
-  DeleteRegParam(HKEY_CURRENT_USER, 'Software\Borland\BDS\5.0\ToolForm\Mapping', s_AlphaLite);
-  DeleteRegParam(HKEY_CURRENT_USER, 'Software\CodeGear\BDS\6.0\ToolForm\Mapping', s_AlphaLite);
-
   RegisterComponents('AlphaStandard', [
     TsLabel, TsEdit, TsMemo, TsButton, TsCheckBox, TsRadioButton,
     TsListBox, TsComboBox, TsScrollBar, TsGroupBox, TsRadioGroup, TsPanel, TsBitBtn,
@@ -80,15 +71,15 @@ begin
   RegisterComponents('AlphaTools', [
     TsSkinManager, TsSkinProvider, TsFrameAdapter, TsHintManager,
     TsCalculator, TsOpenDialog, TsSaveDialog, TsOpenPictureDialog,
-    TsSavePictureDialog, TsMagnifier, TsColordialog{, TsFontDialog},
-    TsPathDialog, TsAlphaImageList, TsAlphaHints]);
+    TsSavePictureDialog, TsMagnifier, TsColordialog,
+    TsPathDialog, TsAlphaImageList, TsAlphaHints, TsTitleBar]);
 
   RegisterNoIcon([TsTabSheet]);
   RegisterClasses([TsTabSheet, TsEditLabel, TsStdColorsPanel, TsDlgShellListView, TsPage]);
 {$ELSE}
   RegisterComponents(s_AlphaLite, [
-    TsSkinManager, TsSkinProvider, TsEdit, TsCheckBox, TsPanel, TsButton, TsBitBtn,
-    TsScrollBar, TsLabel, TsWebLabel, TsLabelFX, TsComboBox, TsListBox, TsCheckListBox, TsGauge, TsAlphaImageList]);
+    TsSkinManager, TsSkinProvider, TsEdit, TsCheckBox, TsPanel, TsButton, TsBitBtn, TsScrollBar, 
+    TsLabel, TsWebLabel, TsLabelFX, TsComboBox, TsListBox, TsCheckListBox, TsGauge, TsAlphaImageList, TsTitleBar]);
 
   RegisterClasses([TsSpeedButton, TsListView, TsMemo]);
   RegisterNoIcon([TsSpeedButton, TsListView, TsMemo]);

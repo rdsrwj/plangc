@@ -69,6 +69,8 @@ const
   s_Gradient              = MaxAlphaStrID - 75;
   s_PreviewHint           = MaxAlphaStrID - 76;
 
+  s_InvalidDate           = MaxAlphaStrID - 77;
+
   // File dialogs
   s_SelectDir             = MaxAlphaStrID - 89;
   s_Create                = MaxAlphaStrID - 90;
@@ -80,7 +82,7 @@ resourcestring // Comment resourcestrings if compiling of res-file is needed
   s_SelectSkinTitle      = 'Select skin';
   s_SkinPreview          = 'Skin preview';
   
-  s_InvalidDate          = 'Invalid date';
+//  s_InvalidDate          = 'Invalid date';
 
 implementation
 

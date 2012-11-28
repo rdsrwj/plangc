@@ -9,14 +9,14 @@ uses sConst, ComCtrls;
 type // Do not change types
   TacThirdPartyTypes = (tpEdit, tpButton, tpBitBtn, tpCheckBox, tpComboBox, tpGrid, tpGroupBox, tpListView,
     tpPanel, tpTreeView, tpwwEdit, tpGridEh, tpVirtualTree, tpPageControl, tpTabControl, tpToolBar,
-    tpStatusBar, tpSpeedButton, tpScrollControl, tpUpDownBtn, tpScrollBar);
+    tpStatusBar, tpSpeedButton, tpScrollControl, tpUpDownBtn, {$IFDEF ADDWEBBROWSER} tpWebBrowser, {$ENDIF}tpScrollBar);
 
 const
   acLastSupportedType = tpScrollBar; // Do not change this line
 
 // Names of standard and 3rd-party controls for automatic skinning (may be changed before recompiling of the package)
   
-{$IFNDEF RUNIDEONLY} // Third-party list is empty by default now because is not used in most projects AC2010
+{$IFNDEF RUNIDEONLY} // Third-party list is empty by definition now because is not used in most projects AC2013
 
   sl_Third_Edit = ' ';
   sl_Third_Panel = ' ';
@@ -39,6 +39,7 @@ const
   sl_Third_ScrollControl = ' ';
   sl_Third_UpDownBtn = ' ';
   sl_Third_ScrollBar = ' ';
+  sl_Third_WebBrowser = ' ';
 
 {$ELSE}
 
@@ -165,19 +166,25 @@ const
     'TScrollBox';
 
   sl_Third_UpDownBtn =
-    'TUpDown';  
+    'TUpDown';
 
   sl_Third_ScrollBar =
     'TScrollBar';
+
+  sl_Third_WebBrowser =
+    'TWebBrowser';
 {$ENDIF}
 
   // Do not change
   acThirdNames : array[0..ord(acLastSupportedType)] of string = (sl_Third_Edit, sl_Third_Button, sl_Third_BitBtn, sl_Third_CheckBox,
     sl_Third_ComboBox, sl_Third_Grid, sl_Third_GroupBox, sl_Third_ListView, sl_Third_Panel, sl_Third_TreeView, sl_Third_wwEdit,
     sl_Third_GridEh, sl_Third_VirtualTree, sl_Third_PageControl, sl_Third_TabControl, sl_Third_ToolBar, sl_Third_StatusBar,
-    sl_Third_SpeedButton, sl_Third_ScrollControl, sl_Third_UpDownBtn, sl_Third_ScrollBar);
-  acThirdCaptions : array[0..ord(acLastSupportedType)] of string = ('Edit', 'Button', 'BitBtn', 'CheckBox', 'ComboBox', 'Grid', 'GroupBox', 'ListView', 'Panel',
-    'TreeView', 'wwEdit', 'GridEh', 'VirtualTree', 'PageControl', 'TabControl', 'ToolBar', 'StatusBar', 'SpeedButton', 'ScrollControl', 'UpDownBtn', 'ScrollBar');
+    sl_Third_SpeedButton, sl_Third_ScrollControl, sl_Third_UpDownBtn, {$IFDEF ADDWEBBROWSER} sl_Third_WebBrowser, {$ENDIF} sl_Third_ScrollBar);
+
+  acThirdCaptions : array[0..ord(acLastSupportedType)] of string = ('Edit', 'Button', 'BitBtn', 'CheckBox', 'ComboBox', 'Grid', 'GroupBox',
+    'ListView', 'Panel', 'TreeView', 'wwEdit', 'GridEh', 'VirtualTree', 'PageControl', 'TabControl', 'ToolBar', 'StatusBar', 'SpeedButton',
+    'ScrollControl', 'UpDownBtn', {$IFDEF ADDWEBBROWSER}'WebBrowser', {$ENDIF}'ScrollBar');
+
 {$ENDIF}
 
   // Values which may be changed before package installing :

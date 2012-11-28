@@ -44,20 +44,17 @@ var
   MaskColor: TsColor;
   TransColor: TsColor;
   X, Y : integer;
-  Fast32Src : TacFast32;
 begin
   TransColor.C := Bmp.Canvas.Pixels[0, Bmp.Height - 1];
   TransColor.A := MaxByte;
-  Fast32Src := TacFast32.Create;
-  if Fast32Src.Attach(Bmp) then for X := 0 to Bmp.Width - 1 do for Y := 0 to Bmp.Height - 1 do begin
-    MaskColor := Fast32Src[X, Y];
+  for X := 0 to Bmp.Width - 1 do for Y := 0 to Bmp.Height - 1 do begin
+    MaskColor := GetAPixel(Bmp, X, Y);
     if MaskColor.C <> TransColor.C then begin
       MaskColor.A := MaxByte;
-      Fast32Src[X, Y] := MaskColor;
+      SetAPixel(Bmp, X, Y, MaskColor);
     end
-    else Fast32Src[X, Y] := sFuchsia;
+    else SetAPixel(Bmp, X, Y, sFuchsia);
   end;
-  FreeAndNil(Fast32Src);
 end;
 
 procedure DrawBtnGlyph(Button : TControl; Canvas : TCanvas = nil);
@@ -151,7 +148,7 @@ begin
   if Canvas = nil then Canvas := SkinData.FCacheBmp.Canvas;
 
   if Assigned(Glyph) and not Glyph.Empty then begin
-    if (Glyph.PixelFormat = pfDevice) or not Enabled then begin
+    if (Glyph.PixelFormat = pfDevice) or not Enabled or ac_CheckEmptyAlpha and (Glyph.PixelFormat = pf32bit) then begin
       nEvent := Glyph.OnChange;
       Glyph.OnChange := nil;
       Glyph.HandleType := bmDIB;
@@ -159,15 +156,12 @@ begin
         b := False;
         for Y := 0 to Glyph.Height - 1 do begin
           SLine := Glyph.ScanLine[Y];
-          for X := 0 to Glyph.Width - 1 do if SLine[X].A = maxByte {?} then begin
+          for X := 0 to Glyph.Width - 1 do if SLine[X].A <> 0 then begin
             b := True;
             Break;
           end;
-          if b then Break;
         end;
-        if not b then begin
-          Glyph.PixelFormat := pf24bit;
-        end;
+        if not b then Glyph.PixelFormat := pf24bit;
       end;
       Glyph.OnChange := nEvent;
     end;
@@ -503,6 +497,7 @@ begin
 end;
 
 initialization
+  // Create a list of form types which will be excluded from skinning
   ThirdPartySkipForms := TStringList.Create;
   ThirdPartySkipForms.Sorted := True;
   ThirdPartySkipForms.Add('TApplication');
