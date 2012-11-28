@@ -150,7 +150,7 @@ const
   s_Gauge                                 = 'GAUGE';
   s_TrackBar                              = 'TRACKBAR';
   s_CheckBox                              = 'CHECKBOX';
-  s_RadioButton                           = 'RADIOBUTTON';
+  s_RadioButton                           = 'CHECKBOX';
   s_DragBar                               = 'DRAGBAR';
   s_Bar                                   = 'BAR';
   s_BarTitle                              = 'BARTITLE';
@@ -159,6 +159,13 @@ const
 
   s_GripH                                 = 'GRIPH';
   s_GripV                                 = 'GRIPV';
+
+  // Title bar items
+  s_TBBTN                                 = 'TB_BTN';
+//  s_TBBUTTON_L                            = 'TB_BUTTONLEFT';
+//  s_TBBUTTON_R                            = 'TB_BUTTONRIGHT';
+  s_TBMENUBTN                             = 'TB_MENUBTN';
+  s_TBTAB                                 = 'TB_TAB';
 
   s_GlobalInfo                            = 'GLOBALINFO';
   s_Unknown                               = 'UNKNOWN';
@@ -169,7 +176,7 @@ const
   s_CheckBoxUnChecked                   = 'BOXUNCHECKED';
   s_CheckBoxGrayed                      = 'BOXGRAYED';
   s_RadioButtonChecked                  = 'RADIOCHECKED';
-  s_RadioButtonUnChecked                = 'RADIOUNCHECKED';     
+  s_RadioButtonUnChecked                = 'RADIOUNCHECKED';
   s_RadioButtonGrayed                   = 'RADIOGRAYED';
   s_SmallBoxChecked                     = 'SMALLCHECKED';
   s_SmallBoxUnChecked                   = 'SMALLUNCHECKED';

@@ -4,6 +4,7 @@ unit acLFPainter;
 // WARNING! This unit is compatible with Devexpress version 2011
 // for older versions the acLFPainter6 unit should be used
 
+{$DEFINE VER26} // cxGrid version 12.4 and newer
 {$DEFINE VER23}
 {$DEFINE VER653}
 {$DEFINE VER650}
@@ -324,7 +325,11 @@ type
     function ProgressBarTextColor: TColor; override;
     // GroupBox
     procedure DrawGroupBoxBackground(ACanvas: TcxCanvas; ABounds: TRect; ARect: TRect); override;
+{$IFDEF VER26}
+    procedure DrawGroupBoxCaption(ACanvas: TcxCanvas; const ACaptionRect, ATextRect: TRect; ACaptionPosition: TcxGroupBoxCaptionPosition); override;
+{$ELSE}
     procedure DrawGroupBoxCaption(ACanvas: TcxCanvas; ACaptionRect: TRect; ACaptionPosition: TcxGroupBoxCaptionPosition); override;
+{$ENDIF}
     procedure DrawGroupBoxContent(ACanvas: TcxCanvas; ABorderRect: TRect; ACaptionPosition: TcxGroupBoxCaptionPosition{$IFDEF VER640}; ABorders: TcxBorders = cxBordersAll{$ENDIF}); override;
     function GroupBoxBorderSize(ACaption: Boolean; ACaptionPosition: TcxGroupBoxCaptionPosition): TRect; override;
     function GroupBoxTextColor({$IFDEF VER645}AEnabled: Boolean;{$ENDIF} ACaptionPosition: TcxGroupBoxCaptionPosition): TColor; override;
@@ -766,12 +771,12 @@ end;
 
 function TcxACLookAndFeelPainter.DefaultInactiveColor: TColor;
 begin
-  if Skinned then Result := DefaultManager.GetGlobalColor else Result := inherited DefaultInactiveColor
+  if Skinned then Result := DefaultManager.GetHighLightColor(False) else Result := inherited DefaultInactiveColor
 end;
 
 function TcxACLookAndFeelPainter.DefaultInactiveTextColor: TColor;
 begin
-  if Skinned then Result := DefaultManager.GetGlobalFontColor else Result := inherited DefaultInactiveTextColor
+  if Skinned then Result := DefaultManager.GetHighLightFontColor(False) else Result := inherited DefaultInactiveTextColor
 end;
 
 function TcxACLookAndFeelPainter.DefaultPreviewTextColor: TColor;
@@ -1288,7 +1293,11 @@ begin
   inherited;
 end;
 
+{$IFDEF VER26}
+procedure TcxACLookAndFeelPainter.DrawGroupBoxCaption(ACanvas: TcxCanvas; const ACaptionRect, ATextRect: TRect; ACaptionPosition: TcxGroupBoxCaptionPosition);
+{$ELSE}
 procedure TcxACLookAndFeelPainter.DrawGroupBoxCaption(ACanvas: TcxCanvas; ACaptionRect: TRect; ACaptionPosition: TcxGroupBoxCaptionPosition);
+{$ENDIF}
 var
   aBord : TcxBorders;
 begin
@@ -2347,18 +2356,20 @@ procedure _InitDevEx(const Active : boolean);
 var
  vPainter: TcxCustomLookAndFeelPainter;
 begin
-  vPainter := nil;
-  if Active then begin
-    if not cxLookAndFeelPaintersManager.GetPainter(s_AlphaSkins, vPainter) then begin
-      cxLookAndFeelPaintersManager.Register(TcxACLookAndFeelPainter.Create);
-      RootLookAndFeel.Kind := lfStandard;  
-      RootLookAndFeel.SkinName := s_AlphaSkins;
+  if GetExtendedStylePainters <> nil then begin
+    vPainter := nil;
+    if Active then begin
+      if not cxLookAndFeelPaintersManager.GetPainter(s_AlphaSkins, vPainter) then begin
+        cxLookAndFeelPaintersManager.Register(TcxACLookAndFeelPainter.Create);
+        RootLookAndFeel.Kind := lfStandard;
+        RootLookAndFeel.SkinName := s_AlphaSkins;
+      end;
+    end
+    else if cxLookAndFeelPaintersManager.GetPainter(s_AlphaSkins, vPainter) then begin
+      RootLookAndFeel.SkinName := '';
+      cxLookAndFeelPaintersManager.Unregister(s_AlphaSkins);
     end;
-  end
-  else if cxLookAndFeelPaintersManager.GetPainter(s_AlphaSkins, vPainter) then begin
-    RootLookAndFeel.SkinName := '';
-    cxLookAndFeelPaintersManager.Unregister(s_AlphaSkins);
-  end
+  end;
 end;
 
 function _CheckDevEx(const Control : TControl) : boolean;

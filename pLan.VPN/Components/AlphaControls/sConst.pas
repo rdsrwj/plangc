@@ -12,7 +12,7 @@ uses Messages, Graphics, Windows, comctrls, ExtCtrls, controls, classes, Buttons
 {$IFNDEF NOTFORHELP}
 const
   CompatibleSkinVersion = 7.00;     // Version of supported skins in current version of the package
-  MaxCompSkinVersion = 7.99;
+  MaxCompSkinVersion = 8.99;
   ExceptTag = -98;                  // Mask for the tag value in 3rd-party controls which will not be skinned automatically
 
   // Data chars for skins
@@ -26,6 +26,7 @@ const
 
   // States of control
   ACS_FAST          = 1;    // Cache is not used (when control is not alphablended and when childs do not must have image of this control)
+  ACS_BGUNDEF       = 2;    // Cache state is undefined still
   ACS_PRINTING      = 512;  // WM_PRINT in process
   ACS_MNUPDATING    = 1024; // Menu updating required
   ACS_LOCKED        = 2048; // Drawing of control is blocked
@@ -117,6 +118,8 @@ type
     fmTileHorBtm, fmTileVertRight, fmStretchHorBtm, fmStretchVertRight, fmDisTiled, fmDiscHorTop,
     fmDiscVertLeft, fmDiscHorBottom, fmDiscVertRight
   );
+
+  TvaAlign = (vaTop, vaMiddle, vaBottom);
 
   TsHackedControl = class(TControl)
   public
@@ -425,6 +428,7 @@ var
   ac_OptimizeMemory      : boolean = True;   // Cache is cleared always when control is invisible
   ac_DialogsLevel        : integer = 2;      // Deep of system dialogs skinning
   ac_NoExtBordersIfMax   : boolean = False;  // Do not use Extended borders when form is maximized
+  ac_CheckEmptyAlpha     : boolean = False;   // Checking of an empty alpha-channel in glyphs is required
 
   StdTransparency : boolean = False;        // Set this variable to True for a standard mechanism of GraphicControls repainting
   MouseForbidden : boolean = False;         // If true then mouse hot events are forbidden
@@ -581,7 +585,6 @@ initialization
 
   acs_ErrorSettingCount    := LoadStr(s_ErrorSettingCount);
   acs_ListBoxMustBeVirtual := LoadStr(s_ListBoxMustBeVirtual);
-  acs_InvalidDate          := s_InvalidDate;
 
   // Color dialog
   acs_ColorDlgAdd          := LoadStr(s_ColorDlgAdd);
@@ -630,6 +633,9 @@ initialization
   acs_Root                 := s_Root;
   acs_SelectDir            := LoadStr(s_SelectDir);
   acs_Create               := LoadStr(s_Create);
+
+  acs_InvalidDate          := LoadStr(s_InvalidDate);
+  if acs_InvalidDate = '' then acs_InvalidDate := 'Invalid date';
 
   acs_DirWithSkins         := s_DirWithSkins;
   acs_SelectSkinTitle      := s_SelectSkinTitle;

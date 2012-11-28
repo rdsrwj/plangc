@@ -714,12 +714,12 @@ end;
 
 class function TcxACLookAndFeelPainter.DefaultInactiveColor: TColor;
 begin
-  if Skinned then Result := DefaultManager.GetGlobalColor else Result := inherited DefaultInactiveColor
+  if Skinned then Result := DefaultManager.GetHighLightColor(False) else Result := inherited DefaultInactiveColor
 end;
 
 class function TcxACLookAndFeelPainter.DefaultInactiveTextColor: TColor;
 begin
-  if Skinned then Result := DefaultManager.GetGlobalFontColor else Result := inherited DefaultInactiveTextColor
+  if Skinned then Result := DefaultManager.GetHighLightFontColor(False) else Result := inherited DefaultInactiveTextColor
 end;
 
 class function TcxACLookAndFeelPainter.DefaultPreviewTextColor: TColor;
@@ -2302,16 +2302,18 @@ procedure _InitDevEx(const Active : boolean);
 var
  vPainter: TcxCustomLookAndFeelPainterClass;
 begin
- if Active then begin
-   if not GetExtendedStylePainters.GetPainterByName(s_AlphaSkins, vPainter) then begin
-     GetExtendedStylePainters.Register(s_AlphaSkins, TcxACLookAndFeelPainter, TdxSkinInfo.Create(nil));
-     RootLookAndFeel.SkinName := s_AlphaSkins;
-   end
- end
- else if GetExtendedStylePainters.GetPainterByName(s_AlphaSkins, vPainter) then begin
-   RootLookAndFeel.SkinName := '';
-   GetExtendedStylePainters.Unregister(s_AlphaSkins);
- end
+  if GetExtendedStylePainters <> nil then begin
+    if Active then begin
+      if not GetExtendedStylePainters.GetPainterByName(s_AlphaSkins, vPainter) then begin
+        GetExtendedStylePainters.Register(s_AlphaSkins, TcxACLookAndFeelPainter, TdxSkinInfo.Create(nil));
+        RootLookAndFeel.SkinName := s_AlphaSkins;
+      end
+    end
+    else if GetExtendedStylePainters.GetPainterByName(s_AlphaSkins, vPainter) then begin
+      RootLookAndFeel.SkinName := '';
+      GetExtendedStylePainters.Unregister(s_AlphaSkins);
+    end
+  end;
 end;
 
 function _CheckDevEx(const Control : TControl) : boolean;
