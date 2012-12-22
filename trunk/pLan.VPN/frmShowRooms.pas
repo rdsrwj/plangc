@@ -11,7 +11,7 @@ uses
   sRichEdit, sButton, sLabel, acAlphaHints, sBitBtn, sPageControl, sPanel,
   IRCRichEdit, sStatusBar, IdTCPConnection, IdTCPClient, IdIRC, sSplitter,
   sEdit, OpenVPNManager, ChatServer, ChatClient, sMemo, sComboBox,
-  FileLauncher, ImgList, acAlphaImageList;
+  FileLauncher, ImgList, acAlphaImageList, acTitleBar, sSkinProvider;
 
 const
   diGetCreateServerLog = 12;
@@ -41,23 +41,16 @@ type
     FcCAPem: TFileContainer;
     FcCAKey: TFileContainer;
     PopupMenu1: TPopupMenu;
-    N1: TMenuItem;
+    MiOpen: TMenuItem;
     N3: TMenuItem;
-    N4: TMenuItem;
+    MiQuit1: TMenuItem;
     FcNotify2Wav: TFileContainer;
     FcPLanDLL: TFileContainer;
     FcDataXML: TFileContainer;
     TimerGetData: TTimer;
     sSkinManager1: TsSkinManager;
     LvRoomsList: TsListView;
-    BtnConnect: TsBitBtn;
     sAlphaHints1: TsAlphaHints;
-    BtnCreateRoom: TsBitBtn;
-    BtnRefresh: TsBitBtn;
-    BtnSettings: TsBitBtn;
-    BtnGetInfo: TsBitBtn;
-    BtnQuit: TsBitBtn;
-    sPanel1: TsPanel;
     sPageControl1: TsPageControl;
     TsRoomList: TsTabSheet;
     FcRussianXML: TFileContainer;
@@ -86,7 +79,6 @@ type
     sSplitter3: TsSplitter;
     sPanel4: TsPanel;
     ChatServer1: TChatServer;
-    ChatClient1: TChatClient;
     BtnDisconnect: TsButton;
     HTTPVpnAdd: THTTPGet;
     HTTPVpnDel: THTTPGet;
@@ -105,11 +97,22 @@ type
     BtnAdd: TsButton;
     BtnDelete: TsButton;
     PopupMenu2: TPopupMenu;
-    Add1: TMenuItem;
-    Edit1: TMenuItem;
-    Delete1: TMenuItem;
+    MiAdd: TMenuItem;
+    MiEdit: TMenuItem;
+    MiDelete: TMenuItem;
     sAlphaImageList1: TsAlphaImageList;
     TimerVpnGet: TTimer;
+    sTitleBar1: TsTitleBar;
+    PopupMenu3: TPopupMenu;
+    MiQuit: TMenuItem;
+    N5: TMenuItem;
+    MiConnect: TMenuItem;
+    MiCreateRoom: TMenuItem;
+    MiSettings: TMenuItem;
+    sSkinProvider1: TsSkinProvider;
+    N9: TMenuItem;
+    MiMakeReport: TMenuItem;
+    MiRefresh: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormHide(Sender: TObject);
@@ -117,12 +120,6 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormDestroy(Sender: TObject);
-    procedure BtnConnectClick(Sender: TObject);
-    procedure BtnCreateRoomClick(Sender: TObject);
-    procedure BtnRefreshClick(Sender: TObject);
-    procedure BtnSettingsClick(Sender: TObject);
-    procedure BtnGetInfoClick(Sender: TObject);
-    procedure BtnQuitClick(Sender: TObject);
     procedure LvRoomsListDblClick(Sender: TObject);
     procedure LvRoomsListSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
@@ -139,8 +136,8 @@ type
       ABinding: TIdSocketHandle);
     procedure CoolTrayIcon1Click(Sender: TObject);
     procedure CoolTrayIcon1MinimizeToTray(Sender: TObject);
-    procedure N1Click(Sender: TObject);
-    procedure N4Click(Sender: TObject);
+    procedure MiOpenClick(Sender: TObject);
+    procedure MiQuit1Click(Sender: TObject);
     procedure IdIRC1Disconnect(Sender: TObject);
     procedure IdIRC1Disconnected(Sender: TObject);
     procedure IdIRC1Error(Sender: TObject; AUser: TIdIRCUser; ANumeric,
@@ -172,11 +169,6 @@ type
     procedure EdRoomKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure LvRoomUsersDblClick(Sender: TObject);
-    procedure ChatClient1Disconnect(Sender: TObject);
-    procedure ChatClient1Message(Sender: TObject; Content: String);
-    procedure ChatClient1TimeOut(Sender: TObject);
-    procedure ChatClient1UserJoined(Sender: TObject; UserName: String);
-    procedure ChatClient1UserParted(Sender: TObject; UserName: String);
     procedure BtnDisconnectClick(Sender: TObject);
     procedure IdIRC1Connected(Sender: TObject);
     procedure BtnServerSendClick(Sender: TObject);
@@ -188,17 +180,23 @@ type
       AChannel: TIdIRCChannel; const AChanName, ATopic: String);
     procedure IdIRC1System(Sender: TObject; AUser: TIdIRCUser;
       ACmdCode: Integer; ACommand, AContent: String);
-    procedure Add1Click(Sender: TObject);
-    procedure Delete1Click(Sender: TObject);
+    procedure MiAddClick(Sender: TObject);
+    procedure MiDeleteClick(Sender: TObject);
     procedure PopupMenu2Popup(Sender: TObject);
     procedure BtnDeleteClick(Sender: TObject);
     procedure BtnAddClick(Sender: TObject);
-    procedure Edit1Click(Sender: TObject);
+    procedure MiEditClick(Sender: TObject);
     procedure LvMyGamesDblClick(Sender: TObject);
     procedure IdIRC1Kick(Sender: TObject; AUser, AVictim: TIdIRCUser;
       AChannel: TIdIRCChannel);
     procedure IdIRC1Kicked(Sender: TObject; AUser: TIdIRCUser;
       AChannel: TIdIRCChannel);
+    procedure MiConnectClick(Sender: TObject);
+    procedure MiCreateRoomClick(Sender: TObject);
+    procedure MiSettingsClick(Sender: TObject);
+    procedure MiMakeReportClick(Sender: TObject);
+    procedure MiQuitClick(Sender: TObject);
+    procedure MiRefreshClick(Sender: TObject);
   private
     FWorkMode: TWorkMode;
     FReportList: TStringList;
@@ -270,7 +268,6 @@ begin
   LvRoomsList.Columns[2].Caption := Language.msgRoomName;
   LvRoomsList.Columns[3].Caption := Language.msgPlayersCount;
   LvRoomsList.DoubleBuffered := True;
-  //
   sStatusBar1.Panels[0].Text := Language.msgYourIP + ':';
   sStatusBar1.Panels[0].Width := TextExtent(sStatusBar1.Panels[0].Text,
     sStatusBar1.Font).cx + 20;
@@ -280,10 +277,15 @@ begin
   sStatusBar1.Panels[4].Text := Language.msgPlayersCount + ':';
   sStatusBar1.Panels[4].Width := TextExtent(sStatusBar1.Panels[4].Text,
     sStatusBar1.Font).cx + 20;
-  //
-  PopupMenu2.Items[0].Caption := Language.msgAdd;
-  PopupMenu2.Items[1].Caption := Language.msgEdit;
-  PopupMenu2.Items[2].Caption := Language.msgDelete;
+  MiAdd.Caption := Language.msgAdd;
+  MiEdit.Caption := Language.msgEdit;
+  MiDelete.Caption := Language.msgDelete;
+  MiConnect.Caption := Language.msgConnect;
+  MiCreateRoom.Caption := Language.msgCreateRoom;
+  MiRefresh.Caption := Language.msgRefresh;
+  MiSettings.Caption := Language.msgSettings;
+  MiMakeReport.Caption := Language.msgMakeReport;
+  MiQuit.Caption := Language.msgQuit;
 
   // Распаковываем ресурсы.
   FcNotifyWav.CheckAndSaveToFile(UGlobal.DataPath + 'notify.wav');
@@ -350,7 +352,7 @@ begin
       (not Settings.AutomaticIP) then
     begin
       Settings.NetworkIP := '';
-      BtnSettings.Click;
+      MiSettings.Click;
     end;
   finally
     AList.Free;
@@ -426,7 +428,7 @@ begin
   Self.Top  := (GetSystemMetrics(SM_CYSCREEN) - Self.Height) div 2;
 
   // Обновляем список комнат.
-  BtnRefresh.Click;
+  MiRefresh.Click;
 
   // Запускаем таймер обновления списка комнат.
   TimerVpnGet.Enabled := True;
@@ -586,311 +588,9 @@ begin
   sStatusBar1.Panels[5].Text := IntToStr(N);                       // Количество игроков.
 end;
 
-procedure TShowRoomsForm.BtnQuitClick(Sender: TObject);
-begin
-  // Не знаю почему, но при включении диалога возникает ошибка.
-  {if (Application.MessageBox(PChar(Language.msgConfirmQuit),
-    PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) <> mrYes) then Exit;}
-
-  // Отключаемся.
-  BtnDisconnectClick(nil);
-
-  FlgClosing := True;
-  Self.Close;
-end;
-
-procedure TShowRoomsForm.BtnRefreshClick(Sender: TObject);
-begin
-  LvRoomsList.Items.Clear;
-  ReRoomInfo.Clear;
-
-  //HTTPVpnGet.URL := UGlobal.URLTracker + '?do=vpn_get&ver=3';
-  HTTPVpnGet.URL := UGlobal.URLTracker;
-  HTTPVpnGet.PostQuery := 'do=vpn_get&ver=3';
-  HTTPVpnGet.GetString;
-end;
-
 procedure TShowRoomsForm.LvRoomsListDblClick(Sender: TObject);
 begin
-  BtnConnect.Click;
-end;
-
-procedure TShowRoomsForm.BtnSettingsClick(Sender: TObject);
-begin
-  with TConfigForm.Create(Self) do
-  try
-    if IdIRC1.Connected then
-      EdName.Text := IdIRC1.Nick;
-
-    if (ShowModal = mrOK) then
-    begin
-      TimerVpnGetShort.Interval := Settings.AutoNotifyPeriod * 60 * 1000;
-      TimerVpnGetShort.Enabled := Settings.AutoNotify;
-    end;
-  finally
-    Free;
-  end;
-end;
-
-procedure TShowRoomsForm.BtnConnectClick(Sender: TObject);
-var
-  Status: Integer;
-  SL: TStringList;
-begin
-  // Если активно VPN-подключение или не выбрана комната из списка, то выходим.
-  if (VPNManager.GetStatus <> ovpnDisconnected) or
-    (LvRoomsList.ItemFocused = nil) then Exit;
-
-  // Если комната как IRC-канал и незавершено подключение к IRC-серверу, то выходим.
-  if (LvRoomsList.ItemFocused.SubItems.Strings[8] <> 'none') and
-    (not FlgCanJoinToRoomChannel) then Exit;
-
-  // Если нет пинга, то предупреждаем.
-  try
-    StrToInt(LvRoomsList.ItemFocused.Caption);
-  except
-    if (MessageBox(Application.Handle, PChar(Language.msgRoomHasNoPing),
-      PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) = ID_NO) then Exit;
-  end;
-
-  // Отключаем таймеры.
-  PingTimer.Enabled := False;
-  TimerVpnGetShort.Enabled := False;
-
-  // Запоминаем данные комнаты.
-  Settings.RemoteRoomIP   := LvRoomsList.ItemFocused.SubItems.Strings[4];
-  Settings.RemoteRoomPort := StrToInt(LvRoomsList.ItemFocused.SubItems.Strings[5]);
-  Settings.RemoteVPNIP    := LvRoomsList.ItemFocused.SubItems.Strings[6];
-  Settings.RemoteVPNPort  := StrToInt(LvRoomsList.ItemFocused.SubItems.Strings[7]);
-  Settings.RoomChannel    := LvRoomsList.ItemFocused.SubItems.Strings[8];
-
-  // Чистим списки.
-  LvRoomUsers.Items.Clear;
-  ReRoom.Clear;
-
-  // Подключаемся.
-  OVPNInitForm := TOVPNInitForm.Create(Self);
-  try
-    OVPNInitForm.Show;
-    repeat
-      Application.ProcessMessages;
-      Status := VPNManager.GetStatus;
-      Sleep(100);
-    until (Status = ovpnDisconnected);
-    VPNManager.Connect(Settings.RemoteVPNIP, Settings.RemoteVPNPort, True,
-      UGlobal.DataPath);
-    repeat
-      Application.ProcessMessages;
-      Status := VPNManager.GetStatus;
-      Sleep(100);
-    until (Status <> ovpnConnecting);
-  finally
-    OVPNInitForm.Close;
-    OVPNInitForm.Free;
-  end;
-
-  if (Status = ovpnConnected) then
-  begin
-    // Режим работы - клиент.
-    FWorkMode := wmClient;
-
-    // Переключаемся на вкладку "Комната".
-    TsRoom.TabVisible := True;
-    sPageControl1.ActivePage := TsRoom;
-
-    ReRoom.AddFormatedString(TAG_COLOR + '3' +
-      'Connected to VPN server with local ip: ' + VPNManager.OVPNIP);
-
-    ReRoom.AddFormatedString(TAG_COLOR + '3' +
-      'Connecting chat to ' + LvRoomsList.ItemFocused.SubItems.Strings[1] +
-      ' / ' + LvRoomsList.ItemFocused.SubItems.Strings[0]);
-
-    // Подключаемся к чату.
-    if (Settings.RoomChannel = 'none') then
-    begin
-      ChatClient1.Connect(ChangeFileExt(VPNManager.OVPNIP, '.1'),
-        Settings.RemoteRoomPort, Settings.UserName, 0);
-    end
-    else
-    begin
-      Settings.RoomChannel := '#' + Settings.RoomChannel;
-      if IdIRC1.Connected then
-      try
-        IdIRC1.Join(Settings.RoomChannel);
-      except
-        on E:Exception do
-          ReRoom.AddFormatedString(TAG_COLOR + '4' + E.Message);
-      end;
-    end;
-  end
-  else
-  begin
-    // Завершаем OpenVPN.
-    VPNManager.Disconnect;
-
-    Sleep(300);
-
-    // Загружаем лог и показываем окно с ошибкой.
-    SL := TStringList.Create;
-    try
-      SL.LoadFromFile(UGlobal.DataPath + 'log.txt');
-      while (SL.Count > 30) do
-        SL.Delete(0);
-      with TDetailedErrorForm.Create(Self) do
-      try
-        Memo1.Lines := SL;
-        ShowModal;
-      finally
-        Free;
-      end;
-    finally
-      SL.Free;
-    end;
-
-    // Сбрасываем настройки, измененные на этом этапе, в исходное состояние.
-    Settings.RemoteRoomIP   := '';
-    Settings.RemoteRoomPort := 0;
-    Settings.RemoteVPNIP    := '';
-    Settings.RemoteVPNPort  := 0;
-    Settings.RoomChannel    := '';
-
-    FWorkMode := wmIdle;
-  end;
-end;
-
-{$O-}
-procedure TShowRoomsForm.BtnCreateRoomClick(Sender: TObject);
-var
-  Status: Integer;
-  SL: TStringList;
-begin
-  // Если активно VPN-подключение или незавершено подключение к IRC-серверу, то выходим.
-  if (VPNManager.GetStatus <> ovpnDisconnected) or
-    (not FlgCanJoinToRoomChannel) then Exit;
-
-  with TCreateRoomForm.Create(Self) do
-  try
-    EdRoomName.Text    := Settings.UserName + '-s room';
-    CbGameName.Text    := '';
-    EdRoomChannel.Text := 'plan_' + IntToStr(Random(10000));
-
-    if (ShowModal = mrOK) then
-    begin
-      // Отключаем таймеры.
-      PingTimer.Enabled := False;
-      TimerVpnGetShort.Enabled := False;
-
-      // Запоминаем данные комнаты.
-      Settings.LocalRoomName := EdRoomName.Text;
-      Settings.LocalGameName := CbGameName.Text;
-      Settings.RoomChannel   := EdRoomChannel.Text;
-
-      // "Защита от дурака".
-      Settings.RoomChannel := StringReplace(Settings.RoomChannel, '#', '',
-        [rfReplaceAll]);
-      Settings.RoomChannel := StringReplace(Settings.RoomChannel, ' ', '',
-        [rfReplaceAll]);
-      if Length(Settings.RoomChannel) < 2 then
-        Settings.RoomChannel := 'plan_' + IntToStr(Random(10000));
-      Settings.RoomChannel := '#' + Settings.RoomChannel;
-
-      // Чистим списки.
-      LvRoomUsers.Items.Clear;
-      ReRoom.Clear;
-
-      ReRoom.AddFormatedString(TAG_COLOR + '3' + 'Creating VPN-server');
-
-      // Запускаем VPN сервер.
-      OVPNInitForm := TOVPNInitForm.Create(Self);
-      try
-        OVPNInitForm.Show;
-        repeat
-          Application.ProcessMessages;
-          Status := VPNManager.GetStatus;
-          Sleep(100);
-        until (Status = ovpnDisconnected);
-        Caption := 'Disconnected';
-        VPNManager.CreateServer(Settings.OpenVPNPort, True, UGlobal.DataPath);
-        repeat
-          Application.ProcessMessages;
-          Status := VPNManager.GetStatus;
-          Sleep(100);
-        until (Status <> ovpnConnecting);
-      finally
-        OVPNInitForm.Close;
-        OVPNInitForm.Free;
-      end;
-
-      if (Status = ovpnConnected) then
-      begin
-        // Режим работы - сервер.
-        FWorkMode := wmServer;
-
-        // Переключаемся на вкладку "Комната".
-        TsRoom.TabVisible := True;
-        sPageControl1.ActivePage := TsRoom;
-
-        ReRoom.AddFormatedString(TAG_COLOR + '3' + 'Created VPNServer with IP: '
-          + VPNManager.OVPNIP);
-
-        ChatServer1.Port := Settings.RoomPort;
-        ChatServer1.Active := True;
-
-        //*
-        {ChatClient1.Connect('127.0.0.1', Settings.RoomPort,
-          Settings.UserName, 0);}
-
-        ReRoom.AddFormatedString(TAG_COLOR + '3' + 'Creating room for ' +
-          Settings.LocalGameName);
-
-        // Заходим на канал комнаты.
-        if IdIRC1.Connected then
-        try
-          IdIRC1.Join(Settings.RoomChannel);
-        except
-          on E:Exception do
-            ReRoom.AddFormatedString(TAG_COLOR + '4' + E.Message);
-        end;
-
-        // Запускаем таймер добавления комнаты на трекер.
-        TimerVpnAdd.Enabled := True;
-        TimerVpnAddTimer(Self);
-      end
-      else
-      begin
-        // Завершаем OpenVPN.
-        VPNManager.Disconnect;
-
-        Sleep(300);
-
-        // Загружаем лог и показываем окно с ошибкой.
-        SL := TStringList.Create;
-        try
-          SL.LoadFromFile(UGlobal.DataPath + 'log.txt');
-          while (SL.Count > 30) do
-            SL.Delete(0);
-          with TDetailedErrorForm.Create(Self) do
-          try
-            Memo1.Lines := SL;
-            ShowModal;
-          finally
-            Free;
-          end;
-        finally
-          SL.Free;
-        end;
-
-        // Сбрасываем настройки, измененные на этом этапе, в исходное состояние.
-        Settings.LocalRoomName := '';
-        Settings.LocalGameName := '';
-        Settings.RoomChannel   := '';
-
-        FWorkMode := wmIdle;
-      end;
-    end;
-  finally
-    Free;
-  end;
+  MiConnect.Click;
 end;
 
 procedure TShowRoomsForm.HTTPVpnGetDoneString(Sender: TObject; Result: String);
@@ -943,8 +643,8 @@ begin
     ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgChannel + ': ' +
       TAG_BOLD + Item.SubItems[8], False);
 
-    ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgPlayers + ': ' +
-      TAG_BOLD + Item.SubItems[10], False);
+    {ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgPlayers + ': ' +
+      TAG_BOLD + Item.SubItems[10], False);}
 
     // Пингуем.
     try
@@ -1029,7 +729,7 @@ end;
 
 procedure TShowRoomsForm.TimerVpnGetTimer(Sender: TObject);
 begin
-  BtnRefresh.Click;
+  MiRefresh.Click;
 end;
 
 procedure TShowRoomsForm.TimerVpnGetShortTimer(Sender: TObject);
@@ -1112,12 +812,12 @@ begin
   FlgMinimized := False;
 end;
 
-procedure TShowRoomsForm.N4Click(Sender: TObject);
+procedure TShowRoomsForm.MiQuit1Click(Sender: TObject);
 begin
-  BtnQuit.Click;
+  MiQuit.Click;
 end;
 
-procedure TShowRoomsForm.N1Click(Sender: TObject);
+procedure TShowRoomsForm.MiOpenClick(Sender: TObject);
 begin
   CoolTrayIcon1.ShowMainForm;
   FlgMinimized := False;
@@ -1126,76 +826,6 @@ end;
 procedure TShowRoomsForm.CoolTrayIcon1MinimizeToTray(Sender: TObject);
 begin
   FlgMinimized := True;
-end;
-
-procedure TShowRoomsForm.BtnGetInfoClick(Sender: TObject);
-var
-  SL: TStringList;
-  AdapterList: TAdapterList;
-  I: Integer;
-begin
-  if (MessageBox(Self.Handle,
-    'Report generation takes 1-2 minutes. Do you want to continue?',
-    PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) = ID_NO) then Exit;
-
-  FReportList := TStringList.Create;
-  SL := FReportList;
-
-  SL.Add('pLan Diagnostic System Report');
-  SL.Add('Program version: '                       + UGlobal.AppVersion);
-  SL.Add('=============== Local settings: ===============');
-  SL.Add('Settings.UserName: '                     + Settings.UserName);
-  SL.Add('Settings.RoomPort: '                     + IntToStr(Settings.RoomPort));
-  SL.Add('Settings.NetworkIP: '                    + Settings.NetworkIP);
-  SL.Add('Settings.OpenVPNPort: '                  + IntToStr(Settings.OpenVPNPort));
-  SL.Add('Settings.OpenVPNIP: '                    + Settings.OpenVPNIP);
-  SL.Add('Settings.OpenVPNMask: '                  + Settings.OpenVPNMask);
-  SL.Add('Settings.OpenVPNExeFile: '               + Settings.OpenVPNExeFile);
-  SL.Add('Settings.RemoteRoomIP: '                 + Settings.RemoteRoomIP);
-  SL.Add('Settings.RemoteRoomPort: '               + IntToStr(Settings.RemoteRoomPort));
-  SL.Add('Settings.RemoteVPNIP: '                  + Settings.RemoteVPNIP);
-  SL.Add('Settings.RemoteVPNPort: '                + IntToStr(Settings.RemoteVPNPort));
-  SL.Add('Settings.MinimizeOnStartup: '            + IntToStr(Byte(Settings.MinimizeOnStartup)));
-  SL.Add('Settings.StartOnSystemBoot: '            + IntToStr(Byte(Settings.StartOnSystemBoot)));
-  SL.Add('Settings.AutoNotify: '                   + IntToStr(Byte(Settings.AutoNotify)));
-  SL.Add('Settings.AutoNotifyPeriod: '             + IntToStr(Settings.AutoNotifyPeriod));
-  SL.Add('Settings.SelectedGames: ');
-  SL.Add(Settings.SelectedGames.Text);
-  SL.Add('Settings.SoundNotifyOnInterestingGame: ' + IntToStr(Byte(Settings.SoundNotifyOnInterestingGame)));
-  SL.Add('Settings.SoundNotifyOnUserJoined: '      + IntToStr(Byte(Settings.SoundNotifyOnUserJoined)));
-  SL.Add('Settings.AutomaticIP: '                  + IntToStr(Byte(Settings.AutomaticIP)));
-  SL.Add('');
-  SL.Add('=============== Paths Settings: ===============');
-  if FileExists(Settings.OpenVPNExeFile) then
-    SL.Add('openvpn.exe found')
-  else
-    SL.Add('!!!!! openvpn.exe not found !!!!!');
-
-  SL.Add('=============== Adapter List: =================');
-
-  AdapterList := TAdapterList.Create;
-  try
-    for I := 0 to AdapterList.Count - 1 do
-    begin
-      SL.Add(AdapterList.Items[I].Description + ': ' +
-        AdapterList.Items[I].IPAddress);
-    end;
-  finally
-    AdapterList.Free;
-  end;
-
-  OVPNInitForm := TOVPNInitForm.Create(nil);
-  OVPNInitForm.Caption := 'Create system report';
-  OVPNInitForm.LblInit.Caption := 'Please, wait...';
-  OVPNInitForm.Show;
-
-  VPNManager.CreateServer(Settings.OpenVPNPort, True, UGlobal.DataPath);
-
-  Self.Enabled := False;
-
-  TimerGetData.Interval := 30000;
-  TimerGetData.Tag := diGetCreateServerLog;
-  TimerGetData.Enabled := True;
 end;
 
 procedure TShowRoomsForm.TimerGetDataTimer(Sender: TObject);
@@ -1717,20 +1347,13 @@ begin
     else
     begin
       // Иначе посылаем сообщение в комнату.
-      if ChatClient1.Active then
-      begin
-        ChatClient1.SendMessage(Char(mtMessage) + EdRoom.Text);
-      end
-      else
-      begin
-        try
-          IdIRC1.Say(Settings.RoomChannel, EdRoom.Text);
-            ReRoom.AddFormatedString(TAG_COLOR + '1' + TAG_BOLD + '<' +
-            IdIRC1.Nick + '>' + TAG_BOLD + ' ' + EdRoom.Text);
-        except
-          on E:Exception do
-            Reconnect(E.Message);
-        end;
+      try
+        IdIRC1.Say(Settings.RoomChannel, EdRoom.Text);
+          ReRoom.AddFormatedString(TAG_COLOR + '1' + TAG_BOLD + '<' +
+          IdIRC1.Nick + '>' + TAG_BOLD + ' ' + EdRoom.Text);
+      except
+        on E:Exception do
+          Reconnect(E.Message);
       end;
     end;
     EdRoom.Text := '';
@@ -1764,105 +1387,6 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.ChatClient1Disconnect(Sender: TObject);
-begin
-  LvRoomUsers.Items.Clear;
-  ReRoom.AddFormatedString(TAG_COLOR + '3Disconnected');
-  VPNManager.Disconnect;
-end;
-
-procedure TShowRoomsForm.ChatClient1Message(Sender: TObject; Content: String);
-var
-  I: Integer;
-  Nick: String;
-begin
-  Nick := '';
-  I := Pos('>', Content);
-  if (I > 0) then
-  begin
-    Nick := Copy(Content, 1, I);
-    Content := Copy(Content, I + 1, Length(Content) - I);
-  end;
-  ReRoom.AddFormatedString(TAG_COLOR + '1' + TAG_BOLD + Nick + TAG_BOLD +
-    Content);
-end;
-
-procedure TShowRoomsForm.ChatClient1TimeOut(Sender: TObject);
-begin
-  ReRoom.AddFormatedString(TAG_COLOR + '3Timed out');
-end;
-
-procedure TShowRoomsForm.ChatClient1UserJoined(Sender: TObject;
-  UserName: String);
-var
-  Item: TListItem;
-  I: Integer;
-  Flag: Boolean;
-begin
-  if not ChatServer1.Active then
-  begin
-    //*
-  end
-  else
-  begin
-    if Settings.SoundNotifyOnUserJoined and (FlgMinimized) and
-      FileExists(UGlobal.DataPath + 'notify2.wav') then
-    begin
-      try
-        MediaPlayer1.Stop;
-      except
-      end;
-      MediaPlayer1.FileName := UGlobal.DataPath + 'notify2.wav';
-      MediaPlayer1.Open;
-      MediaPlayer1.Play;
-      CoolTrayIcon1.ShowBalloonHint(UGlobal.AppTitle,
-        'К вам в комнату зашёл пользователь: ' + UserName, bitInfo, 10);
-    end;
-  end;
-
-  if not Settings.IgnoreJoinOnRoom then
-    ReRoom.AddFormatedString(TAG_COLOR + '15User joined: ' + UserName);
-
-  // Ищем пользователя в списке.
-  Flag := False;
-
-  for I := 0 to LvRoomUsers.Items.Count - 1 do
-  begin
-    if (LvRoomUsers.Items[I].Caption = UserName) then
-    begin
-      Flag := True;
-      Break;
-    end;
-  end;
-
-  if not Flag then
-  begin
-    Item := LvRoomUsers.Items.Add;
-    Item.Caption := UserName;
-  end;
-
-  //LvRoomUsers.SortType := ComCtrls.stText;
-end;
-
-procedure TShowRoomsForm.ChatClient1UserParted(Sender: TObject;
-  UserName: String);
-var
-  I: Integer;
-begin
-  // Удаляем пользователя из списка.
-  for I := 0 to LvRoomUsers.Items.Count - 1 do
-  begin
-    if (LvRoomUsers.Items[I].Caption = UserName) then
-    begin
-      LvRoomUsers.Items.Delete(I);
-      Break;
-    end;
-  end;  
-
-  if not Settings.IgnoreJoinOnRoom then
-    ReRoom.AddFormatedString(TAG_COLOR + '15User parted: ' + UserName);
-end;
-
 procedure TShowRoomsForm.BtnDisconnectClick(Sender: TObject);
 begin
   if ChatServer1.Active then
@@ -1891,8 +1415,7 @@ begin
     HTTPVpnDel.GetString;
   end;
 
-  // Если подключены не старым способом, то покидаем канал.
-  if (not ChatClient1.Active) then
+  // Покидаем канал.
   try
     if IdIRC1.Connected then
       IdIRC1.Part(Settings.RoomChannel);
@@ -1903,9 +1426,6 @@ begin
 
   if ChatServer1.Active then
     ChatServer1.Active := False;
-
-  if ChatClient1.Active then
-    ChatClient1.Disconnect(Sender);
 
   // Завершаем OpenVPN.
   VPNManager.Disconnect;
@@ -2103,12 +1623,12 @@ begin
   ReServer.AddFormatedString(TAG_COLOR + '1' + S);
 end;
 
-procedure TShowRoomsForm.Add1Click(Sender: TObject);
+procedure TShowRoomsForm.MiAddClick(Sender: TObject);
 begin
   BtnAdd.Click;
 end;
 
-procedure TShowRoomsForm.Delete1Click(Sender: TObject);
+procedure TShowRoomsForm.MiDeleteClick(Sender: TObject);
 begin
   BtnDelete.Click;
 end;
@@ -2186,7 +1706,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.Edit1Click(Sender: TObject);
+procedure TShowRoomsForm.MiEditClick(Sender: TObject);
 var
   FileOpenForm: TFileOpenForm;
   AItem: TFileLauncher;
@@ -2438,6 +1958,365 @@ begin
       LvRoomUsers.Items.Delete(Idx);
     ReRoom.AddFormatedString(S);
   end;
+end;
+
+procedure TShowRoomsForm.MiConnectClick(Sender: TObject);
+var
+  Status: Integer;
+  SL: TStringList;
+begin
+  // Если активно VPN-подключение или не выбрана комната из списка, то выходим.
+  if (VPNManager.GetStatus <> ovpnDisconnected) or
+    (LvRoomsList.ItemFocused = nil) then Exit;
+
+  // Если комната как IRC-канал и незавершено подключение к IRC-серверу, то выходим.
+  if (LvRoomsList.ItemFocused.SubItems.Strings[8] <> 'none') and
+    (not FlgCanJoinToRoomChannel) then Exit;
+
+  // Если нет пинга, то предупреждаем.
+  try
+    StrToInt(LvRoomsList.ItemFocused.Caption);
+  except
+    if (MessageBox(Application.Handle, PChar(Language.msgRoomHasNoPing),
+      PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) = ID_NO) then Exit;
+  end;
+
+  // Отключаем таймеры.
+  PingTimer.Enabled := False;
+  TimerVpnGetShort.Enabled := False;
+
+  // Запоминаем данные комнаты.
+  Settings.RemoteRoomIP   := LvRoomsList.ItemFocused.SubItems.Strings[4];
+  Settings.RemoteRoomPort := StrToInt(LvRoomsList.ItemFocused.SubItems.Strings[5]);
+  Settings.RemoteVPNIP    := LvRoomsList.ItemFocused.SubItems.Strings[6];
+  Settings.RemoteVPNPort  := StrToInt(LvRoomsList.ItemFocused.SubItems.Strings[7]);
+  Settings.RoomChannel    := LvRoomsList.ItemFocused.SubItems.Strings[8];
+
+  // Чистим списки.
+  LvRoomUsers.Items.Clear;
+  ReRoom.Clear;
+
+  // Подключаемся.
+  OVPNInitForm := TOVPNInitForm.Create(Self);
+  try
+    OVPNInitForm.Show;
+    repeat
+      Application.ProcessMessages;
+      Status := VPNManager.GetStatus;
+      Sleep(100);
+    until (Status = ovpnDisconnected);
+    VPNManager.Connect(Settings.RemoteVPNIP, Settings.RemoteVPNPort, True,
+      UGlobal.DataPath);
+    repeat
+      Application.ProcessMessages;
+      Status := VPNManager.GetStatus;
+      Sleep(100);
+    until (Status <> ovpnConnecting);
+  finally
+    OVPNInitForm.Close;
+    OVPNInitForm.Free;
+  end;
+
+  if (Status = ovpnConnected) then
+  begin
+    // Режим работы - клиент.
+    FWorkMode := wmClient;
+
+    // Переключаемся на вкладку "Комната".
+    TsRoom.TabVisible := True;
+    sPageControl1.ActivePage := TsRoom;
+
+    ReRoom.AddFormatedString(TAG_COLOR + '3' +
+      'Connected to VPN server with local ip: ' + VPNManager.OVPNIP);
+
+    ReRoom.AddFormatedString(TAG_COLOR + '3' +
+      'Connecting chat to ' + LvRoomsList.ItemFocused.SubItems.Strings[1] +
+      ' / ' + LvRoomsList.ItemFocused.SubItems.Strings[0]);
+
+    // Подключаемся к чату.
+    Settings.RoomChannel := '#' + Settings.RoomChannel;
+    if IdIRC1.Connected then
+    try
+      IdIRC1.Join(Settings.RoomChannel);
+    except
+      on E:Exception do
+        ReRoom.AddFormatedString(TAG_COLOR + '4' + E.Message);
+    end;
+  end
+  else
+  begin
+    // Завершаем OpenVPN.
+    VPNManager.Disconnect;
+
+    Sleep(300);
+
+    // Загружаем лог и показываем окно с ошибкой.
+    SL := TStringList.Create;
+    try
+      SL.LoadFromFile(UGlobal.DataPath + 'log.txt');
+      while (SL.Count > 30) do
+        SL.Delete(0);
+      with TDetailedErrorForm.Create(Self) do
+      try
+        Memo1.Lines := SL;
+        ShowModal;
+      finally
+        Free;
+      end;
+    finally
+      SL.Free;
+    end;
+
+    // Сбрасываем настройки, измененные на этом этапе, в исходное состояние.
+    Settings.RemoteRoomIP   := '';
+    Settings.RemoteRoomPort := 0;
+    Settings.RemoteVPNIP    := '';
+    Settings.RemoteVPNPort  := 0;
+    Settings.RoomChannel    := '';
+
+    FWorkMode := wmIdle;
+  end;
+end;
+
+procedure TShowRoomsForm.MiCreateRoomClick(Sender: TObject);
+var
+  Status: Integer;
+  SL: TStringList;
+begin
+  // Если активно VPN-подключение или незавершено подключение к IRC-серверу, то выходим.
+  if (VPNManager.GetStatus <> ovpnDisconnected) or
+    (not FlgCanJoinToRoomChannel) then Exit;
+
+  with TCreateRoomForm.Create(Self) do
+  try
+    EdRoomName.Text    := Settings.UserName + '-s room';
+    CbGameName.Text    := '';
+    EdRoomChannel.Text := 'plan_' + IntToStr(Random(10000));
+
+    if (ShowModal = mrOK) then
+    begin
+      // Отключаем таймеры.
+      PingTimer.Enabled := False;
+      TimerVpnGetShort.Enabled := False;
+
+      // Запоминаем данные комнаты.
+      Settings.LocalRoomName := EdRoomName.Text;
+      Settings.LocalGameName := CbGameName.Text;
+      Settings.RoomChannel   := EdRoomChannel.Text;
+
+      // "Защита от дурака".
+      Settings.RoomChannel := StringReplace(Settings.RoomChannel, '#', '',
+        [rfReplaceAll]);
+      Settings.RoomChannel := StringReplace(Settings.RoomChannel, ' ', '',
+        [rfReplaceAll]);
+      if Length(Settings.RoomChannel) < 2 then
+        Settings.RoomChannel := 'plan_' + IntToStr(Random(10000));
+      Settings.RoomChannel := '#' + Settings.RoomChannel;
+
+      // Чистим списки.
+      LvRoomUsers.Items.Clear;
+      ReRoom.Clear;
+
+      ReRoom.AddFormatedString(TAG_COLOR + '3' + 'Creating VPN-server');
+
+      // Запускаем VPN сервер.
+      OVPNInitForm := TOVPNInitForm.Create(Self);
+      try
+        OVPNInitForm.Show;
+        repeat
+          Application.ProcessMessages;
+          Status := VPNManager.GetStatus;
+          Sleep(100);
+        until (Status = ovpnDisconnected);
+        Caption := 'Disconnected';
+        VPNManager.CreateServer(Settings.OpenVPNPort, True, UGlobal.DataPath);
+        repeat
+          Application.ProcessMessages;
+          Status := VPNManager.GetStatus;
+          Sleep(100);
+        until (Status <> ovpnConnecting);
+      finally
+        OVPNInitForm.Close;
+        OVPNInitForm.Free;
+      end;
+
+      if (Status = ovpnConnected) then
+      begin
+        // Режим работы - сервер.
+        FWorkMode := wmServer;
+
+        // Переключаемся на вкладку "Комната".
+        TsRoom.TabVisible := True;
+        sPageControl1.ActivePage := TsRoom;
+
+        ReRoom.AddFormatedString(TAG_COLOR + '3' + 'Created VPNServer with IP: '
+          + VPNManager.OVPNIP);
+
+        ChatServer1.Port := Settings.RoomPort;
+        ChatServer1.Active := True;
+
+        ReRoom.AddFormatedString(TAG_COLOR + '3' + 'Creating room for ' +
+          Settings.LocalGameName);
+
+        // Заходим на канал комнаты.
+        if IdIRC1.Connected then
+        try
+          IdIRC1.Join(Settings.RoomChannel);
+        except
+          on E:Exception do
+            ReRoom.AddFormatedString(TAG_COLOR + '4' + E.Message);
+        end;
+
+        // Запускаем таймер добавления комнаты на трекер.
+        TimerVpnAdd.Enabled := True;
+        TimerVpnAddTimer(Self);
+      end
+      else
+      begin
+        // Завершаем OpenVPN.
+        VPNManager.Disconnect;
+
+        Sleep(300);
+
+        // Загружаем лог и показываем окно с ошибкой.
+        SL := TStringList.Create;
+        try
+          SL.LoadFromFile(UGlobal.DataPath + 'log.txt');
+          while (SL.Count > 30) do
+            SL.Delete(0);
+          with TDetailedErrorForm.Create(Self) do
+          try
+            Memo1.Lines := SL;
+            ShowModal;
+          finally
+            Free;
+          end;
+        finally
+          SL.Free;
+        end;
+
+        // Сбрасываем настройки, измененные на этом этапе, в исходное состояние.
+        Settings.LocalRoomName := '';
+        Settings.LocalGameName := '';
+        Settings.RoomChannel   := '';
+
+        FWorkMode := wmIdle;
+      end;
+    end;
+  finally
+    Free;
+  end;
+end;
+
+procedure TShowRoomsForm.MiSettingsClick(Sender: TObject);
+begin
+  with TConfigForm.Create(Self) do
+  try
+    if IdIRC1.Connected then
+      EdName.Text := IdIRC1.Nick;
+
+    if (ShowModal = mrOK) then
+    begin
+      TimerVpnGetShort.Interval := Settings.AutoNotifyPeriod * 60 * 1000;
+      TimerVpnGetShort.Enabled := Settings.AutoNotify;
+    end;
+  finally
+    Free;
+  end;
+end;
+
+procedure TShowRoomsForm.MiMakeReportClick(Sender: TObject);
+var
+  SL: TStringList;
+  AdapterList: TAdapterList;
+  I: Integer;
+begin
+  if (MessageBox(Self.Handle,
+    'Report generation takes 1-2 minutes. Do you want to continue?',
+    PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) = ID_NO) then Exit;
+
+  FReportList := TStringList.Create;
+  SL := FReportList;
+
+  SL.Add('pLan Diagnostic System Report');
+  SL.Add('Program version: '                       + UGlobal.AppVersion);
+  SL.Add('=============== Local settings: ===============');
+  SL.Add('Settings.UserName: '                     + Settings.UserName);
+  SL.Add('Settings.RoomPort: '                     + IntToStr(Settings.RoomPort));
+  SL.Add('Settings.NetworkIP: '                    + Settings.NetworkIP);
+  SL.Add('Settings.OpenVPNPort: '                  + IntToStr(Settings.OpenVPNPort));
+  SL.Add('Settings.OpenVPNIP: '                    + Settings.OpenVPNIP);
+  SL.Add('Settings.OpenVPNMask: '                  + Settings.OpenVPNMask);
+  SL.Add('Settings.OpenVPNExeFile: '               + Settings.OpenVPNExeFile);
+  SL.Add('Settings.RemoteRoomIP: '                 + Settings.RemoteRoomIP);
+  SL.Add('Settings.RemoteRoomPort: '               + IntToStr(Settings.RemoteRoomPort));
+  SL.Add('Settings.RemoteVPNIP: '                  + Settings.RemoteVPNIP);
+  SL.Add('Settings.RemoteVPNPort: '                + IntToStr(Settings.RemoteVPNPort));
+  SL.Add('Settings.MinimizeOnStartup: '            + IntToStr(Byte(Settings.MinimizeOnStartup)));
+  SL.Add('Settings.StartOnSystemBoot: '            + IntToStr(Byte(Settings.StartOnSystemBoot)));
+  SL.Add('Settings.AutoNotify: '                   + IntToStr(Byte(Settings.AutoNotify)));
+  SL.Add('Settings.AutoNotifyPeriod: '             + IntToStr(Settings.AutoNotifyPeriod));
+  SL.Add('Settings.SelectedGames: ');
+  SL.Add(Settings.SelectedGames.Text);
+  SL.Add('Settings.SoundNotifyOnInterestingGame: ' + IntToStr(Byte(Settings.SoundNotifyOnInterestingGame)));
+  SL.Add('Settings.SoundNotifyOnUserJoined: '      + IntToStr(Byte(Settings.SoundNotifyOnUserJoined)));
+  SL.Add('Settings.AutomaticIP: '                  + IntToStr(Byte(Settings.AutomaticIP)));
+  SL.Add('');
+  SL.Add('=============== Paths Settings: ===============');
+  if FileExists(Settings.OpenVPNExeFile) then
+    SL.Add('openvpn.exe found')
+  else
+    SL.Add('!!!!! openvpn.exe not found !!!!!');
+
+  SL.Add('=============== Adapter List: =================');
+
+  AdapterList := TAdapterList.Create;
+  try
+    for I := 0 to AdapterList.Count - 1 do
+    begin
+      SL.Add(AdapterList.Items[I].Description + ': ' +
+        AdapterList.Items[I].IPAddress);
+    end;
+  finally
+    AdapterList.Free;
+  end;
+
+  OVPNInitForm := TOVPNInitForm.Create(nil);
+  OVPNInitForm.Caption := 'Create system report';
+  OVPNInitForm.LblInit.Caption := 'Please, wait...';
+  OVPNInitForm.Show;
+
+  VPNManager.CreateServer(Settings.OpenVPNPort, True, UGlobal.DataPath);
+
+  Self.Enabled := False;
+
+  TimerGetData.Interval := 30000;
+  TimerGetData.Tag := diGetCreateServerLog;
+  TimerGetData.Enabled := True;
+end;
+
+procedure TShowRoomsForm.MiQuitClick(Sender: TObject);
+begin
+  // Не знаю почему, но при включении диалога возникает ошибка.
+  {if (Application.MessageBox(PChar(Language.msgConfirmQuit),
+    PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) <> mrYes) then Exit;}
+
+  // Отключаемся.
+  BtnDisconnectClick(nil);
+
+  FlgClosing := True;
+  Self.Close;
+end;
+
+procedure TShowRoomsForm.MiRefreshClick(Sender: TObject);
+begin
+  LvRoomsList.Items.Clear;
+  ReRoomInfo.Clear;
+
+  //HTTPVpnGet.URL := UGlobal.URLTracker + '?do=vpn_get&ver=3';
+  HTTPVpnGet.URL := UGlobal.URLTracker;
+  HTTPVpnGet.PostQuery := 'do=vpn_get&ver=3';
+  HTTPVpnGet.GetString;
 end;
 
 end.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1250"?>
-<language name="de" version="1.0.3">
+<language name="de" version="1.0.4">
 	<messages
-		msgCantEstablishConnection="kann keine verbindung herstellen werden"
+		msgCantEstablishConnection="Kann keine verbindung herstellen werden"
 		msgRoomHasNoPing="The room has no ping. Are you sure want to continue?"
 		msgCantCreateServer="Fehler beim Server erstellen"
 		msgYourReportText="Wenn Sie Problemi mit pLan habe senden sie Fehler an team@plangc.ru "
@@ -32,6 +32,12 @@
 		msgChannel="Channel"
 		msgRoomsCount="Rooms count"
 		msgConfirmQuit="Are you sure want to exit?"
+		msgConnect="Verbindeung"
+		msgCreateRoom="Raum erstellen"
+		msgRefresh="Refresh room list"
+		msgMakeReport="System-Bericht"
+		msgSettings="Einstellungen"
+		msgQuit="Quit"
 	/>
 	<window Name="UpdateForm" Caption="Suche nach Updates"/>
 	<window Name="ConfigForm" Caption="Einstellungen">
@@ -74,12 +80,6 @@
 		<label ComponentName="TsRoom" Caption="Room"/>
 		<label ComponentName="TsMyGames" Caption="My games"/>
 		<label ComponentName="LblServerInfo" Caption="Zimmer info:"/>
-		<button ComponentName="BtnQuit" Caption="Exit"/>
-		<button ComponentName="BtnConnect" Caption="Verbindeung"/>
-		<button ComponentName="BtnCreateRoom" Caption="Create room"/>
-		<button ComponentName="BtnRefresh" Caption="Refresh"/>
-		<button ComponentName="BtnGetInfo" Caption="System-Bericht"/>
-		<button ComponentName="BtnSettings" Caption="Einstellungen"/>
 		<button ComponentName="BtnChatSend" Caption="Senden"/>
 	</window>
 	<window Name="CreateRoomForm" Caption="Raum erstellen">

@@ -78,6 +78,12 @@ type
     msgRoomsCount: String;
     msgConfirmQuit: String;
     msgCompatibility: String;
+    msgConnect: String;
+    msgCreateRoom: String;
+    msgRefresh: String;
+    msgMakeReport: String;
+    msgSettings: String;
+    msgQuit: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -166,6 +172,12 @@ begin
   msgRoomsCount := 'Rooms count';
   msgConfirmQuit := 'Are you sure want to exit?';
   msgCompatibility := 'Run program with compatibility mode';
+  msgConnect := 'Connect to room';
+  msgCreateRoom := 'Create room';
+  msgRefresh := 'Refresh room list';
+  msgMakeReport := 'System report';
+  msgSettings := 'Settings';
+  msgQuit := 'Quit';
 end;
 
 destructor TLanguage.Destroy;
@@ -300,6 +312,14 @@ begin
       msgConfirmQuit := Node.GetAttr('msgConfirmQuit', msgConfirmQuit);
 
       msgCompatibility := Node.GetAttr('msgCompatibility', msgCompatibility);
+
+      msgConnect := Node.GetAttr('msgConnect', msgConnect);
+      msgCreateRoom := Node.GetAttr('msgCreateRoom', msgCreateRoom);
+      msgRefresh := Node.GetAttr('msgRefresh', msgRefresh);
+      msgMakeReport := Node.GetAttr('msgMakeReport', msgMakeReport);
+      msgSettings := Node.GetAttr('msgSettings', msgSettings);
+      msgMakeReport := Node.GetAttr('msgMakeReport', msgMakeReport);
+      msgQuit := Node.GetAttr('msgQuit', msgQuit);
     end;
 
     WindowNL := XML.DocumentElement.SelectNodes('window');
