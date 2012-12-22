@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1251"?>
-<language name="en" version="1.0.8">
+<language name="en" version="1.0.9">
 	<messages
 		msgCantEstablishConnection="Can't establish connection"
 		msgRoomHasNoPing="The room has no ping. Are you sure want to continue?"
@@ -32,6 +32,12 @@
 		msgChannel="Channel"
 		msgRoomsCount="Rooms count"
 		msgConfirmQuit="Are you sure want to exit?"
+		msgConnect="Connect to room"
+		msgCreateRoom="Create room"
+		msgRefresh="Refresh room list"
+		msgMakeReport="System report"
+		msgSettings="Settings"
+		msgQuit="Quit"
 	/>
 	<window Name="UpdateForm" Caption="Checking for updates"/>
 	<window Name="ConfigForm" Caption="Settings">
@@ -74,12 +80,6 @@
 		<label ComponentName="TsRoom" Caption="Room"/>
 		<label ComponentName="TsMyGames" Caption="My games"/>
 		<label ComponentName="LblServerInfo" Caption="Room info:"/>
-		<button ComponentName="BtnQuit" Caption="Exit"/>
-		<button ComponentName="BtnConnect" Caption="Connect"/>
-		<button ComponentName="BtnCreateRoom" Caption="Create room"/>
-		<button ComponentName="BtnRefresh" Caption="Refresh"/>
-		<button ComponentName="BtnGetInfo" Caption="System report"/>
-		<button ComponentName="BtnSettings" Caption="Settings"/>
 		<button ComponentName="BtnChatSend" Caption="Send"/>
 	</window>
 	<window Name="CreateRoomForm" Caption="Room creation">
