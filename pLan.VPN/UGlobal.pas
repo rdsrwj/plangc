@@ -8,8 +8,8 @@ uses
 
 const
   AppTitle       = 'pLan OpenVPN Edition'; // Заголовок программы.
-  AppVersion     = '0.6.61';               // Отображаемая версия программы, также составляет часть HTTPGet.UserAgent
-  AppBuild       = 61;                     // Билд программы, используется при проверке обновлений.
+  AppVersion     = '0.6.62';               // Отображаемая версия программы, также составляет часть HTTPGet.UserAgent
+  AppBuild       = 62;                     // Билд программы, используется при проверке обновлений.
 
   // IRC
   IRCHost        = 'irc.ircluxe.ru';
