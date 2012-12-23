@@ -113,6 +113,11 @@ type
     N9: TMenuItem;
     MiMakeReport: TMenuItem;
     MiRefresh: TMenuItem;
+    MiHelp: TMenuItem;
+    MiForum: TMenuItem;
+    MiHomePage: TMenuItem;
+    MiAbout: TMenuItem;
+    N1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormHide(Sender: TObject);
@@ -197,6 +202,9 @@ type
     procedure MiMakeReportClick(Sender: TObject);
     procedure MiQuitClick(Sender: TObject);
     procedure MiRefreshClick(Sender: TObject);
+    procedure MiHomePageClick(Sender: TObject);
+    procedure MiForumClick(Sender: TObject);
+    procedure MiAboutClick(Sender: TObject);
   private
     FWorkMode: TWorkMode;
     FReportList: TStringList;
@@ -285,6 +293,10 @@ begin
   MiRefresh.Caption := Language.msgRefresh;
   MiSettings.Caption := Language.msgSettings;
   MiMakeReport.Caption := Language.msgMakeReport;
+  MiHelp.Caption := Language.msgHelp;
+  MiHomePage.Caption := Language.msgHomePage;
+  MiForum.Caption := Language.msgForum;
+  MiAbout.Caption := Language.msgAbout;
   MiQuit.Caption := Language.msgQuit;
 
   // Распаковываем ресурсы.
@@ -2317,6 +2329,23 @@ begin
   HTTPVpnGet.URL := UGlobal.URLTracker;
   HTTPVpnGet.PostQuery := 'do=vpn_get&ver=3';
   HTTPVpnGet.GetString;
+end;
+
+procedure TShowRoomsForm.MiHomePageClick(Sender: TObject);
+begin
+  ShellExecute(Application.Handle, 'open', 'http://plangc.ru/', nil, nil,
+    SW_NORMAL);
+end;
+
+procedure TShowRoomsForm.MiForumClick(Sender: TObject);
+begin
+  ShellExecute(Application.Handle, 'open', 'http://plangc.ru/forum.html', nil,
+    nil, SW_NORMAL);
+end;
+
+procedure TShowRoomsForm.MiAboutClick(Sender: TObject);
+begin
+//*
 end;
 
 end.
