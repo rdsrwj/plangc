@@ -564,7 +564,8 @@ type
   public
     SmilesInfo: array[0..MAX_SMILES_INFO - 1] of TSmileInfo;
     property Smiles: TImageList read FSmiles write SetSmiles;
-    function AddFormatedString(Mess: AnsiString; WithTime: Boolean = True): String;
+    function AddFormatedString(Mess: AnsiString; WithTime: Boolean = True;
+      Scrolling: Boolean = True): String;
     procedure SelAttrsDefault;
   published
     property Align;
@@ -5592,7 +5593,7 @@ begin
 end;
 
 function TIRCRichEdit.AddFormatedString(Mess: AnsiString;
-  WithTime: Boolean = True): String;
+  WithTime: Boolean = True; Scrolling: Boolean = True): String;
 var
   _Formated: TFormated;
   Count_Formated: Integer;
@@ -5790,7 +5791,10 @@ begin
   end; { if }
 
   SelAttrsDefault;
-  SendMessage(Handle, WM_VSCROLL, SB_BOTTOM, 0);
+
+  if Scrolling then
+    SendMessage(Handle, WM_VSCROLL, SB_BOTTOM, 0);
+
   FIRCRichEditBusy := False;
   Result := NoSmilesMess;
 end;
