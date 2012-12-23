@@ -9,7 +9,6 @@ uses
   USettings in 'USettings.pas',
   ULanguage in 'ULanguage.pas',
   ChatServer in 'Components\ChatServer.pas',
-  ChatClient in 'Components\ChatClient.pas',
   OpenVPNManager in 'Components\OpenVPNManager.pas',
   AdaptItems in 'AdaptItems.pas',
   PrevInst in 'PrevInst.pas',

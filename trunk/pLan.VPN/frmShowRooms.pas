@@ -626,25 +626,25 @@ begin
   if Selected then
   begin
     ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgGame + ': ' +
-      TAG_BOLD + Item.SubItems[0], False);
+      TAG_BOLD + Item.SubItems[0], False, False);
 
     ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgRoomName + ': ' +
-      TAG_BOLD + Item.SubItems[1], False);
+      TAG_BOLD + Item.SubItems[1], False, False);
 
     ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgRoomIP + ': ' +
-      TAG_BOLD + Item.SubItems[4] + ':' + Item.SubItems[5], False);
+      TAG_BOLD + Item.SubItems[4] + ':' + Item.SubItems[5], False, False);
 
     ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgOpenVPNIP + ': ' +
-      TAG_BOLD + Item.SubItems[6] + ':' + Item.SubItems[7], False);
+      TAG_BOLD + Item.SubItems[6] + ':' + Item.SubItems[7], False, False);
 
     ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgUptime + ': ' +
-      TAG_BOLD + SecToTime(StrToInt(Item.SubItems[11])), False);
+      TAG_BOLD + SecToTime(StrToInt(Item.SubItems[11])), False, False);
 
     ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgChannel + ': ' +
-      TAG_BOLD + Item.SubItems[8], False);
+      TAG_BOLD + Item.SubItems[8], False, False);
 
-    {ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgPlayers + ': ' +
-      TAG_BOLD + Item.SubItems[10], False);}
+    ReRoomInfo.AddFormatedString(TAG_BOLD + Language.msgPlayers + ': ' +
+      TAG_BOLD + Item.SubItems[10], False, False);
 
     // Пингуем.
     try
