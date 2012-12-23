@@ -81,8 +81,12 @@ type
     msgConnect: String;
     msgCreateRoom: String;
     msgRefresh: String;
-    msgMakeReport: String;
     msgSettings: String;
+    msgMakeReport: String;
+    msgHelp: String;
+    msgHomePage: String;
+    msgForum: String;
+    msgAbout: String;
     msgQuit: String;
   public
     constructor Create;
@@ -175,8 +179,8 @@ begin
   msgConnect := 'Connect to room';
   msgCreateRoom := 'Create room';
   msgRefresh := 'Refresh room list';
-  msgMakeReport := 'System report';
   msgSettings := 'Settings';
+  msgMakeReport := 'System report';
   msgQuit := 'Quit';
 end;
 
@@ -316,9 +320,12 @@ begin
       msgConnect := Node.GetAttr('msgConnect', msgConnect);
       msgCreateRoom := Node.GetAttr('msgCreateRoom', msgCreateRoom);
       msgRefresh := Node.GetAttr('msgRefresh', msgRefresh);
-      msgMakeReport := Node.GetAttr('msgMakeReport', msgMakeReport);
       msgSettings := Node.GetAttr('msgSettings', msgSettings);
       msgMakeReport := Node.GetAttr('msgMakeReport', msgMakeReport);
+      msgHelp := Node.GetAttr('msgHelp', msgHelp);
+      msgHomePage := Node.GetAttr('msgHomePage', msgHomePage);
+      msgForum := Node.GetAttr('msgForum', msgForum);
+      msgAbout := Node.GetAttr('msgAbout', msgAbout);
       msgQuit := Node.GetAttr('msgQuit', msgQuit);
     end;
 
