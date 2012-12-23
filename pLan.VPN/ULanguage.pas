@@ -181,6 +181,10 @@ begin
   msgRefresh := 'Refresh room list';
   msgSettings := 'Settings';
   msgMakeReport := 'System report';
+  msgHelp := 'Help';
+  msgHomePage := 'Home Page';
+  msgForum := 'Forum';
+  msgAbout := 'About';
   msgQuit := 'Quit';
 end;
 
