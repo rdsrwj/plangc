@@ -61,6 +61,9 @@ var
   Reg: TRegistry;
   SL: TStringList;
   Dummy: Integer;
+  phIconLarge, phIconSmall: ^HICON;
+  IconCount: Integer;
+  Ico: TIcon;
 begin
   if (EdFile.Text <> '') and (WinVer >= wvVista) then
   begin
@@ -79,6 +82,29 @@ begin
       end;
     finally
       Reg.Free;
+    end;
+  end;
+
+  if (EdFile.Text <> '' ) then
+  begin
+    IconCount := ExtractIconEx(PChar(EdFile.Text), -1, phIconLarge^,
+      phIconLarge^, 0);
+    if (IconCount > 0) then
+    begin
+      GetMem(phIconLarge, SizeOf(HICON));
+      GetMem(phIconSmall, SizeOf(HICON));
+      ExtractIconEx(PChar(EdFile.Text), 0, phIconLarge^, phIconSmall^, 1);
+      Ico := TIcon.Create;
+      if (phIconLarge^ <> 0) then
+        Ico.Handle := phIconLarge^
+      else
+         Ico.Handle := phIconSmall^;
+      try
+        Image.Picture.Icon := Ico;
+      finally
+        FreeMem(phIconLarge);
+        FreeMem(phIconSmall);
+      end;
     end;
   end;
 

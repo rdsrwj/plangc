@@ -118,6 +118,7 @@ type
     MiHomePage: TMenuItem;
     MiAbout: TMenuItem;
     N1: TMenuItem;
+    MiTeamSpeak: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormHide(Sender: TObject);
@@ -205,6 +206,7 @@ type
     procedure MiHomePageClick(Sender: TObject);
     procedure MiForumClick(Sender: TObject);
     procedure MiAboutClick(Sender: TObject);
+    procedure MiTeamSpeakClick(Sender: TObject);
   private
     FWorkMode: TWorkMode;
     FReportList: TStringList;
@@ -217,6 +219,9 @@ type
     procedure LvMyGamesRefresh;
     procedure ParseList(Data: String);
     function FindUser(LV: TsListView; Nick: String; var Prefix: String): Integer;
+    procedure AddGame(ACaption, AFileName: string);
+  protected
+    procedure WMDropFiles(var Msg: TWMDropFiles); message WM_DROPFILES;
   end;
 
 var
@@ -232,8 +237,9 @@ implementation
 {$R *.dfm}
 
 uses
-  PsAPI, ShellAPI, UGlobal, USettings, ULanguage, frmConfig, AdaptItems,
-  frmCreateRoom, frmOVPNInit, frmDetailedError, frmFileOpen;
+  PsAPI, ShellAPI, ComObj, ShlObj, ActiveX, UGlobal, USettings, ULanguage,
+  frmConfig, AdaptItems, frmCreateRoom, frmOVPNInit, frmDetailedError,
+  frmFileOpen;
 
 procedure TShowRoomsForm.FormCreate(Sender: TObject);
 var
@@ -429,6 +435,9 @@ begin
   {if Settings.MinimizeOnStartup then
     CoolTrayIcon1.HideMainForm;}
 
+  // Разрешаем бросать ярлык игры в программу.
+  DragAcceptFiles(Self.Handle, True);
+
   if Settings.MinimizeOnStartup then
     Application.ShowMainForm := False;
 end;
@@ -485,6 +494,8 @@ begin
   FMyGamesList.Free;
   Language.Free;
   Settings.Free;
+
+  DragAcceptFiles(Self.Handle, False);  
 end;
 
 procedure TShowRoomsForm.ParseList(Data: String);
@@ -1683,7 +1694,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.BtnAddClick(Sender: TObject);
+procedure TShowRoomsForm.AddGame(ACaption, AFileName: string);
 var
   FileOpenForm: TFileOpenForm;
   AItem: TFileLauncher;
@@ -1691,6 +1702,8 @@ var
 begin
   FileOpenForm := TFileOpenForm.Create(Self);
   try
+    FileOpenForm.CbCaption.Text := ACaption;
+    FileOpenForm.EdFile.Text := AFileName;
     if (FileOpenForm.ShowModal = mrOK) then
     begin
       AItem := TFileLauncher.Create;
@@ -1716,6 +1729,11 @@ begin
   finally
     FileOpenForm.Free;
   end;
+end;
+
+procedure TShowRoomsForm.BtnAddClick(Sender: TObject);
+begin
+  AddGame('', '');
 end;
 
 procedure TShowRoomsForm.MiEditClick(Sender: TObject);
@@ -2346,6 +2364,63 @@ end;
 procedure TShowRoomsForm.MiAboutClick(Sender: TObject);
 begin
 //*
+end;
+
+function ResolveShortcut(Wnd: HWND; ShortcutPath: string): string;
+var
+  obj: IUnknown;
+  isl: IShellLink;
+  ipf: IPersistFile;
+  pfd: TWin32FindDataA;
+begin
+  Result := '';
+  obj := CreateComObject(CLSID_ShellLink);
+  isl := obj as IShellLink;
+  ipf := obj as IPersistFile;
+  ipf.Load(PWChar(WideString(ShortcutPath)), STGM_READ);
+  with isl do
+  begin
+    Resolve(Wnd, SLR_ANY_MATCH);
+    SetLength(Result, MAX_PATH);
+    GetPath(PChar(Result), Length(Result), pfd, SLGP_UNCPRIORITY);
+    Result := PChar(Result);
+  end;
+end; 
+
+procedure TShowRoomsForm.WMDropFiles(var Msg: TWMDropFiles);
+var
+  Count: Integer;
+  I: Integer;
+  FileNameLen: Integer;
+  FileName: String;
+begin
+  inherited;
+
+  try
+    Count := DragQueryFile(Msg.Drop, $FFFFFFFF, nil, 0);
+    for I := 0 to Count - 1 do
+    begin
+      FileNameLen := DragQueryFile(Msg.Drop, I, nil, 0);
+      SetLength(FileName, FileNameLen);
+      DragQueryFile(Msg.Drop, I, PChar(FileName), FileNameLen + 1);
+      if AnsiUpperCase(ExtractFileExt(FileName)) = '.LNK' then
+      begin
+        FileName := ResolveShortcut(Application.Handle, FileName);
+        AddGame(ChangeFileExt(ExtractFileName(FileName), ''), FileName);
+      end;
+    end;
+  finally
+    DragFinish(Msg.Drop);
+  end;
+
+  Msg.Result := 0;
+end;
+
+procedure TShowRoomsForm.MiTeamSpeakClick(Sender: TObject);
+begin
+  ShellExecute(Application.Handle, 'open',
+    PChar('ts3server://178.63.183.111?port=9987&nickname=' + Settings.UserName),
+    nil, nil, SW_NORMAL);
 end;
 
 end.

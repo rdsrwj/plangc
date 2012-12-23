@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1251"?>
-<language name="ru" version="1.0.9">
+<language name="ru" version="1.0.10">
 	<messages
 		msgCantEstablishConnection="Невозможно установить соединение с комнатой"
 		msgRoomHasNoPing="Комната не отвечает на запрос пинга. Всё равно продолжить?"
@@ -102,7 +102,7 @@
 		<label ComponentName="ChkUseForceBindIP" Caption="Использовать ForceBindIP"/>
 		<label ComponentName="ChkInjectIntoProcess" Caption="Внедряться в процесс"/>
 		<label ComponentName="ChkWaitAWhile" Caption="Перед запуском ожидать внедрения в процесс"/>
-		<label ComponentName="ChkCompatibility" Caption="Запустить программу в режиме совместимости"/>
+		<label ComponentName="ChkCompatibility" Caption="Запускать программу в режиме совместимости"/>
 		<button ComponentName="BtnOK" Caption="OK"/>
 		<button ComponentName="BtnCancel" Caption="Отмена"/>
 	</window>
