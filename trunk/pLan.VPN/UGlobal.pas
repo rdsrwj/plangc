@@ -8,8 +8,6 @@ uses
 
 const
   AppTitle       = 'pLan OpenVPN Edition'; // Заголовок программы.
-  AppVersion     = '0.6.62';               // Отображаемая версия программы, также составляет часть HTTPGet.UserAgent
-  AppBuild       = 62;                     // Билд программы, используется при проверке обновлений.
 
   // IRC
   IRCHost        = 'irc.ircluxe.ru';
@@ -26,11 +24,11 @@ type
   TChatMessage = (cmNormal, cmPrivate, cmSystem, cmMyMessage);
 
   function SetDebugPriveleges: Boolean;
-  function GetSpecialFolder(FolderID: Longint): String;
+  function GetSpecialFolder(FolderID: Longint): string;
   function IsIEOffline: Boolean;
   procedure SetIEOffline(Value: Boolean);
-  function TextExtent(const Text: String; const Font: TFont): TSize;
-  function MakeHash(const S: String): Integer;
+  function TextExtent(const Text: string; const Font: TFont): TSize;
+  function MakeHash(const S: string): Integer;
 
 type
   TWindowsVersion = (wv31, wv95, wv98, wvME, wvNT, wvY2K, wvXP, wvServer2003,
@@ -40,10 +38,12 @@ type
   function WinVer: TWindowsVersion;
 
 var
-  AppPath: String;
-  DataPath: String;
-  HTTPAgent: String;
-  URLCheckUpdates: String;
+  AppPath: string;
+  AppVersion: string;       // Отображаемая версия программы, также составляет часть HTTPGet.UserAgent
+  AppBuild: string;         // Билд программы, используется при проверке обновлений.
+  DataPath: string;
+  HTTPAgent: string;
+  URLCheckUpdates: string;
 
 implementation
 
@@ -77,7 +77,7 @@ begin
     raise Exception.Create(SysErrorMessage(GetLastError));}
 end;
 
-function GetSpecialFolder(FolderID: Longint): String;
+function GetSpecialFolder(FolderID: Longint): string;
 var
   Path: PChar;
   idList: PItemIDList;
@@ -85,7 +85,7 @@ begin
   GetMem(Path, MAX_PATH);
   SHGetSpecialFolderLocation(0, FolderID, idList);
   SHGetPathFromIDList(idList, Path);
-  Result := String(Path);
+  Result := string(Path);
   FreeMem(Path);
 end;
 
@@ -121,7 +121,7 @@ begin
   InternetSetOption(nil, INTERNET_OPTION_CONNECTED_STATE, @CI, Sz);
 end;
 
-function TextExtent(const Text: String; const Font: TFont): TSize;
+function TextExtent(const Text: string; const Font: TFont): TSize;
 var
   DC: HDC;
   //SaveFont: HFONT;
@@ -137,7 +137,7 @@ begin
   DeleteDC(DC);
 end;
 
-function MakeHash(const S: String): Integer;
+function MakeHash(const S: string): Integer;
 var
   I: Integer;
 begin
@@ -202,7 +202,43 @@ begin
   end;
 end;
 
+function GetBuildInfoString: string;
+var
+  VerInfoSize: DWORD;
+  VerInfo: Pointer;
+  VerValueSize: DWORD;
+  VerValue: PVSFixedFileInfo;
+  V1, V2, V3, V4: Word;
+  Dummy: DWORD;
+begin
+  Result := '';
+  VerInfoSize := GetFileVersionInfoSize(PChar(Application.ExeName), Dummy);
+  if (VerInfoSize > 0) then
+  begin
+    GetMem(VerInfo, VerInfoSize);
+    try
+      GetFileVersionInfo(PChar(Application.ExeName), 0, VerInfoSize, VerInfo);
+      VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
+      with VerValue^ do
+      begin
+        V1 := dwFileVersionMS shr 16;
+        V2 := dwFileVersionMS and $FFFF;
+        V3 := dwFileVersionLS shr 16;
+        V4 := dwFileVersionLS and $FFFF;
+      end;
+      Result := Format('%d.%d.%d.%d', [V1, V2, V3, V4]);
+    finally
+      FreeMem(VerInfo, VerInfoSize);
+    end;
+  end;
+end;
+
 initialization
+
+  AppVersion := GetBuildInfoString;
+
+  AppBuild := StringReplace(ExtractFileExt(AppVersion), '.', '',
+    [rfReplaceAll]);
 
   AppPath := IncludeTrailingBackSlash(ExtractFilePath(Application.ExeName));
 
@@ -213,7 +249,6 @@ initialization
 
   HTTPAgent := 'pLan ' + AppVersion;
 
-  URLCheckUpdates := URLTracker + '?do=checkupdates&build=' +
-    IntToStr(AppBuild);
+  URLCheckUpdates := URLTracker + '?do=checkupdates&build=' + AppBuild;
 
 end.
