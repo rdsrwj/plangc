@@ -240,7 +240,7 @@ implementation
 uses
   PsAPI, ShellAPI, ComObj, ShlObj, ActiveX, UGlobal, USettings, ULanguage,
   frmConfig, AdaptItems, frmCreateRoom, frmOVPNInit, frmDetailedError,
-  frmFileOpen;
+  frmFileOpen, frmAbout;
 
 procedure TShowRoomsForm.FormCreate(Sender: TObject);
 var
@@ -251,7 +251,7 @@ var
 begin
   Language.Apply(Self);
 
-  Self.Caption := UGlobal.AppTitle + ' v' + UGlobal.AppVersion;
+  Self.Caption := UGlobal.AppTitle;
 
   // Скины.
   sSkinManager1.SkinDirectory := AppPath + 'Skins';
@@ -971,7 +971,7 @@ begin
     // Общий канал.
     if (AChannel.Name = UGlobal.IRCMainChannel) then
     begin
-      ReMainChat.AddFormatedString(TAG_COLOR + '1' + TAG_BOLD + '<' +
+      ReMainChat.AddFormatedString({TAG_COLOR + '1' + }TAG_BOLD + '<' +
         AUser.Nick + '>' + TAG_BOLD + ' ' + Content);
       Exit;
     end;
@@ -979,7 +979,7 @@ begin
     // Комната.
     if (AChannel.Name = Settings.RoomChannel) then
     begin
-      ReRoom.AddFormatedString(TAG_COLOR + '1' + TAG_BOLD + '<' +
+      ReRoom.AddFormatedString({TAG_COLOR + '1' + }TAG_BOLD + '<' +
         AUser.Nick + '>' + TAG_BOLD + ' ' + Content);
     end;
   end
@@ -1262,7 +1262,7 @@ begin
       // Иначе посылаем сообщение на общий канал.
       try
         IdIRC1.Say(UGlobal.IRCMainChannel, EdMainChat.Text);
-        ReMainChat.AddFormatedString(TAG_COLOR + '1' + TAG_BOLD + '<' +
+        ReMainChat.AddFormatedString({TAG_COLOR + '1' + }TAG_BOLD + '<' +
           IdIRC1.Nick + '>' + TAG_BOLD + ' ' + EdMainChat.Text);
       except
         on E:Exception do
@@ -1362,7 +1362,7 @@ begin
       // Иначе посылаем сообщение в комнату.
       try
         IdIRC1.Say(Settings.RoomChannel, EdRoom.Text);
-          ReRoom.AddFormatedString(TAG_COLOR + '1' + TAG_BOLD + '<' +
+          ReRoom.AddFormatedString({TAG_COLOR + '1' + }TAG_BOLD + '<' +
           IdIRC1.Nick + '>' + TAG_BOLD + ' ' + EdRoom.Text);
       except
         on E:Exception do
@@ -2353,7 +2353,15 @@ end;
 
 procedure TShowRoomsForm.MiAboutClick(Sender: TObject);
 begin
-//*
+  with TAboutForm.Create(Self) do
+  try
+    if (ShowModal = mrOK) then
+    begin
+      //
+    end;
+  finally
+    Free;
+  end;
 end;
 
 function ResolveShortcut(Wnd: HWND; ShortcutPath: string): string;
@@ -2382,7 +2390,7 @@ var
   Count: Integer;
   I: Integer;
   FileNameLen: Integer;
-  FileName: String;
+  FileName: string;
 begin
   inherited;
 
@@ -2409,8 +2417,8 @@ end;
 procedure TShowRoomsForm.MiTeamSpeakClick(Sender: TObject);
 begin
   ShellExecute(Application.Handle, 'open',
-    PChar('ts3server://178.63.183.111?port=9987&nickname=' + Settings.UserName),
-    nil, nil, SW_NORMAL);
+    PChar('ts3server://plangc.nanoloop.ru?port=9987&nickname=' +
+    Settings.UserName), nil, nil, SW_NORMAL);
 end;
 
 end.

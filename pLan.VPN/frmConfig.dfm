@@ -23,7 +23,7 @@ object ConfigForm: TConfigForm
     Width = 146
     Height = 330
     Align = alLeft
-    Color = clWhite
+    Color = 15855332
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
@@ -70,7 +70,7 @@ object ConfigForm: TConfigForm
       Layout = tlCenter
       OnMouseDown = FormMouseDown
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 5059883
+      Font.Color = 16182738
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
@@ -80,7 +80,7 @@ object ConfigForm: TConfigForm
       Top = 20
       Width = 363
       Height = 308
-      ActivePage = sTabSheet5
+      ActivePage = sTabSheet1
       Align = alClient
       TabOrder = 0
       SkinData.SkinSection = 'PAGECONTROL'
@@ -99,7 +99,7 @@ object ConfigForm: TConfigForm
           ParentFont = False
           OnMouseDown = FormMouseDown
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = 16182738
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = []
@@ -113,7 +113,7 @@ object ConfigForm: TConfigForm
           ParentFont = False
           OnMouseDown = FormMouseDown
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = 16182738
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = []
@@ -127,7 +127,7 @@ object ConfigForm: TConfigForm
           ParentFont = False
           OnMouseDown = FormMouseDown
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = 16182738
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = []
@@ -135,7 +135,7 @@ object ConfigForm: TConfigForm
         object ChkStartOnSystemBoot: TsCheckBox
           Left = 5
           Top = 50
-          Width = 142
+          Width = 146
           Height = 19
           Caption = 'Run on Windows startup'
           TabOrder = 0
@@ -146,7 +146,7 @@ object ConfigForm: TConfigForm
         object ChkMinimizeOnStartup: TsCheckBox
           Left = 5
           Top = 75
-          Width = 115
+          Width = 119
           Height = 19
           Caption = 'Minimize on startup'
           TabOrder = 1
@@ -166,7 +166,7 @@ object ConfigForm: TConfigForm
           object ChkIgnoreJoinsOnIRC: TsCheckBox
             Left = 5
             Top = 25
-            Width = 54
+            Width = 58
             Height = 19
             Caption = 'in IRC'
             TabOrder = 0
@@ -177,7 +177,7 @@ object ConfigForm: TConfigForm
           object ChkIgnoreJoinsOnRoom: TsCheckBox
             Left = 5
             Top = 50
-            Width = 64
+            Width = 68
             Height = 19
             Caption = 'in Room'
             TabOrder = 1
@@ -203,7 +203,7 @@ object ConfigForm: TConfigForm
           BoundLabel.UseSkinColor = True
           SkinData.SkinSection = 'COMBOBOX'
           Style = csDropDownList
-          Color = clWhite
+          Color = 15855332
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -233,7 +233,7 @@ object ConfigForm: TConfigForm
           BoundLabel.UseSkinColor = True
           SkinData.SkinSection = 'COMBOBOX'
           Style = csDropDownList
-          Color = clWhite
+          Color = 15855332
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -250,7 +250,7 @@ object ConfigForm: TConfigForm
           Top = 20
           Width = 170
           Height = 21
-          Color = clWhite
+          Color = 15855332
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -469,7 +469,7 @@ object ConfigForm: TConfigForm
             BoundLabel.MaxWidth = 0
             BoundLabel.UseSkinColor = True
             SkinData.SkinSection = 'COMBOBOX'
-            Color = clWhite
+            Color = 15855332
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
             Font.Height = -11
@@ -693,7 +693,7 @@ object ConfigForm: TConfigForm
           BoundLabel.UseSkinColor = True
           SkinData.SkinSection = 'EDIT'
           Checkboxes = True
-          Color = clWhite
+          Color = 15855332
           Columns = <
             item
               Width = 325
@@ -743,42 +743,6 @@ object ConfigForm: TConfigForm
           end
         end
       end
-      object sTabSheet5: TsTabSheet
-        Caption = 'About'
-        TabVisible = False
-        OnMouseDown = FormMouseDown
-        SkinData.CustomColor = False
-        SkinData.CustomFont = False
-        object sRichEditURL1: TsRichEditURL
-          Left = 0
-          Top = 0
-          Width = 355
-          Height = 298
-          Align = alClient
-          Color = clWhite
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          ReadOnly = True
-          ScrollBars = ssVertical
-          TabOrder = 0
-          BoundLabel.Indent = 0
-          BoundLabel.Font.Charset = DEFAULT_CHARSET
-          BoundLabel.Font.Color = clWindowText
-          BoundLabel.Font.Height = -11
-          BoundLabel.Font.Name = 'MS Sans Serif'
-          BoundLabel.Font.Style = []
-          BoundLabel.Layout = sclLeft
-          BoundLabel.MaxWidth = 0
-          BoundLabel.UseSkinColor = True
-          SkinData.CustomColor = True
-          SkinData.CustomFont = True
-          SkinData.SkinSection = 'EDIT'
-        end
-      end
     end
   end
   object sPanel2: TsPanel
@@ -822,41 +786,5 @@ object ConfigForm: TConfigForm
   object ImageListGames: TImageList
     Left = 33
     Top = 225
-  end
-  object FcAbout: TFileContainer
-    FileName = 'about.rtf'
-    Left = 65
-    Top = 225
-    Data = {
-      7B5C727466315C616E73695C616E7369637067313235315C64656666307B5C66
-      6F6E7474626C7B5C66305C6673776973735C66707271325C6663686172736574
-      3020417269616C3B7D7B5C66315C6673776973735C66707271325C6663686172
-      7365743230347B5C2A5C666E616D6520417269616C3B7D417269616C20435952
-      3B7D7B5C66325C666E696C5C6663686172736574302043616C696272693B7D7D
-      0D0A7B5C636F6C6F7274626C203B5C726564305C677265656E305C626C756531
-      32383B5C726564305C677265656E305C626C75653235353B7D0D0A7B5C2A5C67
-      656E657261746F72204D7366746564697420352E34312E31352E313531353B7D
-      5C766965776B696E64345C7563315C706172645C71635C6C616E67313033335C
-      625C66305C6673323020704C616E204F70656E56504E2045646974696F6E5C63
-      66315C7061720D0A5C706172645C7061720D0A417574686F72735C6C616E6731
-      3034395C6631203A5C6366305C6C616E67313033335C62305C66302020444B54
-      696772612C204A6F65735C7061720D0A5C6366315C6220446576656C6F706572
-      733A5C6366305C623020205368696E5C7061720D0A5C6366315C622053706563
-      69616C207468616E6B7320666F7220737570706F72743A205F5C6366305C6230
-      20616D7374795F2C20416C6578616E6465722C20566972745C7061720D0A5C63
-      66315C62205472616E736C61746F72733A5C6366305C62305C7061720D0A2020
-      2020456E676C69736828454E2920704C616E204465765465616D5C7061720D0A
-      202020204765726D616E2844452920465269545A205B4E696B6F6C6179202872
-      756E3840676D782E6465295D5C7061720D0A202020205275737369616E285255
-      2920704C616E204465765465616D5C7061720D0A5C6366315C6220486F6D6570
-      6167653A5C6366305C62302020687474703A2F2F706C616E67632E72752F5C70
-      61720D0A5C6366315C6220466F72756D3A5C6366305C62302020687474703A2F
-      2F706C616E67632E72752F666F72756D2E68746D6C5C7061720D0A5C7061720D
-      0A5C6366315C6220446576656C6F706572732070726576696F75732076657273
-      696F6E733A205C6366305C623020416E64726F732C2048657263756C65732C20
-      4B2E5370656374722C2053756E6E794472616B655C7061720D0A5C6366315C62
-      205370656369616C207468616E6B7320666F7220737570706F72743A205C6366
-      305C62302046696C696E5C6C616E67395C66325C667332325C7061720D0A7D0D
-      0A00}
   end
 end

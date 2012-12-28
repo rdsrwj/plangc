@@ -59,9 +59,6 @@ type
     UdAutoNotifyPeriod: TsUpDown;
     sListView1: TsListView;
     sTreeView1: TsTreeView;
-    sTabSheet5: TsTabSheet;
-    FcAbout: TFileContainer;
-    sRichEditURL1: TsRichEditURL;
     sLabel18: TsLabel;
     sPanel1: TsPanel;
     sPanel2: TsPanel;
@@ -104,7 +101,6 @@ var
   I: Integer;
   LV: TListItem;
   TreeNode: TTreeNode;
-  MS: TMemoryStream;
 begin
   Language.Apply(Self);
 
@@ -168,18 +164,6 @@ begin
   FillSkinCombo;
   ComboSkin.ItemIndex :=
     ComboSkin.Items.IndexOf(ShowRoomsForm.sSkinManager1.SkinName);
-
-  MS := TMemoryStream.Create;
-  try
-    fcAbout.SaveToStream(MS);
-    if (MS.Size > 0) then
-    begin
-      MS.Seek(0, soFromBeginning);
-      sRichEditURL1.Lines.LoadFromStream(MS);
-    end;
-  finally
-    MS.Free;
-  end;
 end;
 
 procedure TConfigForm.SaveSettings;
