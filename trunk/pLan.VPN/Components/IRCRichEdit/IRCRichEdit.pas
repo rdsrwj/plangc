@@ -5612,7 +5612,7 @@ var
   FlgBold, FlgUnderline, FlgInvert: Boolean;
 begin
   if WithTime then
-    Mess := TAG_COLOR + '14' + TimeToStr(Now) + ': ' + Mess;
+    Mess := {TAG_COLOR + '14' +} TimeToStr(Now) + ': ' + Mess;
 
   FlgBold := False;
   FlgUnderline := False;
@@ -5626,6 +5626,7 @@ begin
 
   // ׃האכÿול סלאיכû.
   NoSmilesMess := Mess;
+  CountSmiles := 0;
   for I := 0 to MAX_SMILES_INFO - 1 do
   begin
     //Application.ProcessMessages;
@@ -5804,8 +5805,8 @@ begin
   SelStart := Length(Text);
   SelLength := 1;
   SelAttributes.Style := [];
-  SelAttributes.Color := clBlack;
-  SelAttributes.BackColor := clWhite;
+  SelAttributes.Color := Self.Font.Color;
+  SelAttributes.BackColor := Self.Color;
 end;
 
 procedure Register;

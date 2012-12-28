@@ -18,7 +18,8 @@ uses
   frmUpdateProgram in 'frmUpdateProgram.pas' {UpdateForm},
   frmOVPNInit in 'frmOVPNInit.pas' {OVPNInitForm},
   frmFileOpen in 'frmFileOpen.pas' {FileOpenForm},
-  frmDetailedError in 'frmDetailedError.pas' {DetailedErrorForm};
+  frmDetailedError in 'frmDetailedError.pas' {DetailedErrorForm},
+  frmAbout in 'frmAbout.pas' {AboutForm};
 
 {$R *.res}
 
@@ -28,7 +29,7 @@ var
   ProcsCount: Cardinal;
   I: Integer;
   PH: THandle;
-  S: String;
+  S: string;
   Sz: Integer;
 begin
   if not EnumProcesses(@Procs, SizeOf(Procs), ProcsCount) then Exit;
@@ -52,7 +53,7 @@ begin
 end;
 
 var
-  S: String;
+  S: string;
 begin
   Application.Initialize;
   Application.Title := 'pLan OpenVPN Edition';
