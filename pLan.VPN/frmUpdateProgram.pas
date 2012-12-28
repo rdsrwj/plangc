@@ -14,10 +14,10 @@ type
     Timer1: TTimer;
     Label1: TLabel;
     procedure FormCreate(Sender: TObject);
-    procedure HTTPGet1DoneString(Sender: TObject; Result: String);
+    procedure HTTPGet1DoneString(Sender: TObject; Result: string);
     procedure HTTPGet1Error(Sender: TObject);
     procedure HTTPGet1Progress(Sender: TObject; TotalSize, Readed: Integer);
-    procedure HTTPGet1DoneFile(Sender: TObject; FileName: String;
+    procedure HTTPGet1DoneFile(Sender: TObject; FileName: string;
       FileSize: Integer);
     procedure Timer1Timer(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -67,7 +67,7 @@ begin
   HTTPGet1.GetString;
 end;
 
-procedure TUpdateForm.HTTPGet1DoneString(Sender: TObject; Result: String);
+procedure TUpdateForm.HTTPGet1DoneString(Sender: TObject; Result: string);
 var
   SL: TStringList;
   Ini: TIniFile;
@@ -83,7 +83,7 @@ begin
 
       if (SL.Count < 2) then Exit;
 
-      NeedToUpdateExe := (UGlobal.AppBuild < StrToIntDef(SL[0], 0));
+      NeedToUpdateExe := (StrToInt(UGlobal.AppBuild) < StrToIntDef(SL[0], 0));
 
       Ini := TIniFile.Create(UGlobal.DataPath + 'config.ini');
       try
@@ -154,10 +154,10 @@ begin
     ProgressBar1.Position := Smallint(Round(Readed * 100 / TotalSize));
 end;
 
-procedure TUpdateForm.HTTPGet1DoneFile(Sender: TObject; FileName: String;
+procedure TUpdateForm.HTTPGet1DoneFile(Sender: TObject; FileName: string;
   FileSize: Integer);
 var
-  ExeFile, BakFile, NewFile: String;
+  ExeFile, BakFile, NewFile: string;
 begin
   ProgressBar1.Position := 100;
 

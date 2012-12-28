@@ -119,6 +119,7 @@ type
     MiAbout: TMenuItem;
     N1: TMenuItem;
     MiTeamSpeak: TMenuItem;
+    FcSpanishXML: TFileContainer;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormHide(Sender: TObject);
@@ -308,45 +309,34 @@ begin
   // Распаковываем ресурсы.
   FcNotifyWav.CheckAndSaveToFile(UGlobal.DataPath + 'notify.wav');
   FcNotifyWav.Free;
-  //
   FcNotify2Wav.CheckAndSaveToFile(UGlobal.DataPath + 'notify2.wav');
   FcNotify2Wav.Free;
-  //
   FcServerPEM.CheckAndSaveToFile(UGlobal.DataPath + 'server.pem');
   FcServerPEM.Free;
-  //
   FcServerKey.CheckAndSaveToFile(UGlobal.DataPath + 'server.key');
   FcServerKey.Free;
-  //
   FcClientPEM.CheckAndSaveToFile(UGlobal.DataPath + 'client.pem');
   FcClientPEM.Free;
-  //
   FcClientKey.CheckAndSaveToFile(UGlobal.DataPath + 'client.key');
   FcClientKey.Free;
-  //
   FcCaPEM.CheckAndSaveToFile(UGlobal.DataPath + 'ca.pem');
   FcCaPEM.Free;
-  //
   FcCaKey.CheckAndSaveToFile(UGlobal.DataPath + 'ca.key');
   FcCaKey.Free;
-  //
   FcDHPem.CheckAndSaveToFile(UGlobal.DataPath + 'dh1024.pem');
   FcDHPem.Free;
-  //
   FcDataXML.CheckAndSaveToFile(UGlobal.DataPath + 'data.xml');
   FcDataXML.Free;
-  //
   FcPlanDLL.CheckAndSaveToFile(UGlobal.DataPath + 'pLan.dll');
   FcPlanDLL.Free;
-  //
   FcEnglishXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\English.xml.txt');
   FcEnglishXML.Free;
-  //
   FcRussianXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\Russian.xml');
   FcRussianXML.Free;
-  //
   FcGermanXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\German.xml');
   FcGermanXML.Free;
+  FcSpanishXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\Spanish.xml');
+  FcSpanishXML.Free;
 
   // Загружаем библиотеку pLan.dll, устанавливаем ловушку.
   pLanDLLHandle := LoadLibrary(PChar(UGlobal.DataPath + 'pLan.dll'));
