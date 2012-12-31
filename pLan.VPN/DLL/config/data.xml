@@ -1,0 +1,17 @@
+<root>
+	<config>
+		<version def="1" dll="1" exe="0" />
+	</config>
+	<game name="FEAR" desc="F.E.A.R.">
+		<identification>
+			<appname name="opera.exe" />
+		</identification>
+		<server>
+			<bind port="3456" />
+			<broadcast emulation="1" sendemu="1">
+				<port value="3456" />
+				<port value="3458" />
+			</broadcast>
+		</server>
+	</game>
+</root>
