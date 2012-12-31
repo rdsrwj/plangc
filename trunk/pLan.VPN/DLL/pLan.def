@@ -1,0 +1,11 @@
+LIBRARY pLAN
+VERSION	1.0
+
+SECTIONS
+	.sdata SHARED READ WRITE
+
+EXPORTS
+	Hooker				@1
+	Unhooker			@2
+	Version				@3
+	
