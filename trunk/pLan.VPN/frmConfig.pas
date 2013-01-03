@@ -92,8 +92,7 @@ implementation
 {$R *.dfm}
 
 uses
-  IniFiles, ShellAPI, UGlobal, USettings, ULanguage, AdaptItems,
-  frmShowRooms;
+  IniFiles, ShellAPI, UGlobal, USettings, ULanguage, AdaptItems, frmMain;
 
 procedure TConfigForm.FormCreate(Sender: TObject);
 var
@@ -163,7 +162,7 @@ begin
 
   FillSkinCombo;
   ComboSkin.ItemIndex :=
-    ComboSkin.Items.IndexOf(ShowRoomsForm.sSkinManager1.SkinName);
+    ComboSkin.Items.IndexOf(MainForm.sSkinManager1.SkinName);
 end;
 
 procedure TConfigForm.SaveSettings;
@@ -207,10 +206,10 @@ begin
 
   Settings.Save;
 
-  if ShowRoomsForm.IdIRC1.Connected and
-    (ShowRoomsForm.IdIRC1.Nick <> Settings.UserName) then
+  if MainForm.IdIRC1.Connected and
+    (MainForm.IdIRC1.Nick <> Settings.UserName) then
   try
-    ShowRoomsForm.IdIRC1.Nick := Settings.UserName;
+    MainForm.IdIRC1.Nick := Settings.UserName;
   except
   end;
 end;
@@ -243,7 +242,7 @@ var
   I: Integer;
 begin
   StrList := TStringList.Create;
-  ShowRoomsForm.sSkinManager1.GetSkinNames(StrList);
+  MainForm.sSkinManager1.GetSkinNames(StrList);
   if (StrList.Count > 0) then
   begin
     StrList.Sort;
@@ -305,7 +304,7 @@ end;
 
 procedure TConfigForm.ComboSkinChange(Sender: TObject);
 begin
-  ShowRoomsForm.sSkinManager1.SkinName := ComboSkin.Text;
+  MainForm.sSkinManager1.SkinName := ComboSkin.Text;
 end;
 
 procedure TConfigForm.sButton3Click(Sender: TObject);

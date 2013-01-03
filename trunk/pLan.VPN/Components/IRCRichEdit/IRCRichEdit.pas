@@ -5812,7 +5812,7 @@ end;
 procedure Register;
 begin
   //RegisterComponents('source  ™', [TIRCMemo]);
-  RegisterComponents('IRCClient', [TIRCRichEdit]);
+  RegisterComponents('pLan Components', [TIRCRichEdit]);
 end;
 
 { Initialization part }
