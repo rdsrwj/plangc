@@ -1,21 +1,17 @@
 // $Id$
-unit frmShowRooms;
+unit frmMain;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls, ExtCtrls, Registry, Buttons, IdBaseComponent,
-  IdComponent, IdUDPBase, IdUDPServer, IdSocketHandle, HTTPGet,CoolTrayIcon,
+  IdComponent, IdUDPBase, IdUDPServer, IdSocketHandle, HTTPGet, CoolTrayIcon,
   MPlayer, FileContainer, Menus, SHFolder, sSkinManager, sListView,
   sRichEdit, sButton, sLabel, acAlphaHints, sBitBtn, sPageControl, sPanel,
   IRCRichEdit, sStatusBar, IdTCPConnection, IdTCPClient, IdIRC, sSplitter,
-  sEdit, OpenVPNManager, ChatServer, ChatClient, sMemo, sComboBox,
-  FileLauncher, ImgList, acAlphaImageList, acTitleBar, sSkinProvider;
-
-const
-  diGetCreateServerLog = 12;
-  diGetConnectLog      = 13;
+  sEdit, OpenVPNManager, ChatServer, sMemo, sComboBox, FileLauncher,
+  ImgList, acAlphaImageList, acTitleBar, sSkinProvider;
 
 type
   TWorkMode = (wmIdle, wmClient, wmServer);
@@ -23,7 +19,7 @@ type
 type
   TDLLProc = procedure;
 
-  TShowRoomsForm = class(TForm)
+  TMainForm = class(TForm)
     HTTPVpnGet: THTTPGet;
     LblServerInfo: TsLabel;
     UDPPinger: TIdUDPServer;
@@ -47,7 +43,6 @@ type
     FcNotify2Wav: TFileContainer;
     FcPLanDLL: TFileContainer;
     FcDataXML: TFileContainer;
-    TimerGetData: TTimer;
     sSkinManager1: TsSkinManager;
     LvRoomsList: TsListView;
     sAlphaHints1: TsAlphaHints;
@@ -111,7 +106,6 @@ type
     MiSettings: TMenuItem;
     sSkinProvider1: TsSkinProvider;
     N9: TMenuItem;
-    MiMakeReport: TMenuItem;
     MiRefresh: TMenuItem;
     MiHelp: TMenuItem;
     MiForum: TMenuItem;
@@ -135,7 +129,6 @@ type
     procedure HTTPGetNewsDoneString(Sender: TObject; Result: String);
     procedure TimerVpnGetTimer(Sender: TObject);
     procedure TimerVpnGetShortTimer(Sender: TObject);
-    procedure TimerGetDataTimer(Sender: TObject);
     procedure TimerVpnAddTimer(Sender: TObject);
     procedure TimerGetNewsTimer(Sender: TObject);
     procedure PingTimerTimer(Sender: TObject);
@@ -201,7 +194,6 @@ type
     procedure MiConnectClick(Sender: TObject);
     procedure MiCreateRoomClick(Sender: TObject);
     procedure MiSettingsClick(Sender: TObject);
-    procedure MiMakeReportClick(Sender: TObject);
     procedure MiQuitClick(Sender: TObject);
     procedure MiRefreshClick(Sender: TObject);
     procedure MiHomePageClick(Sender: TObject);
@@ -226,7 +218,7 @@ type
   end;
 
 var
-  ShowRoomsForm: TShowRoomsForm;
+  MainForm: TMainForm;
   pLanDLLHandle: THandle;
   ProcHooker: TDLLProc;
   ProcUnhooker: TDLLProc;
@@ -242,7 +234,7 @@ uses
   frmConfig, AdaptItems, frmCreateRoom, frmOVPNInit, frmDetailedError,
   frmFileOpen, frmAbout;
 
-procedure TShowRoomsForm.FormCreate(Sender: TObject);
+procedure TMainForm.FormCreate(Sender: TObject);
 var
   AList: TAdapterList;
   StrList: TStringList;
@@ -299,7 +291,6 @@ begin
   MiCreateRoom.Caption := Language.msgCreateRoom;
   MiRefresh.Caption := Language.msgRefresh;
   MiSettings.Caption := Language.msgSettings;
-  MiMakeReport.Caption := Language.msgMakeReport;
   MiHelp.Caption := Language.msgHelp;
   MiHomePage.Caption := Language.msgHomePage;
   MiForum.Caption := Language.msgForum;
@@ -421,18 +412,18 @@ begin
   LvMainChatUsers.Columns[0].Width := LvMainChatUsers.Width -
     GetSystemMetrics(SM_CXVSCROLL);
 
+  // Разрешаем бросать ярлык игры в программу.
+  DragAcceptFiles(Self.Handle, True);
+
   // Запуск в свёрнутом виде.
   {if Settings.MinimizeOnStartup then
     CoolTrayIcon1.HideMainForm;}
-
-  // Разрешаем бросать ярлык игры в программу.
-  DragAcceptFiles(Self.Handle, True);
 
   if Settings.MinimizeOnStartup then
     Application.ShowMainForm := False;
 end;
 
-procedure TShowRoomsForm.FormShow(Sender: TObject);
+procedure TMainForm.FormShow(Sender: TObject);
 begin
   // Открываем форму в центре экрана.
   Self.Left := (GetSystemMetrics(SM_CXSCREEN) - Self.Width)  div 2;
@@ -445,20 +436,20 @@ begin
   TimerVpnGet.Enabled := True;
 end;
 
-procedure TShowRoomsForm.FormHide(Sender: TObject);
+procedure TMainForm.FormHide(Sender: TObject);
 begin
   // Останавливаем таймер обновления списка комнат.
   TimerVpnGet.Enabled := False;
 end;
 
-procedure TShowRoomsForm.FormMouseDown(Sender: TObject; Button: TMouseButton;
+procedure TMainForm.FormMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   ReleaseCapture;
   Self.Perform(WM_SYSCOMMAND, $F012, 0);
 end;
 
-procedure TShowRoomsForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   if not FlgClosing then
   begin
@@ -468,7 +459,7 @@ begin
   CanClose := FlgClosing;
 end;
 
-procedure TShowRoomsForm.FormDestroy(Sender: TObject);
+procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   // Отключаемся от IRC сервера.
   try
@@ -488,7 +479,7 @@ begin
   DragAcceptFiles(Self.Handle, False);  
 end;
 
-procedure TShowRoomsForm.ParseList(Data: String);
+procedure TMainForm.ParseList(Data: String);
 var
   S: String;
   SL: TStringList;
@@ -601,19 +592,19 @@ begin
   sStatusBar1.Panels[5].Text := IntToStr(N);                       // Количество игроков.
 end;
 
-procedure TShowRoomsForm.LvRoomsListDblClick(Sender: TObject);
+procedure TMainForm.LvRoomsListDblClick(Sender: TObject);
 begin
   MiConnect.Click;
 end;
 
-procedure TShowRoomsForm.HTTPVpnGetDoneString(Sender: TObject; Result: String);
+procedure TMainForm.HTTPVpnGetDoneString(Sender: TObject; Result: String);
 begin
   ParseList(Result);
   PingTimerTimer(Self);
   PingTimer.Enabled := True;
 end;
 
-procedure TShowRoomsForm.LvRoomsListSelectItem(Sender: TObject; Item: TListItem;
+procedure TMainForm.LvRoomsListSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 var
   TickCount: String;
@@ -674,7 +665,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.PingTimerTimer(Sender: TObject);
+procedure TMainForm.PingTimerTimer(Sender: TObject);
 var
   TickCount: String;
   B: Cardinal;
@@ -707,7 +698,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.UDPPingerUDPRead(Sender: TObject; AData: TStream;
+procedure TMainForm.UDPPingerUDPRead(Sender: TObject; AData: TStream;
   ABinding: TIdSocketHandle);
 var
   S: String;
@@ -740,12 +731,12 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.TimerVpnGetTimer(Sender: TObject);
+procedure TMainForm.TimerVpnGetTimer(Sender: TObject);
 begin
   MiRefresh.Click;
 end;
 
-procedure TShowRoomsForm.TimerVpnGetShortTimer(Sender: TObject);
+procedure TMainForm.TimerVpnGetShortTimer(Sender: TObject);
 begin
   //HTTPVpnGetShort.URL := UGlobal.URLTracker + '?do=vpn_getshort';
   HTTPVpnGetShort.URL := UGlobal.URLTracker;
@@ -753,7 +744,7 @@ begin
   HTTPVpnGetShort.GetString;
 end;
 
-procedure TShowRoomsForm.HTTPVpnGetShortDoneString(Sender: TObject;
+procedure TMainForm.HTTPVpnGetShortDoneString(Sender: TObject;
   Result: String);
 var
   I, J: Integer;
@@ -819,126 +810,49 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.CoolTrayIcon1Click(Sender: TObject);
+procedure TMainForm.CoolTrayIcon1Click(Sender: TObject);
 begin
   CoolTrayIcon1.ShowMainForm;
   FlgMinimized := False;
 end;
 
-procedure TShowRoomsForm.MiQuit1Click(Sender: TObject);
+procedure TMainForm.MiQuit1Click(Sender: TObject);
 begin
   MiQuit.Click;
 end;
 
-procedure TShowRoomsForm.MiOpenClick(Sender: TObject);
+procedure TMainForm.MiOpenClick(Sender: TObject);
 begin
   CoolTrayIcon1.ShowMainForm;
   FlgMinimized := False;
 end;
 
-procedure TShowRoomsForm.CoolTrayIcon1MinimizeToTray(Sender: TObject);
+procedure TMainForm.CoolTrayIcon1MinimizeToTray(Sender: TObject);
 begin
   FlgMinimized := True;
 end;
 
-procedure TShowRoomsForm.TimerGetDataTimer(Sender: TObject);
-var
-  SL: TStringList;
-begin
-  if (TimerGetData.Tag = diGetCreateServerLog) then
-  begin
-    VPNManager.Disconnect;
-
-    repeat
-      Application.ProcessMessages;
-      Sleep(100);
-    until (VPNManager.GetStatus = ovpnDisconnected);
-
-    SL := TStringList.Create;
-    try
-      try
-        SL.LoadFromFile(UGlobal.DataPath + 'log.txt');
-        FReportList.Add('=============== Create server log: ===============');
-        FReportList.Add(SL.Text);
-      except
-        FReportList.Add('=============== Create server log: ===============');
-        FReportList.Add('Server log.txt not found');
-      end;
-    finally
-      SL.Free;
-    end;
-
-    if (Settings.RemoteRoomIP <> '') then
-      VPNManager.Connect(Settings.RemoteRoomIP, Settings.RemoteVPNPort, True,
-        UGlobal.DataPath)
-    else
-      VPNManager.Connect('192.168.251.1', 1098, True, UGlobal.DataPath);
-
-    TimerGetData.Interval := 10000;
-    TimerGetData.Tag := diGetConnectLog;
-    TimerGetData.Enabled := True;
-  end
-  else
-  if (TimerGetData.Tag = diGetConnectLog) then
-  begin
-    VPNManager.Disconnect;
-
-    repeat
-      Application.ProcessMessages;
-      Sleep(100);
-    until (VPNManager.GetStatus = ovpnDisconnected);
-
-    SL := TStringList.Create;
-    try
-      try
-        SL.LoadFromFile(UGlobal.DataPath + 'log.txt');
-        FReportList.Add('=============== Connect log: ===============');
-        FReportList.Add(SL.Text);
-      except
-        FReportList.Add('=============== Connect log: ===============');
-        FReportList.Add('client log.txt not found');
-      end;
-    finally
-      SL.Free;
-    end;
-
-    TimerGetData.Interval := 30000;
-    TimerGetData.Tag := 0;
-    TimerGetData.Enabled := False;
-
-    FReportList.SaveToFile(UGlobal.DataPath + 'log.txt');
-
-    Self.Enabled := True;
-
-    OVPNInitForm.Close;
-    OVPNInitForm.Free;
-
-    Application.MessageBox(PChar(Language.msgYourReportText +
-      UGlobal.DataPath + 'log.txt'), PChar(Language.msgYourReportCaption));
-  end;
-end;
-
-procedure TShowRoomsForm.IdIRC1Disconnect(Sender: TObject);
+procedure TMainForm.IdIRC1Disconnect(Sender: TObject);
 begin
   ReMainChat.AddFormatedString(TAG_COLOR + '4Disconnect...');
   ReRoom.AddFormatedString(TAG_COLOR + '4Disconnect...');
   FlgCanJoinToRoomChannel := False;
 end;
 
-procedure TShowRoomsForm.IdIRC1Disconnected(Sender: TObject);
+procedure TMainForm.IdIRC1Disconnected(Sender: TObject);
 begin
   ReMainChat.AddFormatedString(TAG_COLOR + '4Disconnected');
   ReRoom.AddFormatedString(TAG_COLOR + '4Disconnected');
   FlgCanJoinToRoomChannel := False;
 end;
 
-procedure TShowRoomsForm.IdIRC1Error(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1Error(Sender: TObject; AUser: TIdIRCUser;
   ANumeric, AError: String);
 begin
   ReMainChat.AddFormatedString(TAG_COLOR + '4Error: ' + AError);
 end;
 
-procedure TShowRoomsForm.IdIRC1Join(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1Join(Sender: TObject; AUser: TIdIRCUser;
   AChannel: TIdIRCChannel);
 var
   Item: TListItem;
@@ -963,7 +877,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1Message(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1Message(Sender: TObject; AUser: TIdIRCUser;
   AChannel: TIdIRCChannel; Content: String);
 begin
   if (AChannel <> nil) then
@@ -992,7 +906,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1Part(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1Part(Sender: TObject; AUser: TIdIRCUser;
   AChannel: TIdIRCChannel);
 var
   Idx: Integer;
@@ -1041,7 +955,7 @@ begin
     Include(Result, ircVoice);
 end;
 
-procedure TShowRoomsForm.IdIRC1Names(Sender: TObject; AUsers: TIdIRCUsers;
+procedure TMainForm.IdIRC1Names(Sender: TObject; AUsers: TIdIRCUsers;
   AChannel: TIdIRCChannel);
 var
   I, Index: Integer;
@@ -1090,13 +1004,13 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1Status(ASender: TObject;
+procedure TMainForm.IdIRC1Status(ASender: TObject;
   const AStatus: TIdStatus; const AStatusText: String);
 begin
   ReMainChat.AddFormatedString(TAG_COLOR + '3' + AStatusText);
 end;
 
-procedure TShowRoomsForm.IdIRC1Joined(Sender: TObject; AChannel: TIdIRCChannel);
+procedure TMainForm.IdIRC1Joined(Sender: TObject; AChannel: TIdIRCChannel);
 begin
   // Общий канал.
   if (AChannel.Name = UGlobal.IRCMainChannel) then
@@ -1115,7 +1029,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.EdMainChatKeyDown(Sender: TObject; var Key: Word;
+procedure TMainForm.EdMainChatKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   Msg: TMsg;
@@ -1127,7 +1041,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1Quit(Sender: TObject; AUser: TIdIRCUser);
+procedure TMainForm.IdIRC1Quit(Sender: TObject; AUser: TIdIRCUser);
 var
   Idx: Integer;
   Dummy: String;
@@ -1151,7 +1065,7 @@ begin
   end;    
 end;
 
-function TShowRoomsForm.FindUser(LV: TsListView; Nick: String;
+function TMainForm.FindUser(LV: TsListView; Nick: String;
   var Prefix: String): Integer;
 var
   I: Integer;
@@ -1181,7 +1095,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1NickChange(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1NickChange(Sender: TObject; AUser: TIdIRCUser;
   ANewNick: String);
 var
   Idx: Integer;
@@ -1198,7 +1112,7 @@ begin
     LvRoomUsers.Items[Idx].Caption := P + ANewNick;
 end;
 
-procedure TShowRoomsForm.IdIRC1NickChanged(Sender: TObject; AOldNick: String);
+procedure TMainForm.IdIRC1NickChanged(Sender: TObject; AOldNick: String);
 var
   Idx: Integer;
   P: String;
@@ -1218,7 +1132,7 @@ begin
   Settings.UserName := IdIRC1.Nick;
 end;
 
-procedure TShowRoomsForm.BtnMainChatSendClick(Sender: TObject);
+procedure TMainForm.BtnMainChatSendClick(Sender: TObject);
 var
   Name: String;
   S: String;
@@ -1273,7 +1187,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1Raw(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1Raw(Sender: TObject; AUser: TIdIRCUser;
   ACommand, AContent: String; var Suppress: Boolean);
 begin
   {ReServer.AddFormatedString(TAG_COLOR + '2' + AUser.Nick + TAG_COLOR + '5 ' +
@@ -1292,7 +1206,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.LvMainChatUsersDblClick(Sender: TObject);
+procedure TMainForm.LvMainChatUsersDblClick(Sender: TObject);
 var
   S: String;
 begin
@@ -1307,17 +1221,17 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.VPNManagerConnected(Sender: TObject);
+procedure TMainForm.VPNManagerConnected(Sender: TObject);
 begin
   ReRoom.AddFormatedString(TAG_COLOR + '3VPN Connection started');
 end;
 
-procedure TShowRoomsForm.VPNManagerDisconnected(Sender: TObject);
+procedure TMainForm.VPNManagerDisconnected(Sender: TObject);
 begin
   ReRoom.AddFormatedString(TAG_COLOR + '3VPN Connection terminated');
 end;
 
-procedure TShowRoomsForm.BtnRoomSendClick(Sender: TObject);
+procedure TMainForm.BtnRoomSendClick(Sender: TObject);
 var
   Name: String;
   S: String;
@@ -1373,7 +1287,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.EdRoomKeyDown(Sender: TObject; var Key: Word;
+procedure TMainForm.EdRoomKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   Msg: TMsg;
@@ -1385,7 +1299,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.LvRoomUsersDblClick(Sender: TObject);
+procedure TMainForm.LvRoomUsersDblClick(Sender: TObject);
 var
   S: String;
 begin
@@ -1400,7 +1314,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.BtnDisconnectClick(Sender: TObject);
+procedure TMainForm.BtnDisconnectClick(Sender: TObject);
 begin
   if ChatServer1.Active then
   begin
@@ -1471,7 +1385,7 @@ begin
   Result := S;
 end;
 
-procedure TShowRoomsForm.TimerVpnAddTimer(Sender: TObject);
+procedure TMainForm.TimerVpnAddTimer(Sender: TObject);
 var
   S, Addr: String;
   I: Integer;
@@ -1509,7 +1423,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.TimerGetNewsTimer(Sender: TObject);
+procedure TMainForm.TimerGetNewsTimer(Sender: TObject);
 begin
   TimerGetNews.Enabled := False;
   //HTTPGetNews.URL := URLTracker + '?do=getnews&lang=' + Language.Code;
@@ -1518,18 +1432,18 @@ begin
   HTTPGetNews.GetString;
 end;
 
-procedure TShowRoomsForm.HTTPGetNewsDoneString(Sender: TObject; Result: String);
+procedure TMainForm.HTTPGetNewsDoneString(Sender: TObject; Result: String);
 begin
   sMemo1.Text := Result;
 end;
 
-procedure TShowRoomsForm.IdIRC1Connected(Sender: TObject);
+procedure TMainForm.IdIRC1Connected(Sender: TObject);
 begin
   TsIRCServer.Caption := IdIRC1.Host;
   ReconnectNum := 0;
 end;
 
-procedure TShowRoomsForm.Reconnect(Err: String);
+procedure TMainForm.Reconnect(Err: String);
 begin
   ReServer.AddFormatedString(TAG_COLOR + '4' + Err);
   if (ReconnectNum = 10) then
@@ -1552,7 +1466,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.BtnServerSendClick(Sender: TObject);
+procedure TMainForm.BtnServerSendClick(Sender: TObject);
 begin
   if (EdServer.Text <> '') then
   begin
@@ -1567,7 +1481,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.EdServerKeyDown(Sender: TObject; var Key: Word;
+procedure TMainForm.EdServerKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   Msg: TMsg;
@@ -1579,7 +1493,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1Notice(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1Notice(Sender: TObject; AUser: TIdIRCUser;
   AChannel: TIdIRCChannel; Content: String);
 var
   S: String;
@@ -1598,7 +1512,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1Topic(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1Topic(Sender: TObject; AUser: TIdIRCUser;
   AChannel: TIdIRCChannel; const AChanName, ATopic: String);
 var
   S: String;
@@ -1611,7 +1525,7 @@ begin
     ReRoom.AddFormatedString(S);
 end;
 
-procedure TShowRoomsForm.IdIRC1System(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1System(Sender: TObject; AUser: TIdIRCUser;
   ACmdCode: Integer; ACommand, AContent: String);
 var
   I: Integer;
@@ -1636,23 +1550,23 @@ begin
   ReServer.AddFormatedString(TAG_COLOR + '1' + S);
 end;
 
-procedure TShowRoomsForm.MiAddClick(Sender: TObject);
+procedure TMainForm.MiAddClick(Sender: TObject);
 begin
   BtnAdd.Click;
 end;
 
-procedure TShowRoomsForm.MiDeleteClick(Sender: TObject);
+procedure TMainForm.MiDeleteClick(Sender: TObject);
 begin
   BtnDelete.Click;
 end;
 
-procedure TShowRoomsForm.PopupMenu2Popup(Sender: TObject);
+procedure TMainForm.PopupMenu2Popup(Sender: TObject);
 begin
   PopupMenu2.Items[1].Enabled := (LvMyGames.ItemFocused <> nil);
   PopupMenu2.Items[2].Enabled := (LvMyGames.ItemFocused <> nil);
 end;
 
-procedure TShowRoomsForm.LvMyGamesRefresh;
+procedure TMainForm.LvMyGamesRefresh;
 var
   I: Integer;
   Item: TListItem;
@@ -1684,7 +1598,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.AddGame(ACaption, AFileName: string);
+procedure TMainForm.AddGame(ACaption, AFileName: string);
 var
   FileOpenForm: TFileOpenForm;
   AItem: TFileLauncher;
@@ -1721,12 +1635,12 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.BtnAddClick(Sender: TObject);
+procedure TMainForm.BtnAddClick(Sender: TObject);
 begin
   AddGame('', '');
 end;
 
-procedure TShowRoomsForm.MiEditClick(Sender: TObject);
+procedure TMainForm.MiEditClick(Sender: TObject);
 var
   FileOpenForm: TFileOpenForm;
   AItem: TFileLauncher;
@@ -1774,7 +1688,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.BtnDeleteClick(Sender: TObject);
+procedure TMainForm.BtnDeleteClick(Sender: TObject);
 var
   S: String;
 begin
@@ -1874,7 +1788,7 @@ begin
   CloseHandle(hProcess);
 end;
 
-procedure TShowRoomsForm.LvMyGamesDblClick(Sender: TObject);
+procedure TMainForm.LvMyGamesDblClick(Sender: TObject);
 var
   S: String;
   DataDir: String;
@@ -1923,7 +1837,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1Kick(Sender: TObject; AUser, AVictim: TIdIRCUser;
+procedure TMainForm.IdIRC1Kick(Sender: TObject; AUser, AVictim: TIdIRCUser;
   AChannel: TIdIRCChannel);
 var
   Idx: Integer;
@@ -1952,7 +1866,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.IdIRC1Kicked(Sender: TObject; AUser: TIdIRCUser;
+procedure TMainForm.IdIRC1Kicked(Sender: TObject; AUser: TIdIRCUser;
   AChannel: TIdIRCChannel);
 var
   Idx: Integer;
@@ -1980,7 +1894,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.MiConnectClick(Sender: TObject);
+procedure TMainForm.MiConnectClick(Sender: TObject);
 var
   Status: Integer;
   SL: TStringList;
@@ -2098,7 +2012,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.MiCreateRoomClick(Sender: TObject);
+procedure TMainForm.MiCreateRoomClick(Sender: TObject);
 var
   Status: Integer;
   SL: TStringList;
@@ -2228,7 +2142,7 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.MiSettingsClick(Sender: TObject);
+procedure TMainForm.MiSettingsClick(Sender: TObject);
 begin
   with TConfigForm.Create(Self) do
   try
@@ -2245,81 +2159,11 @@ begin
   end;
 end;
 
-procedure TShowRoomsForm.MiMakeReportClick(Sender: TObject);
-var
-  SL: TStringList;
-  AdapterList: TAdapterList;
-  I: Integer;
-begin
-  if (MessageBox(Self.Handle,
-    'Report generation takes 1-2 minutes. Do you want to continue?',
-    PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) = ID_NO) then Exit;
-
-  FReportList := TStringList.Create;
-  SL := FReportList;
-
-  SL.Add('pLan Diagnostic System Report');
-  SL.Add('Program version: '                       + UGlobal.AppVersion);
-  SL.Add('=============== Local settings: ===============');
-  SL.Add('Settings.UserName: '                     + Settings.UserName);
-  SL.Add('Settings.RoomPort: '                     + IntToStr(Settings.RoomPort));
-  SL.Add('Settings.NetworkIP: '                    + Settings.NetworkIP);
-  SL.Add('Settings.OpenVPNPort: '                  + IntToStr(Settings.OpenVPNPort));
-  SL.Add('Settings.OpenVPNIP: '                    + Settings.OpenVPNIP);
-  SL.Add('Settings.OpenVPNMask: '                  + Settings.OpenVPNMask);
-  SL.Add('Settings.OpenVPNExeFile: '               + Settings.OpenVPNExeFile);
-  SL.Add('Settings.RemoteRoomIP: '                 + Settings.RemoteRoomIP);
-  SL.Add('Settings.RemoteRoomPort: '               + IntToStr(Settings.RemoteRoomPort));
-  SL.Add('Settings.RemoteVPNIP: '                  + Settings.RemoteVPNIP);
-  SL.Add('Settings.RemoteVPNPort: '                + IntToStr(Settings.RemoteVPNPort));
-  SL.Add('Settings.MinimizeOnStartup: '            + IntToStr(Byte(Settings.MinimizeOnStartup)));
-  SL.Add('Settings.StartOnSystemBoot: '            + IntToStr(Byte(Settings.StartOnSystemBoot)));
-  SL.Add('Settings.AutoNotify: '                   + IntToStr(Byte(Settings.AutoNotify)));
-  SL.Add('Settings.AutoNotifyPeriod: '             + IntToStr(Settings.AutoNotifyPeriod));
-  SL.Add('Settings.SelectedGames: ');
-  SL.Add(Settings.SelectedGames.Text);
-  SL.Add('Settings.SoundNotifyOnInterestingGame: ' + IntToStr(Byte(Settings.SoundNotifyOnInterestingGame)));
-  SL.Add('Settings.SoundNotifyOnUserJoined: '      + IntToStr(Byte(Settings.SoundNotifyOnUserJoined)));
-  SL.Add('Settings.AutomaticIP: '                  + IntToStr(Byte(Settings.AutomaticIP)));
-  SL.Add('');
-  SL.Add('=============== Paths Settings: ===============');
-  if FileExists(Settings.OpenVPNExeFile) then
-    SL.Add('openvpn.exe found')
-  else
-    SL.Add('!!!!! openvpn.exe not found !!!!!');
-
-  SL.Add('=============== Adapter List: =================');
-
-  AdapterList := TAdapterList.Create;
-  try
-    for I := 0 to AdapterList.Count - 1 do
-    begin
-      SL.Add(AdapterList.Items[I].Description + ': ' +
-        AdapterList.Items[I].IPAddress);
-    end;
-  finally
-    AdapterList.Free;
-  end;
-
-  OVPNInitForm := TOVPNInitForm.Create(nil);
-  OVPNInitForm.Caption := 'Create system report';
-  OVPNInitForm.LblInit.Caption := 'Please, wait...';
-  OVPNInitForm.Show;
-
-  VPNManager.CreateServer(Settings.OpenVPNPort, True, UGlobal.DataPath);
-
-  Self.Enabled := False;
-
-  TimerGetData.Interval := 30000;
-  TimerGetData.Tag := diGetCreateServerLog;
-  TimerGetData.Enabled := True;
-end;
-
-procedure TShowRoomsForm.MiQuitClick(Sender: TObject);
+procedure TMainForm.MiQuitClick(Sender: TObject);
 begin
   // Не знаю почему, но при включении диалога возникает ошибка.
-  {if (Application.MessageBox(PChar(Language.msgConfirmQuit),
-    PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) <> mrYes) then Exit;}
+  if (Application.MessageBox(PChar(Language.msgConfirmQuit),
+    PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) <> mrYes) then Exit;
 
   // Отключаемся.
   BtnDisconnectClick(nil);
@@ -2328,7 +2172,7 @@ begin
   Self.Close;
 end;
 
-procedure TShowRoomsForm.MiRefreshClick(Sender: TObject);
+procedure TMainForm.MiRefreshClick(Sender: TObject);
 begin
   LvRoomsList.Items.Clear;
   ReRoomInfo.Clear;
@@ -2339,19 +2183,19 @@ begin
   HTTPVpnGet.GetString;
 end;
 
-procedure TShowRoomsForm.MiHomePageClick(Sender: TObject);
+procedure TMainForm.MiHomePageClick(Sender: TObject);
 begin
   ShellExecute(Application.Handle, 'open', 'http://plangc.ru/', nil, nil,
     SW_NORMAL);
 end;
 
-procedure TShowRoomsForm.MiForumClick(Sender: TObject);
+procedure TMainForm.MiForumClick(Sender: TObject);
 begin
   ShellExecute(Application.Handle, 'open', 'http://plangc.ru/forum.html', nil,
     nil, SW_NORMAL);
 end;
 
-procedure TShowRoomsForm.MiAboutClick(Sender: TObject);
+procedure TMainForm.MiAboutClick(Sender: TObject);
 begin
   with TAboutForm.Create(Self) do
   try
@@ -2385,7 +2229,7 @@ begin
   end;
 end; 
 
-procedure TShowRoomsForm.WMDropFiles(var Msg: TWMDropFiles);
+procedure TMainForm.WMDropFiles(var Msg: TWMDropFiles);
 var
   Count: Integer;
   I: Integer;
@@ -2414,7 +2258,7 @@ begin
   Msg.Result := 0;
 end;
 
-procedure TShowRoomsForm.MiTeamSpeakClick(Sender: TObject);
+procedure TMainForm.MiTeamSpeakClick(Sender: TObject);
 begin
   ShellExecute(Application.Handle, 'open',
     PChar('ts3server://plangc.nanoloop.ru?port=9987&nickname=' +

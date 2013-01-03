@@ -208,7 +208,7 @@ var
   VerInfo: Pointer;
   VerValueSize: DWORD;
   VerValue: PVSFixedFileInfo;
-  V1, V2, V3, V4: Word;
+  V1, V2, {V3,} V4: Word;
   Dummy: DWORD;
 begin
   Result := '';
@@ -223,10 +223,11 @@ begin
       begin
         V1 := dwFileVersionMS shr 16;
         V2 := dwFileVersionMS and $FFFF;
-        V3 := dwFileVersionLS shr 16;
+        //V3 := dwFileVersionLS shr 16;
         V4 := dwFileVersionLS and $FFFF;
       end;
-      Result := Format('%d.%d.%d.%d', [V1, V2, V3, V4]);
+      //Result := Format('%d.%d.%d.%d', [V1, V2, V3, V4]);
+      Result := Format('%d.%d.%d', [V1, V2, V4]);
     finally
       FreeMem(VerInfo, VerInfoSize);
     end;

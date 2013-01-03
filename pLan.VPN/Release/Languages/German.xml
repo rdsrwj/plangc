@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1250"?>
-<language name="de" version="1.0.4">
+<language name="de" version="1.0.5">
 	<messages
 		msgCantEstablishConnection="Kann keine verbindung herstellen werden"
 		msgRoomHasNoPing="The room has no ping. Are you sure want to continue?"
@@ -73,7 +73,7 @@
 		<label ComponentName="sButton3" Caption="..."/>
 		<label ComponentName="sTabSheet5" Caption="Über"/>
 	</window>
-	<window Name="ShowRoomsForm" Caption="pLan OpenVPN Edition">
+	<window Name="MainForm" Caption="pLan OpenVPN Edition">
 		<label ComponentName="TsRoomList" Caption="Raumliste"/>
 		<label ComponentName="TsNews" Caption="News"/>
 		<label ComponentName="TsMainChat" Caption="IRC client"/>

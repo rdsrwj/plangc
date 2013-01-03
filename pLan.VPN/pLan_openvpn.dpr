@@ -4,7 +4,11 @@ program pLan_openvpn;
 {$R 'Resources\manifest.res' 'Resources\manifest.rc'}
 
 uses
-  Windows, Forms, PsAPI, Registry, SysUtils,
+  Windows,
+  Forms,
+  PsAPI,
+  Registry,
+  SysUtils,
   UGlobal in 'UGlobal.pas',
   USettings in 'USettings.pas',
   ULanguage in 'ULanguage.pas',
@@ -12,7 +16,7 @@ uses
   OpenVPNManager in 'Components\OpenVPNManager.pas',
   AdaptItems in 'AdaptItems.pas',
   PrevInst in 'PrevInst.pas',
-  frmShowRooms in 'frmShowRooms.pas' {ShowRoomsForm},
+  frmMain in 'frmMain.pas' {MainForm},
   frmCreateRoom in 'frmCreateRoom.pas' {CreateRoomForm},
   frmConfig in 'frmConfig.pas' {ConfigForm},
   frmUpdateProgram in 'frmUpdateProgram.pas' {UpdateForm},
@@ -42,7 +46,7 @@ begin
       SetLength(S, MAX_PATH);
       Sz := GetModuleBaseName(PH, 0, @S[1], MAX_PATH);
       SetLength(S, Sz);
-      if (Pos('pLan_openvpn', S) <> 0) then
+      if (Pos('pLan_openvpn.exe', S) <> 0) or (Pos('pLanVPN.exe', S) <> 0) then
       begin
         TerminateProcess(PH, 0);
         WaitForSingleObject(PH, INFINITE);
@@ -112,6 +116,6 @@ begin
 
   Randomize;
 
-  Application.CreateForm(TShowRoomsForm, ShowRoomsForm);
+  Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.
