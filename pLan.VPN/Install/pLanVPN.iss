@@ -41,7 +41,7 @@ Name: "skins"; Description: "Skins"; Types: full
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"
 Name: "openvpn"; Description: "Install OpenVPN 2.2.2"
-Name: "teamspeak"; Description: "Download TeamSpeak 3 Client 3.0.9.2"
+Name: "teamspeak"; Description: "Download TeamSpeak 3 Client"
 
 [Files]
 Source: "..\Release\Languages\*"; DestDir: "{app}\Languages"; Components: "program"; Flags: ignoreversion
