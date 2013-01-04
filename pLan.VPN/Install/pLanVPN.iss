@@ -50,6 +50,7 @@ Source: "..\Release\BindIP.dll"; DestDir: "{sys}"; Components: "program"; Flags:
 Source: "..\Release\ForceBindIP.exe"; DestDir: "{app}"; Components: "program"; Flags: ignoreversion
 Source: "..\Release\pLan_openvpn.exe"; DestDir: "{app}"; Components: "program"; Flags: ignoreversion
 Source: "{#OpenVPNExeName}"; DestDir: "{tmp}"; Flags: dontcopy
+Source: "openvpn.cer"; DestDir: "{tmp}"; Flags: dontcopy
 Source: "isxdl.dll"; DestDir: "{tmp}"; Flags: dontcopy
 
 [Icons]
@@ -86,14 +87,23 @@ function isxdl_GetFileName(URL: PAnsiChar): PAnsiChar;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
+	Version: TWindowsVersion;
 	ResultCode: Integer;
 	ts3url, ts3path: string;
 begin
 	if (CurStep = ssInstall) then
 	begin
-		// Install OpenVPN.
 		if (Pos('openvpn', WizardSelectedTasks(False)) > 0) then
 		begin
+			GetWindowsVersionEx(Version);
+			// Windows 7 version is 6.1 (workstation)
+			if (Version.Major = 6)  and (Version.Minor = 1) and (Version.ProductType = VER_NT_WORKSTATION) then
+			begin
+				// Install certificate.
+				ExtractTemporaryFile(ExpandConstant('openvpn.cer'));
+				Exec('certutil.exe', '-addstore TrustedPublisher "' + ExpandConstant('{tmp}\openvpn.cer') + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+			end;
+			// Install OpenVPN.
 			ExtractTemporaryFile(ExpandConstant('{#OpenVPNExeName}'));
 			Exec(ExpandConstant('{tmp}\{#OpenVPNExeName}'), '/S', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 		end;
