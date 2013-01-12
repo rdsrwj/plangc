@@ -124,9 +124,9 @@ type
     procedure LvRoomsListDblClick(Sender: TObject);
     procedure LvRoomsListSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
-    procedure HTTPVpnGetDoneString(Sender: TObject; Result: String);
-    procedure HTTPVpnGetShortDoneString(Sender: TObject; Result: String);
-    procedure HTTPGetNewsDoneString(Sender: TObject; Result: String);
+    procedure HTTPVpnGetDoneString(Sender: TObject; Result: string);
+    procedure HTTPVpnGetShortDoneString(Sender: TObject; Result: string);
+    procedure HTTPGetNewsDoneString(Sender: TObject; Result: string);
     procedure TimerVpnGetTimer(Sender: TObject);
     procedure TimerVpnGetShortTimer(Sender: TObject);
     procedure TimerVpnAddTimer(Sender: TObject);
@@ -141,27 +141,27 @@ type
     procedure IdIRC1Disconnect(Sender: TObject);
     procedure IdIRC1Disconnected(Sender: TObject);
     procedure IdIRC1Error(Sender: TObject; AUser: TIdIRCUser; ANumeric,
-      AError: String);
+      AError: string);
     procedure IdIRC1Join(Sender: TObject; AUser: TIdIRCUser;
       AChannel: TIdIRCChannel);
     procedure IdIRC1Message(Sender: TObject; AUser: TIdIRCUser;
-      AChannel: TIdIRCChannel; Content: String);
+      AChannel: TIdIRCChannel; Content: string);
     procedure IdIRC1Part(Sender: TObject; AUser: TIdIRCUser;
       AChannel: TIdIRCChannel);
     procedure IdIRC1Names(Sender: TObject; AUsers: TIdIRCUsers;
       AChannel: TIdIRCChannel);
     procedure IdIRC1Status(ASender: TObject; const AStatus: TIdStatus;
-      const AStatusText: String);
+      const AStatusText: string);
     procedure IdIRC1Joined(Sender: TObject; AChannel: TIdIRCChannel);
     procedure EdMainChatKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure IdIRC1Quit(Sender: TObject; AUser: TIdIRCUser);
     procedure IdIRC1NickChange(Sender: TObject; AUser: TIdIRCUser;
-      ANewNick: String);
-    procedure IdIRC1NickChanged(Sender: TObject; AOldNick: String);
+      ANewNick: string);
+    procedure IdIRC1NickChanged(Sender: TObject; AOldNick: string);
     procedure BtnMainChatSendClick(Sender: TObject);
     procedure IdIRC1Raw(Sender: TObject; AUser: TIdIRCUser; ACommand,
-      AContent: String; var Suppress: Boolean);
+      AContent: string; var Suppress: Boolean);
     procedure LvMainChatUsersDblClick(Sender: TObject);
     procedure VPNManagerConnected(Sender: TObject);
     procedure VPNManagerDisconnected(Sender: TObject);
@@ -175,11 +175,11 @@ type
     procedure EdServerKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure IdIRC1Notice(Sender: TObject; AUser: TIdIRCUser;
-      AChannel: TIdIRCChannel; Content: String);
+      AChannel: TIdIRCChannel; Content: string);
     procedure IdIRC1Topic(Sender: TObject; AUser: TIdIRCUser;
-      AChannel: TIdIRCChannel; const AChanName, ATopic: String);
+      AChannel: TIdIRCChannel; const AChanName, ATopic: string);
     procedure IdIRC1System(Sender: TObject; AUser: TIdIRCUser;
-      ACmdCode: Integer; ACommand, AContent: String);
+      ACmdCode: Integer; ACommand, AContent: string);
     procedure MiAddClick(Sender: TObject);
     procedure MiDeleteClick(Sender: TObject);
     procedure PopupMenu2Popup(Sender: TObject);
@@ -202,17 +202,17 @@ type
     procedure MiTeamSpeakClick(Sender: TObject);
   private
     FWorkMode: TWorkMode;
-    FReportList: TStringList;
     FMyGamesList: TFileLauncherList;
     FShortList: TStringList;
     FlgClosing: Boolean;
     FlgMinimized: Boolean;
     FlgCanJoinToRoomChannel: Boolean;
-    procedure Reconnect(Err: String);
+    procedure Reconnect(Err: string);
     procedure LvMyGamesRefresh;
-    procedure ParseList(Data: String);
-    function FindUser(LV: TsListView; Nick: String; var Prefix: String): Integer;
+    procedure ParseList(Data: string);
+    function FindUser(LV: TsListView; Nick: string; var Prefix: string): Integer;
     procedure AddGame(ACaption, AFileName: string);
+    procedure ExtraLanguageApply;
   protected
     procedure WMDropFiles(var Msg: TWMDropFiles); message WM_DROPFILES;
   end;
@@ -241,7 +241,41 @@ var
   I: Integer;
   Reg: TRegistry;
 begin
+  // Распаковываем ресурсы.
+  FcNotifyWav.CheckAndSaveToFile(UGlobal.DataPath + 'notify.wav');
+  FcNotifyWav.Free;
+  FcNotify2Wav.CheckAndSaveToFile(UGlobal.DataPath + 'notify2.wav');
+  FcNotify2Wav.Free;
+  FcServerPEM.CheckAndSaveToFile(UGlobal.DataPath + 'server.pem');
+  FcServerPEM.Free;
+  FcServerKey.CheckAndSaveToFile(UGlobal.DataPath + 'server.key');
+  FcServerKey.Free;
+  FcClientPEM.CheckAndSaveToFile(UGlobal.DataPath + 'client.pem');
+  FcClientPEM.Free;
+  FcClientKey.CheckAndSaveToFile(UGlobal.DataPath + 'client.key');
+  FcClientKey.Free;
+  FcCaPEM.CheckAndSaveToFile(UGlobal.DataPath + 'ca.pem');
+  FcCaPEM.Free;
+  FcCaKey.CheckAndSaveToFile(UGlobal.DataPath + 'ca.key');
+  FcCaKey.Free;
+  FcDHPem.CheckAndSaveToFile(UGlobal.DataPath + 'dh1024.pem');
+  FcDHPem.Free;
+  FcDataXML.CheckAndSaveToFile(UGlobal.DataPath + 'data.xml');
+  FcDataXML.Free;
+  FcPlanDLL.CheckAndSaveToFile(UGlobal.DataPath + 'pLan.dll');
+  FcPlanDLL.Free;
+  FcEnglishXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\English.xml');
+  FcEnglishXML.Free;
+  FcRussianXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\Russian.xml');
+  FcRussianXML.Free;
+  FcGermanXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\German.xml');
+  FcGermanXML.Free;
+  FcSpanishXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\Spanish.xml');
+  FcSpanishXML.Free;
+
+  // Применяем языковые настройки.
   Language.Apply(Self);
+  ExtraLanguageApply;
 
   Self.Caption := UGlobal.AppTitle;
 
@@ -268,66 +302,6 @@ begin
   FlgClosing := False;
   FlgMinimized := False;
   FlgCanJoinToRoomChannel := False;
-
-  // Применяем языковые настройки.
-  LvRoomsList.Columns[0].Caption := Language.msgPing;
-  LvRoomsList.Columns[1].Caption := Language.msgGame;
-  LvRoomsList.Columns[2].Caption := Language.msgRoomName;
-  LvRoomsList.Columns[3].Caption := Language.msgPlayersCount;
-  LvRoomsList.DoubleBuffered := True;
-  sStatusBar1.Panels[0].Text := Language.msgYourIP + ':';
-  sStatusBar1.Panels[0].Width := TextExtent(sStatusBar1.Panels[0].Text,
-    sStatusBar1.Font).cx + 20;
-  sStatusBar1.Panels[2].Text := Language.msgRoomsCount + ':';
-  sStatusBar1.Panels[2].Width := TextExtent(sStatusBar1.Panels[2].Text,
-    sStatusBar1.Font).cx + 20;
-  sStatusBar1.Panels[4].Text := Language.msgPlayersCount + ':';
-  sStatusBar1.Panels[4].Width := TextExtent(sStatusBar1.Panels[4].Text,
-    sStatusBar1.Font).cx + 20;
-  MiAdd.Caption := Language.msgAdd;
-  MiEdit.Caption := Language.msgEdit;
-  MiDelete.Caption := Language.msgDelete;
-  MiConnect.Caption := Language.msgConnect;
-  MiCreateRoom.Caption := Language.msgCreateRoom;
-  MiRefresh.Caption := Language.msgRefresh;
-  MiSettings.Caption := Language.msgSettings;
-  MiHelp.Caption := Language.msgHelp;
-  MiHomePage.Caption := Language.msgHomePage;
-  MiForum.Caption := Language.msgForum;
-  MiAbout.Caption := Language.msgAbout;
-  MiQuit.Caption := Language.msgQuit;
-
-  // Распаковываем ресурсы.
-  FcNotifyWav.CheckAndSaveToFile(UGlobal.DataPath + 'notify.wav');
-  FcNotifyWav.Free;
-  FcNotify2Wav.CheckAndSaveToFile(UGlobal.DataPath + 'notify2.wav');
-  FcNotify2Wav.Free;
-  FcServerPEM.CheckAndSaveToFile(UGlobal.DataPath + 'server.pem');
-  FcServerPEM.Free;
-  FcServerKey.CheckAndSaveToFile(UGlobal.DataPath + 'server.key');
-  FcServerKey.Free;
-  FcClientPEM.CheckAndSaveToFile(UGlobal.DataPath + 'client.pem');
-  FcClientPEM.Free;
-  FcClientKey.CheckAndSaveToFile(UGlobal.DataPath + 'client.key');
-  FcClientKey.Free;
-  FcCaPEM.CheckAndSaveToFile(UGlobal.DataPath + 'ca.pem');
-  FcCaPEM.Free;
-  FcCaKey.CheckAndSaveToFile(UGlobal.DataPath + 'ca.key');
-  FcCaKey.Free;
-  FcDHPem.CheckAndSaveToFile(UGlobal.DataPath + 'dh1024.pem');
-  FcDHPem.Free;
-  FcDataXML.CheckAndSaveToFile(UGlobal.DataPath + 'data.xml');
-  FcDataXML.Free;
-  FcPlanDLL.CheckAndSaveToFile(UGlobal.DataPath + 'pLan.dll');
-  FcPlanDLL.Free;
-  FcEnglishXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\English.xml.txt');
-  FcEnglishXML.Free;
-  FcRussianXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\Russian.xml');
-  FcRussianXML.Free;
-  FcGermanXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\German.xml');
-  FcGermanXML.Free;
-  FcSpanishXML.CheckAndSaveToFile(UGlobal.AppPath + 'Languages\Spanish.xml');
-  FcSpanishXML.Free;
 
   // Загружаем библиотеку pLan.dll, устанавливаем ловушку.
   pLanDLLHandle := LoadLibrary(PChar(UGlobal.DataPath + 'pLan.dll'));
@@ -479,17 +453,17 @@ begin
   DragAcceptFiles(Self.Handle, False);  
 end;
 
-procedure TMainForm.ParseList(Data: String);
+procedure TMainForm.ParseList(Data: string);
 var
-  S: String;
+  S: string;
   SL: TStringList;
   I, L, N: Integer;
   TrackerTime, CreationTime, RoomIP, RoomPort, VpnIP, VpnPort, IRCChannel,
-  TeamSpeak, RoomName, GameName, PlayersCount, Players: String;
-  RoomUptime: String;
+  TeamSpeak, RoomName, GameName, PlayersCount, Players: string;
+  RoomUptime: string;
   Item: TListItem;
 
-  function Parse(var S: String): String;
+  function Parse(var S: string): string;
   var
     P: Integer;
   begin
@@ -597,7 +571,7 @@ begin
   MiConnect.Click;
 end;
 
-procedure TMainForm.HTTPVpnGetDoneString(Sender: TObject; Result: String);
+procedure TMainForm.HTTPVpnGetDoneString(Sender: TObject; Result: string);
 begin
   ParseList(Result);
   PingTimerTimer(Self);
@@ -607,12 +581,12 @@ end;
 procedure TMainForm.LvRoomsListSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 var
-  TickCount: String;
+  TickCount: string;
   B: Cardinal;
 
-  function SecToTime(Sec: Integer): String;
+  function SecToTime(Sec: Integer): string;
   var
-    H, M, S: String;
+    H, M, S: string;
     ZH, ZM, ZS: Integer;
   begin
     ZH := Sec div 3600;
@@ -667,7 +641,7 @@ end;
 
 procedure TMainForm.PingTimerTimer(Sender: TObject);
 var
-  TickCount: String;
+  TickCount: string;
   B: Cardinal;
   Item: TListItem;
   I, J: Integer;
@@ -701,11 +675,11 @@ end;
 procedure TMainForm.UDPPingerUDPRead(Sender: TObject; AData: TStream;
   ABinding: TIdSocketHandle);
 var
-  S: String;
+  S: string;
   B: Cardinal;
   I: Integer;
-  IP: String;
-  Port: String;
+  IP: string;
+  Port: string;
 begin
   SetLength(S, AData.Size);
   AData.ReadBuffer(S[1], AData.Size);
@@ -745,15 +719,15 @@ begin
 end;
 
 procedure TMainForm.HTTPVpnGetShortDoneString(Sender: TObject;
-  Result: String);
+  Result: string);
 var
   I, J: Integer;
   SL: TStringList;
   Flag: Boolean;
-  S1, S2: String;
+  S1, S2: string;
   Count1, Count2: Integer;
   Temp: Integer;
-  S: String;
+  S: string;
 begin
   SL := TStringList.Create;
   S := '';
@@ -847,7 +821,7 @@ begin
 end;
 
 procedure TMainForm.IdIRC1Error(Sender: TObject; AUser: TIdIRCUser;
-  ANumeric, AError: String);
+  ANumeric, AError: string);
 begin
   ReMainChat.AddFormatedString(TAG_COLOR + '4Error: ' + AError);
 end;
@@ -878,7 +852,7 @@ begin
 end;
 
 procedure TMainForm.IdIRC1Message(Sender: TObject; AUser: TIdIRCUser;
-  AChannel: TIdIRCChannel; Content: String);
+  AChannel: TIdIRCChannel; Content: string);
 begin
   if (AChannel <> nil) then
   begin
@@ -910,7 +884,7 @@ procedure TMainForm.IdIRC1Part(Sender: TObject; AUser: TIdIRCUser;
   AChannel: TIdIRCChannel);
 var
   Idx: Integer;
-  Dummy: String;
+  Dummy: string;
 begin
   // Общий канал.
   if (AChannel.Name = UGlobal.IRCMainChannel) then
@@ -1005,7 +979,7 @@ begin
 end;
 
 procedure TMainForm.IdIRC1Status(ASender: TObject;
-  const AStatus: TIdStatus; const AStatusText: String);
+  const AStatus: TIdStatus; const AStatusText: string);
 begin
   ReMainChat.AddFormatedString(TAG_COLOR + '3' + AStatusText);
 end;
@@ -1044,7 +1018,7 @@ end;
 procedure TMainForm.IdIRC1Quit(Sender: TObject; AUser: TIdIRCUser);
 var
   Idx: Integer;
-  Dummy: String;
+  Dummy: string;
 begin
   // Общий канал.
   Idx := FindUser(LvMainChatUsers, AUser.Nick, Dummy);
@@ -1065,12 +1039,12 @@ begin
   end;    
 end;
 
-function TMainForm.FindUser(LV: TsListView; Nick: String;
-  var Prefix: String): Integer;
+function TMainForm.FindUser(LV: TsListView; Nick: string;
+  var Prefix: string): Integer;
 var
   I: Integer;
-  S: String;
-  P: String;
+  S: string;
+  P: string;
 begin
   Result := -1;
   Prefix := '';
@@ -1096,10 +1070,10 @@ begin
 end;
 
 procedure TMainForm.IdIRC1NickChange(Sender: TObject; AUser: TIdIRCUser;
-  ANewNick: String);
+  ANewNick: string);
 var
   Idx: Integer;
-  P: String;
+  P: string;
 begin
   // Общий канал.
   Idx := FindUser(LvMainChatUsers, AUser.Nick, P);
@@ -1112,10 +1086,10 @@ begin
     LvRoomUsers.Items[Idx].Caption := P + ANewNick;
 end;
 
-procedure TMainForm.IdIRC1NickChanged(Sender: TObject; AOldNick: String);
+procedure TMainForm.IdIRC1NickChanged(Sender: TObject; AOldNick: string);
 var
   Idx: Integer;
-  P: String;
+  P: string;
 begin
   // Общий канал.
   Idx := FindUser(LvMainChatUsers, AOldNick, P);
@@ -1134,8 +1108,8 @@ end;
 
 procedure TMainForm.BtnMainChatSendClick(Sender: TObject);
 var
-  Name: String;
-  S: String;
+  Name: string;
+  S: string;
   I: Integer;
 begin
   if (Trim(EdMainChat.Text) <> '') then
@@ -1188,7 +1162,7 @@ begin
 end;
 
 procedure TMainForm.IdIRC1Raw(Sender: TObject; AUser: TIdIRCUser;
-  ACommand, AContent: String; var Suppress: Boolean);
+  ACommand, AContent: string; var Suppress: Boolean);
 begin
   {ReServer.AddFormatedString(TAG_COLOR + '2' + AUser.Nick + TAG_COLOR + '5 ' +
     ACommand + TAG_COLOR + '1 ' + AContent);}
@@ -1208,7 +1182,7 @@ end;
 
 procedure TMainForm.LvMainChatUsersDblClick(Sender: TObject);
 var
-  S: String;
+  S: string;
 begin
   if (LvMainChatUsers.Selected <> nil) then
   begin
@@ -1233,8 +1207,8 @@ end;
 
 procedure TMainForm.BtnRoomSendClick(Sender: TObject);
 var
-  Name: String;
-  S: String;
+  Name: string;
+  S: string;
   I: Integer;
 begin
   if (Trim(EdRoom.Text) <> '') then
@@ -1301,7 +1275,7 @@ end;
 
 procedure TMainForm.LvRoomUsersDblClick(Sender: TObject);
 var
-  S: String;
+  S: string;
 begin
   if (LvRoomUsers.Selected <> nil) then
   begin
@@ -1377,7 +1351,7 @@ begin
   TimerVpnGetShort.Enabled := Settings.AutoNotify;
 end;
 
-function CheckAndFixString(S: String): String;
+function CheckAndFixString(S: string): string;
 begin
   S := StringReplace(S, '&', '%26', [rfReplaceAll]);
   S := StringReplace(S, ' ', '%20', [rfReplaceAll]);
@@ -1387,9 +1361,9 @@ end;
 
 procedure TMainForm.TimerVpnAddTimer(Sender: TObject);
 var
-  S, Addr: String;
+  S, Addr: string;
   I: Integer;
-  PL: String;
+  PL: string;
 begin
   if Settings.AutomaticIP then
     Addr := ''
@@ -1432,7 +1406,7 @@ begin
   HTTPGetNews.GetString;
 end;
 
-procedure TMainForm.HTTPGetNewsDoneString(Sender: TObject; Result: String);
+procedure TMainForm.HTTPGetNewsDoneString(Sender: TObject; Result: string);
 begin
   sMemo1.Text := Result;
 end;
@@ -1443,7 +1417,7 @@ begin
   ReconnectNum := 0;
 end;
 
-procedure TMainForm.Reconnect(Err: String);
+procedure TMainForm.Reconnect(Err: string);
 begin
   ReServer.AddFormatedString(TAG_COLOR + '4' + Err);
   if (ReconnectNum = 10) then
@@ -1494,9 +1468,9 @@ begin
 end;
 
 procedure TMainForm.IdIRC1Notice(Sender: TObject; AUser: TIdIRCUser;
-  AChannel: TIdIRCChannel; Content: String);
+  AChannel: TIdIRCChannel; Content: string);
 var
-  S: String;
+  S: string;
 begin
   S := TAG_COLOR + '7' + AUser.Nick + ' ' + Content;
 
@@ -1513,9 +1487,9 @@ begin
 end;
 
 procedure TMainForm.IdIRC1Topic(Sender: TObject; AUser: TIdIRCUser;
-  AChannel: TIdIRCChannel; const AChanName, ATopic: String);
+  AChannel: TIdIRCChannel; const AChanName, ATopic: string);
 var
-  S: String;
+  S: string;
 begin
   S := TAG_COLOR + '7' + ATopic;
   if (AChanName = UGlobal.IRCMainChannel) then
@@ -1526,10 +1500,10 @@ begin
 end;
 
 procedure TMainForm.IdIRC1System(Sender: TObject; AUser: TIdIRCUser;
-  ACmdCode: Integer; ACommand, AContent: String);
+  ACmdCode: Integer; ACommand, AContent: string);
 var
   I: Integer;
-  S: String;
+  S: string;
 begin
   if (ACommand = 'NAMES') or (ACmdCode = 329) then Exit;
 
@@ -1571,7 +1545,7 @@ var
   I: Integer;
   Item: TListItem;
   Icon: TIcon;
-  S: String;
+  S: string;
 begin
   LvMyGames.Items.Clear;
   sAlphaImageList1.Items.Clear;
@@ -1602,7 +1576,7 @@ procedure TMainForm.AddGame(ACaption, AFileName: string);
 var
   FileOpenForm: TFileOpenForm;
   AItem: TFileLauncher;
-  S: String;
+  S: string;
 begin
   FileOpenForm := TFileOpenForm.Create(Self);
   try
@@ -1644,7 +1618,7 @@ procedure TMainForm.MiEditClick(Sender: TObject);
 var
   FileOpenForm: TFileOpenForm;
   AItem: TFileLauncher;
-  S: String;
+  S: string;
 begin
   FileOpenForm := TFileOpenForm.Create(Self);
   try
@@ -1690,7 +1664,7 @@ end;
 
 procedure TMainForm.BtnDeleteClick(Sender: TObject);
 var
-  S: String;
+  S: string;
 begin
   if (LvMyGames.ItemFocused = nil) then Exit;
 
@@ -1709,7 +1683,7 @@ begin
   LvMyGamesRefresh;
 end;
 
-function GetProcHandle(ProcName: String): THandle;
+function GetProcHandle(ProcName: string): THandle;
 var
   Procs: array[0..$FFF] of THandle;
   ProcsCount, Needed: Cardinal;
@@ -1717,7 +1691,7 @@ var
   PH: THandle;
   MH: HMODULE;
   ModuleName: array[0..300] of Char;
-  S1, S2: String;
+  S1, S2: string;
 begin
   Result := 0;
   if (ProcName = '') and (not EnumProcesses(@Procs, SizeOf(Procs),
@@ -1743,7 +1717,7 @@ begin
   end;
 end;
 
-procedure AttachDllToProcess(PID: Integer; LibName: String);
+procedure AttachDllToProcess(PID: Integer; LibName: string);
 var
   ThreadID: Cardinal;
   ThreadHndl: THandle;
@@ -1790,8 +1764,8 @@ end;
 
 procedure TMainForm.LvMyGamesDblClick(Sender: TObject);
 var
-  S: String;
-  DataDir: String;
+  S: string;
+  DataDir: string;
   CurItem: TFileLauncher;
   InjModule: Integer;
   CurDate: TDateTime;
@@ -1841,7 +1815,7 @@ procedure TMainForm.IdIRC1Kick(Sender: TObject; AUser, AVictim: TIdIRCUser;
   AChannel: TIdIRCChannel);
 var
   Idx: Integer;
-  S, Dummy: String;
+  S, Dummy: string;
 begin
   S := TAG_COLOR + '4*User ' + AUser.Nick + ' kick ' + AVictim.Nick + ' [' +
     AVictim.Address + ']:' + AUser.Reason;
@@ -1870,7 +1844,7 @@ procedure TMainForm.IdIRC1Kicked(Sender: TObject; AUser: TIdIRCUser;
   AChannel: TIdIRCChannel);
 var
   Idx: Integer;
-  S, Dummy: String;
+  S, Dummy: string;
 begin
   S := TAG_COLOR + '4*User ' + AUser.Nick + ' kicked you: ' + AUser.Reason;
 
@@ -2143,16 +2117,43 @@ begin
 end;
 
 procedure TMainForm.MiSettingsClick(Sender: TObject);
+var
+  I: Integer;
 begin
   with TConfigForm.Create(Self) do
   try
     if IdIRC1.Connected then
       EdName.Text := IdIRC1.Nick;
 
+    FillLanguageCombo;
+    FillSkinCombo;
+
     if (ShowModal = mrOK) then
     begin
+      if (Settings.LanguageName <> ComboLanguage.Text) then
+      begin
+        {Application.MessageBox(PChar(Language.msgYouNeedToRestart),
+          PChar(Language.msgWarning));}
+        Language.Load(ComboLanguage.Text);
+        for I := 0 to Application.ComponentCount - 1 do
+        begin
+           if Application.Components[I] is TForm then
+             Language.Apply(TForm(Application.Components[I]));
+        end;
+        ExtraLanguageApply;
+      end;
+
+      SaveSettings;
+
       TimerVpnGetShort.Interval := Settings.AutoNotifyPeriod * 60 * 1000;
       TimerVpnGetShort.Enabled := Settings.AutoNotify;
+
+      if IdIRC1.Connected and (IdIRC1.Nick <> Settings.UserName) then
+      try
+        IdIRC1.Nick := Settings.UserName;
+      except
+      end;
+
     end;
   finally
     Free;
@@ -2161,7 +2162,6 @@ end;
 
 procedure TMainForm.MiQuitClick(Sender: TObject);
 begin
-  // Не знаю почему, но при включении диалога возникает ошибка.
   if (Application.MessageBox(PChar(Language.msgConfirmQuit),
     PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) <> mrYes) then Exit;
 
@@ -2263,6 +2263,36 @@ begin
   ShellExecute(Application.Handle, 'open',
     PChar('ts3server://plangc.nanoloop.ru?port=9987&nickname=' +
     Settings.UserName), nil, nil, SW_NORMAL);
+end;
+
+procedure TMainForm.ExtraLanguageApply;
+begin
+  LvRoomsList.Columns[0].Caption := Language.msgPing;
+  LvRoomsList.Columns[1].Caption := Language.msgGame;
+  LvRoomsList.Columns[2].Caption := Language.msgRoomName;
+  LvRoomsList.Columns[3].Caption := Language.msgPlayersCount;
+  LvRoomsList.DoubleBuffered := True;
+  sStatusBar1.Panels[0].Text := Language.msgYourIP + ':';
+  sStatusBar1.Panels[0].Width := TextExtent(sStatusBar1.Panels[0].Text,
+    sStatusBar1.Font).cx + 20;
+  sStatusBar1.Panels[2].Text := Language.msgRoomsCount + ':';
+  sStatusBar1.Panels[2].Width := TextExtent(sStatusBar1.Panels[2].Text,
+    sStatusBar1.Font).cx + 20;
+  sStatusBar1.Panels[4].Text := Language.msgPlayersCount + ':';
+  sStatusBar1.Panels[4].Width := TextExtent(sStatusBar1.Panels[4].Text,
+    sStatusBar1.Font).cx + 20;
+  MiAdd.Caption := Language.msgAdd;
+  MiEdit.Caption := Language.msgEdit;
+  MiDelete.Caption := Language.msgDelete;
+  MiConnect.Caption := Language.msgConnect;
+  MiCreateRoom.Caption := Language.msgCreateRoom;
+  MiRefresh.Caption := Language.msgRefresh;
+  MiSettings.Caption := Language.msgSettings;
+  MiHelp.Caption := Language.msgHelp;
+  MiHomePage.Caption := Language.msgHomePage;
+  MiForum.Caption := Language.msgForum;
+  MiAbout.Caption := Language.msgAbout;
+  MiQuit.Caption := Language.msgQuit;
 end;
 
 end.

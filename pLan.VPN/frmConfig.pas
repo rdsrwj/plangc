@@ -64,7 +64,6 @@ type
     sPanel2: TsPanel;
     sButton6: TsButton;
     procedure FormCreate(Sender: TObject);
-    procedure Label12Click(Sender: TObject);
     procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure sButton1Click(Sender: TObject);
@@ -76,12 +75,12 @@ type
     procedure sButton6Click(Sender: TObject);
   private
     { Private declarations }
-    procedure SaveSettings;
-    procedure FillLanguageCombo;
-    procedure FillSkinCombo;
-    procedure FillAdaptersCombo(LastAdress: String = '');
+    procedure FillAdaptersCombo(LastAdress: string = '');
   public
     { Public declarations }
+    procedure FillLanguageCombo;
+    procedure FillSkinCombo;
+    procedure SaveSettings;
   end;
 
 var
@@ -158,11 +157,7 @@ begin
   ComboInterface.Enabled := not ChkAutomaticIP.Checked;
 
   FillLanguageCombo;
-  ComboLanguage.ItemIndex := ComboLanguage.Items.IndexOf(Settings.LanguageName);
-
   FillSkinCombo;
-  ComboSkin.ItemIndex :=
-    ComboSkin.Items.IndexOf(MainForm.sSkinManager1.SkinName);
 end;
 
 procedure TConfigForm.SaveSettings;
@@ -205,35 +200,23 @@ begin
   end;
 
   Settings.Save;
-
-  if MainForm.IdIRC1.Connected and
-    (MainForm.IdIRC1.Nick <> Settings.UserName) then
-  try
-    MainForm.IdIRC1.Nick := Settings.UserName;
-  except
-  end;
-end;
-
-procedure TConfigForm.Label12Click(Sender: TObject);
-begin
-  ShellExecute(Application.Handle, 'open',
-    PAnsiChar('http://www.teamspeak.org'), nil, nil, SW_NORMAL);
 end;
 
 procedure TConfigForm.FillLanguageCombo;
 var
   SR: TSearchRec;
-  S: String;
+  S: string;
 begin
   S := UGlobal.AppPath + 'Languages\';
   if (FindFirst(S + '*.xml', {faHidden + faSysFile}faAnyFile, SR) = 0) then
   begin
+    ComboLanguage.Items.Clear;
     repeat
-      {if (SR.Name <> '..') then}
       ComboLanguage.Items.Add(ChangeFileExt(SR.Name, ''));
     until (FindNext(SR) <> 0);
     FindClose(SR);
   end;
+  ComboLanguage.ItemIndex := ComboLanguage.Items.IndexOf(Settings.LanguageName);
 end;
 
 procedure TConfigForm.FillSkinCombo;
@@ -245,14 +228,17 @@ begin
   MainForm.sSkinManager1.GetSkinNames(StrList);
   if (StrList.Count > 0) then
   begin
+    ComboSkin.Items.Clear;
     StrList.Sort;
     for I := 0 to StrList.Count - 1 do
       ComboSkin.Items.Add(StrList.Strings[I]);
   end;
   StrList.Free;
+  ComboSkin.ItemIndex :=
+    ComboSkin.Items.IndexOf(MainForm.sSkinManager1.SkinName);
 end;
 
-procedure TConfigForm.FillAdaptersCombo(LastAdress: String = '');
+procedure TConfigForm.FillAdaptersCombo(LastAdress: string = '');
 var
   I: Integer;
   Item: TAdapterItem;
@@ -285,14 +271,6 @@ begin
   end
   else
   begin
-    if (Settings.LanguageName <> ComboLanguage.Text) then
-    begin
-      Application.MessageBox(PChar(Language.msgYouNeedToRestart),
-        PChar(Language.msgWarning));
-    end;
-
-    SaveSettings;
-
     ModalResult := mrOK;
   end;
 end;
