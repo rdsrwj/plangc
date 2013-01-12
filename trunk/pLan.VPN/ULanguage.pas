@@ -11,9 +11,9 @@ uses
 type
   TObjBase = class(TObject)
   public
-    WindowName: String;
-    ComponentName: String;
-    Caption: String;
+    WindowName: string;
+    ComponentName: string;
+    Caption: string;
   end;
 
   TObjWindow = class(TObjBase)
@@ -27,7 +27,7 @@ type
 
   TColumn = class(TObject)
   public
-    Caption: String;
+    Caption: string;
   end;
 
   TObjListView = class(TObjBase)
@@ -45,55 +45,55 @@ type
   private
     FObjects: TList;
   public
-    Code: String; // ru, en, de
-    msgCantEstablishConnection: String;
-    msgRoomHasNoPing: String;
-    msgCantCreateServer: String;
-    msgYourReportText: String;
-    msgYourReportCaption: String;
-    msgYouNeedToRestart: String;
-    msgYouNeedToSelectIP: String;
-    msgError: String;
-    msgWarning: String;
-    msgAdd: String;
-    msgEdit: String;
-    msgDelete: String;
-    msgConfirmDelete: String;
-    msgPing: String;
-    msgGame: String;
-    msgRoomName: String;
-    msgPlayersCount: String;
-    msgRoomIP: String;
-    msgRoomPort: String;
-    msgOpenVPNIP: String;
-    msgOpenVPNPort: String;
-    msgPlayers: String;
-    msgRetrievingNews: String;
-    msgRetrievingVersion: String;
-    msgUpdatingGameList: String;
-    msgUpdatingProgram: String;
-    msgYourIP: String;
-    msgUptime: String;
-    msgChannel: String;
-    msgRoomsCount: String;
-    msgConfirmQuit: String;
-    msgCompatibility: String;
-    msgConnect: String;
-    msgCreateRoom: String;
-    msgRefresh: String;
-    msgSettings: String;
-    msgMakeReport: String;
-    msgHelp: String;
-    msgHomePage: String;
-    msgForum: String;
-    msgAbout: String;
-    msgQuit: String;
+    Code: string; // ru, en, de
+    msgCantEstablishConnection: string;
+    msgRoomHasNoPing: string;
+    msgCantCreateServer: string;
+    msgYourReportText: string;
+    msgYourReportCaption: string;
+    msgYouNeedToRestart: string;
+    msgYouNeedToSelectIP: string;
+    msgError: string;
+    msgWarning: string;
+    msgAdd: string;
+    msgEdit: string;
+    msgDelete: string;
+    msgConfirmDelete: string;
+    msgPing: string;
+    msgGame: string;
+    msgRoomName: string;
+    msgPlayersCount: string;
+    msgRoomIP: string;
+    msgRoomPort: string;
+    msgOpenVPNIP: string;
+    msgOpenVPNPort: string;
+    msgPlayers: string;
+    msgRetrievingNews: string;
+    msgRetrievingVersion: string;
+    msgUpdatingGameList: string;
+    msgUpdatingProgram: string;
+    msgYourIP: string;
+    msgUptime: string;
+    msgChannel: string;
+    msgRoomsCount: string;
+    msgConfirmQuit: string;
+    msgCompatibility: string;
+    msgConnect: string;
+    msgCreateRoom: string;
+    msgRefresh: string;
+    msgSettings: string;
+    msgMakeReport: string;
+    msgHelp: string;
+    msgHomePage: string;
+    msgForum: string;
+    msgAbout: string;
+    msgQuit: string;
   public
     constructor Create;
     destructor Destroy; override;
   public
-    procedure Load(Name: String);
-    function ItemByName(WindowName, ComponentName: String): TObjBase;
+    procedure Load(Name: string);
+    function ItemByName(WindowName, ComponentName: string): TObjBase;
     procedure LoadCommonSettings(Obj: TObjBase; Element: IXMLNode);
     procedure Apply(Form: TForm);
     procedure Delete(Index: Integer);
@@ -195,7 +195,7 @@ begin
   inherited;
 end;
 
-function TLanguage.ItemByName(WindowName, ComponentName: String): TObjBase;
+function TLanguage.ItemByName(WindowName, ComponentName: string): TObjBase;
 var
   I: Integer;
   Obj: TObjBase;
@@ -219,9 +219,9 @@ begin
   Obj.ComponentName := Element.GetAttr('ComponentName');
 end;
 
-procedure TLanguage.Load(Name: String);
+procedure TLanguage.Load(Name: string);
 var
-  FileName: String;
+  FileName: string;
   XML: IXmlDocument;
   MessagesNL, WindowNL, ButtonNL, LabelNL, ListViewNL,
   ColumnNL: IXmlNodeList;
@@ -233,12 +233,12 @@ var
   ObjListView: TObjListView;
   Column: TColumn;
 begin
-  Clear;
-
   FileName := UGlobal.AppPath + 'Languages\' + Name + '.xml';
 
   if FileExists(FileName) then
   begin
+    Clear;
+
     XML := CreateXmlDocument();
     XML.Load(FileName);
 

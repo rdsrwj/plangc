@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1250"?>
-<language name="de" version="1.0.5">
+<language name="de" version="1.0.6">
 	<messages
 		msgCantEstablishConnection="Kann keine verbindung herstellen werden"
 		msgRoomHasNoPing="The room has no ping. Are you sure want to continue?"
@@ -35,8 +35,12 @@
 		msgConnect="Verbindeung"
 		msgCreateRoom="Raum erstellen"
 		msgRefresh="Refresh room list"
-		msgMakeReport="System-Bericht"
 		msgSettings="Einstellungen"
+		msgMakeReport="System-Bericht"
+		msgHelp="Help"
+		msgHomePage="Home Page"
+		msgForum="Forum"
+		msgAbout="About"
 		msgQuit="Quit"
 	/>
 	<window Name="UpdateForm" Caption="Suche nach Updates"/>
