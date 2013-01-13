@@ -56,8 +56,12 @@ end;
 
 procedure TCreateRoomForm.CbGameNameKeyPress(Sender: TObject; var Key: Char);
 begin
-  if (Key = #13) then
-    BtnOK.OnClick(Sender);
+  case Key of
+    '0'..'9', 'A'..'Z', 'a'..'z', '_', ' ': begin end;
+    #13: BtnOK.OnClick(Sender);
+  else
+    Key := #0;
+  end;
 end;
 
 procedure TCreateRoomForm.FormMouseDown(Sender: TObject;

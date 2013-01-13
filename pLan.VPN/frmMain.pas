@@ -200,6 +200,8 @@ type
     procedure MiForumClick(Sender: TObject);
     procedure MiAboutClick(Sender: TObject);
     procedure MiTeamSpeakClick(Sender: TObject);
+    procedure IdIRC1CTCPReply(Sender: TObject; AUser: TIdIRCUser;
+      AChannel: TIdIRCChannel; Command, Args: String);
   private
     FWorkMode: TWorkMode;
     FMyGamesList: TFileLauncherList;
@@ -443,6 +445,11 @@ begin
 
   // Завершаем процесс OpenVPN.
   VPNManager.Disconnect;
+  while (VPNManager.GetStatus <> ovpnDisconnected) do
+  begin
+    Application.ProcessMessages;
+    Sleep(100);
+  end;
 
   // Освобождаем память.
   FShortList.Free;
@@ -455,111 +462,121 @@ end;
 
 procedure TMainForm.ParseList(Data: string);
 var
+  MemRN: string;
   S: string;
   SL: TStringList;
   I, L, N: Integer;
-  TrackerTime, CreationTime, RoomIP, RoomPort, VpnIP, VpnPort, IRCChannel,
+  TrackerTime: Integer;
+  CreationTime, RoomIP, RoomPort, VpnIP, VpnPort, IRCChannel,
   TeamSpeak, RoomName, GameName, PlayersCount, Players: string;
   RoomUptime: string;
   Item: TListItem;
-
-  function Parse(var S: string): string;
-  var
-    P: Integer;
-  begin
-    P := Pos('$', S);
-    if (P <> 0) then
-    begin
-      Result := Copy(S, 1, P - 1);
-      S := Copy(S, P + 1, Length(S));
-    end
-    else
-    begin
-      Result := S;
-    end;
-  end;
-
 begin
-  UDPPinger.Active := True;
-  LvRoomsList.Items.Clear;
-  N := 0;
+  // Запоминаем название выбранной комнаты.
+  if Assigned(LvRoomsList.Selected) then
+    MemRN := LvRoomsList.Selected.SubItems[1];
+
+  N := StrToIntDef(sStatusBar1.Panels[5].Text, 0); // Количество игроков.
 
   SL := TStringList.Create;
   try
     SL.Text := Data;
 
-    // IP адрес.
+    // Время на трекере и IP-адрес клиента.
     if (SL.Count >= 1) then
     begin
       S := SL.Strings[0];
-      TrackerTime := Parse(S);         // Время на трекере.
-      sStatusBar1.Panels[1].Text := S; // Адрес клиента.
+      TrackerTime := StrToIntDef('$' + Parse(S, '$'), 0);
+      if (TrackerTime = 0) then Exit;
+      sStatusBar1.Panels[1].Text := S;
     end;
 
     // Список комнат.
     if (SL.Count > 1) and (Length(SL.Strings[1]) > 4) then
     begin
-      for I := 1 to SL.Count - 1 do
-      begin
-        S := SL.Strings[I];
-        S := StringReplace(S, '&amp;',  '&', [rfReplaceAll]);
-        S := StringReplace(S, '&lt;',   '<', [rfReplaceAll]);
-        S := StringReplace(S, '&gt;',   '>', [rfReplaceAll]);
-        S := StringReplace(S, '&quot;', '"', [rfReplaceAll]);
-        S := StringReplace(S, '&#039;', #39, [rfReplaceAll]);
+      UDPPinger.Active := True;
 
-        // Парсируем.
-        CreationTime := Parse(S); // Время создания комнаты.
-        RoomIP       := Parse(S); // Адрес комнаты.
-        RoomPort     := Parse(S); // Порт комнаты.
-        VpnIP        := Parse(S); // Адрес VPN.
-        VpnPort      := Parse(S); // Порт VPN.
-        IRCChannel   := Parse(S); // IRC канал комнаты.
-        Teamspeak    := Parse(S); // Адрес Teamspeak.
-        RoomName     := Parse(S); // Название комнаты.
-        GameName     := Parse(S); // Название игры.
-        PlayersCount := Parse(S); // Количество игроков.
-        Players      := S;        // Список игроков.
+      LvRoomsList.Items.BeginUpdate;
+      try
+        N := 0;
+        LvRoomsList.Items.Clear;
 
-        try
-          StrToInt(RoomPort);
-          StrToInt(VpnPort);
-        except
-          Continue;
+        for I := 1 to SL.Count - 1 do
+        begin
+          S := SL.Strings[I];
+          S := StringReplace(S, '&amp;',  '&', [rfReplaceAll]);
+          S := StringReplace(S, '&lt;',   '<', [rfReplaceAll]);
+          S := StringReplace(S, '&gt;',   '>', [rfReplaceAll]);
+          S := StringReplace(S, '&quot;', '"', [rfReplaceAll]);
+          S := StringReplace(S, '&#039;', #39, [rfReplaceAll]);
+
+          // Парсируем.
+          CreationTime := Parse(S, '$'); // Время создания комнаты.
+          RoomIP       := Parse(S, '$'); // Адрес комнаты.
+          RoomPort     := Parse(S, '$'); // Порт комнаты.
+          VpnIP        := Parse(S, '$'); // Адрес VPN.
+          VpnPort      := Parse(S, '$'); // Порт VPN.
+          IRCChannel   := Parse(S, '$'); // IRC канал комнаты.
+          Teamspeak    := Parse(S, '$'); // Адрес Teamspeak.
+          RoomName     := Parse(S, '$'); // Название комнаты.
+          GameName     := Parse(S, '$'); // Название игры.
+          PlayersCount := Parse(S, '$'); // Количество игроков.
+          Players      := S;             // Список игроков.
+
+          try
+            StrToInt(RoomPort);
+            StrToInt(VpnPort);
+          except
+            Continue;
+          end;
+
+          // Удаляем запятую в конце строки.
+          L := Length(Players);
+          if (L > 0) and (Players[L] = ',') then
+            Delete(Players, L, 1);
+
+          Inc(N, StrToInt(PlayersCount));
+
+          // ToDo: подсчитывать RoomUptime при выборе комнаты из списка.
+          RoomUptime := IntToStr(TrackerTime -
+            StrToIntDef('$' + CreationTime, 0));
+
+          // Добавляем комнату в список.
+          Item := LvRoomsList.Items.Add;
+          Item.Caption := '  ';            // Ping
+          Item.SubItems.Add(GameName);     //  0 - Название игры.
+          Item.SubItems.Add(RoomName);     //  1 - Название комнаты.
+          Item.SubItems.Add(PlayersCount); //  2 - Количество игроков.
+          Item.SubItems.Add(CreationTime); //  3 - Время создания.
+          Item.SubItems.Add(RoomIP);       //  4 - Адрес комнаты.
+          Item.SubItems.Add(RoomPort);     //  5 - Порт комнаты.
+          Item.SubItems.Add(VpnIP);        //  6 - Адрес VPN.
+          Item.SubItems.Add(VpnPort);      //  7 - Порт VPN.
+          Item.SubItems.Add(IRCChannel);   //  8 - IRC канал.
+          Item.SubItems.Add(TeamSpeak);    //  9 - Адрес TeamSpeak [OLD].
+          Item.SubItems.Add(Players);      // 10 - Список игроков.
+          Item.SubItems.Add(RoomUptime);   // 11 - Uptime комнаты.
+          Item.SubItems.Add('');           // 12 - TickCount на момент проверки.
         end;
 
-        // Удаляем запятую в конце строки.
-        L := Length(Players);
-        if (L > 0) and (Players[L] = ',') then
-          Delete(Players, L, 1);
-
-        Inc(N, StrToInt(PlayersCount));
-
-        // ToDo: подсчитывать RoomUptime при выборе комнаты из списка.
-        RoomUptime := IntToStr(StrToInt('$' + TrackerTime) -
-          StrToInt('$' + CreationTime));
-
-        // Добавляем комнату в список.
-        Item := LvRoomsList.Items.Add;
-        Item.Caption := '  ';
-        Item.SubItems.Add(GameName);     //  0 - Название игры.
-        Item.SubItems.Add(RoomName);     //  1 - Название комнаты.
-        Item.SubItems.Add(PlayersCount); //  2 - Количество игроков.
-        Item.SubItems.Add(CreationTime); //  3 - Время создания.
-        Item.SubItems.Add(RoomIP);       //  4 - Адрес комнаты.
-        Item.SubItems.Add(RoomPort);     //  5 - Порт комнаты.
-        Item.SubItems.Add(VpnIP);        //  6 - Адрес VPN.
-        Item.SubItems.Add(VpnPort);      //  7 - Порт VPN.
-        Item.SubItems.Add(IRCChannel);   //  8 - IRC канал.
-        Item.SubItems.Add(TeamSpeak);    //  9 - Адрес TeamSpeak.
-        Item.SubItems.Add(Players);      // 10 - Список игроков.
-        Item.SubItems.Add(RoomUptime);   // 11 - Uptime комнаты.
-        Item.SubItems.Add('');           // 12 - TickCount на момент проверки.
+      finally
+        LvRoomsList.Items.EndUpdate;
       end;
+
     end;
 
   finally
     SL.Free;
+  end;
+
+  // Заполняем описание.
+  for I := 0 to LvRoomsList.Items.Count - 1 do
+  begin
+    if (LvRoomsList.Items[I].SubItems[1] = MemRN) then
+    begin
+      LvRoomsList.SelectItem(I);
+      Break;
+    end;
   end;
 
   sStatusBar1.Panels[3].Text := IntToStr(LvRoomsList.Items.Count); // Количество комнат.
@@ -574,7 +591,7 @@ end;
 procedure TMainForm.HTTPVpnGetDoneString(Sender: TObject; Result: string);
 begin
   ParseList(Result);
-  PingTimerTimer(Self);
+  //PingTimerTimer(Self);
   PingTimer.Enabled := True;
 end;
 
@@ -712,7 +729,6 @@ end;
 
 procedure TMainForm.TimerVpnGetShortTimer(Sender: TObject);
 begin
-  //HTTPVpnGetShort.URL := UGlobal.URLTracker + '?do=vpn_getshort';
   HTTPVpnGetShort.URL := UGlobal.URLTracker;
   HTTPVpnGetShort.PostQuery := 'do=vpn_getshort';
   HTTPVpnGetShort.GetString;
@@ -1108,38 +1124,52 @@ end;
 
 procedure TMainForm.BtnMainChatSendClick(Sender: TObject);
 var
-  Name: string;
   S: string;
-  I: Integer;
+  Name: string;
+  Command: string;
+  Parameters: string;
 begin
   if (Trim(EdMainChat.Text) <> '') then
   begin
-    if (Pos('/msg', EdMainChat.Text) = 1) then // Личное сообщение.
+    S := EdMainChat.Text;
+    if (Pos('/msg', S) = 1) then // Личное сообщение.
     begin
-      I := Pos(' ', EdMainChat.Text);
-      if (I <> 0) then
-        S := Copy(EdMainChat.Text, I + 1, Length(EdMainChat.Text) - I);
-      I := Pos(' ', S);
-      if (I <> 0) then
-      begin
-        Name := Copy(S, 1, I - 1);
-        S := Copy(S, I + 1, Length(S));
-        try
-          IdIRC1.Say(Name, S);
-          ReMainChat.AddFormatedString(TAG_COLOR + '2(private) ' + IdIRC1.Nick
-            + '->' + Name + ': ' + S);
-        except
-          on E:Exception do
-            Reconnect(E.Message);
-        end;
+      Parse(S);
+      Name := Trim(Parse(S));
+      if (Name <> '') then
+      try
+        IdIRC1.Say(Name, S);
+        ReMainChat.AddFormatedString(TAG_COLOR + '2(private) ' + IdIRC1.Nick
+          + '->' + Name + ': ' + S);
+      except
+        on E:Exception do
+          Reconnect(E.Message);
       end;
     end
     else
-    if (Pos('/', EdMainChat.Text) = 1) then // Другая управляющая команда.
+    if (Pos('/ctcp', EdMainChat.Text) = 1) then // CTCP.
     begin
-      S := Copy(EdMainChat.Text, 2, Length(EdMainChat.Text) - 1);
+      Parse(S);
+      Name := Trim(Parse(S));
+      Command := Trim(Parse(S));
+      Parameters := Trim(Parse(S));
+      if (Name <> '') and (Command <> '') then
       try
-        IdIRC1.WriteLn(S);
+        IdIRC1.CTCPQuery(Name, Command, Parameters);
+        ReMainChat.AddFormatedString(TAG_COLOR + '2CTCP ' + Name + ' ' +
+          Command + ' ' + Parameters);
+      except
+        on E:Exception do
+          Reconnect(E.Message);
+      end;
+    end
+    else
+    if (Pos('/', S) = 1) then // Другая управляющая команда.
+    begin
+      Command := Copy(S, 2, Length(S) - 1);
+      if (Command <> '') then
+      try
+        IdIRC1.WriteLn(Command);
       except
         on E:Exception do
           Reconnect(E.Message);
@@ -1149,9 +1179,9 @@ begin
     begin
       // Иначе посылаем сообщение на общий канал.
       try
-        IdIRC1.Say(UGlobal.IRCMainChannel, EdMainChat.Text);
+        IdIRC1.Say(UGlobal.IRCMainChannel, S);
         ReMainChat.AddFormatedString({TAG_COLOR + '1' + }TAG_BOLD + '<' +
-          IdIRC1.Nick + '>' + TAG_BOLD + ' ' + EdMainChat.Text);
+          IdIRC1.Nick + '>' + TAG_BOLD + ' ' + S);
       except
         on E:Exception do
           Reconnect(E.Message);
@@ -1207,39 +1237,34 @@ end;
 
 procedure TMainForm.BtnRoomSendClick(Sender: TObject);
 var
-  Name: string;
   S: string;
-  I: Integer;
+  Name: string;
+  Command: string;
 begin
   if (Trim(EdRoom.Text) <> '') then
   begin
-    // Личное сообщение.
-    if (Pos('/msg', EdRoom.Text) = 1) then
+    S := EdRoom.Text;
+    if (Pos('/msg', S) = 1) then // Личное сообщение.
     begin
-      I := Pos(' ', EdRoom.Text);
-      if (I <> 0) then
-        S := Copy(EdRoom.Text, I + 1, Length(EdRoom.Text) - I);
-      I := Pos(' ', S);
-      if (I <> 0) then
-      begin
-        Name := Copy(S, 1, I - 1);
-        S := Copy(S, I + 1, Length(S));
-        try
-          IdIRC1.Say(Name, S);
-          ReRoom.AddFormatedString(TAG_COLOR + '2(private) ' + IdIRC1.Nick +
-            '->' + Name + ': ' + S);
-        except
-          on E:Exception do
-            Reconnect(E.Message);
-        end;
+      Parse(S);
+      Name := Trim(Parse(S));
+      if (Name <> '') then
+      try
+        IdIRC1.Say(Name, S);
+        ReRoom.AddFormatedString(TAG_COLOR + '2(private) ' + IdIRC1.Nick +
+          '->' + Name + ': ' + S);
+      except
+        on E:Exception do
+          Reconnect(E.Message);
       end;
     end
     else
-    if (Pos('/', EdRoom.Text) = 1) then // Другая управляющая команда.
+    if (Pos('/', S) = 1) then // Другая управляющая команда.
     begin
-      S := Copy(EdRoom.Text, 2, Length(EdRoom.Text) - 1);
+      Command := Copy(S, 2, Length(S) - 1);
+      if (Command <> '') then
       try
-        IdIRC1.WriteLn(S);
+        IdIRC1.WriteLn(Command);
       except
         on E:Exception do
           Reconnect(E.Message);
@@ -1249,9 +1274,9 @@ begin
     begin
       // Иначе посылаем сообщение в комнату.
       try
-        IdIRC1.Say(Settings.RoomChannel, EdRoom.Text);
+        IdIRC1.Say(Settings.RoomChannel, S);
           ReRoom.AddFormatedString({TAG_COLOR + '1' + }TAG_BOLD + '<' +
-          IdIRC1.Nick + '>' + TAG_BOLD + ' ' + EdRoom.Text);
+          IdIRC1.Nick + '>' + TAG_BOLD + ' ' + S);
       except
         on E:Exception do
           Reconnect(E.Message);
@@ -1400,7 +1425,6 @@ end;
 procedure TMainForm.TimerGetNewsTimer(Sender: TObject);
 begin
   TimerGetNews.Enabled := False;
-  //HTTPGetNews.URL := URLTracker + '?do=getnews&lang=' + Language.Code;
   HTTPGetNews.URL := URLTracker;
   HTTPGetNews.PostQuery := 'do=getnews&lang=' + Language.Code;
   HTTPGetNews.GetString;
@@ -1875,7 +1899,7 @@ var
 begin
   // Если активно VPN-подключение или не выбрана комната из списка, то выходим.
   if (VPNManager.GetStatus <> ovpnDisconnected) or
-    (LvRoomsList.ItemFocused = nil) then Exit;
+    (LvRoomsList.Selected = nil) then Exit;
 
   // Если комната как IRC-канал и незавершено подключение к IRC-серверу, то выходим.
   if (LvRoomsList.ItemFocused.SubItems.Strings[8] <> 'none') and
@@ -2166,7 +2190,7 @@ begin
     PChar(UGlobal.AppTitle), MB_YESNO or MB_DEFBUTTON2) <> mrYes) then Exit;
 
   // Отключаемся.
-  BtnDisconnectClick(nil);
+  BtnDisconnect.Click;
 
   FlgClosing := True;
   Self.Close;
@@ -2174,10 +2198,6 @@ end;
 
 procedure TMainForm.MiRefreshClick(Sender: TObject);
 begin
-  LvRoomsList.Items.Clear;
-  ReRoomInfo.Clear;
-
-  //HTTPVpnGet.URL := UGlobal.URLTracker + '?do=vpn_get&ver=3';
   HTTPVpnGet.URL := UGlobal.URLTracker;
   HTTPVpnGet.PostQuery := 'do=vpn_get&ver=3';
   HTTPVpnGet.GetString;
@@ -2293,6 +2313,13 @@ begin
   MiForum.Caption := Language.msgForum;
   MiAbout.Caption := Language.msgAbout;
   MiQuit.Caption := Language.msgQuit;
+end;
+
+procedure TMainForm.IdIRC1CTCPReply(Sender: TObject; AUser: TIdIRCUser;
+  AChannel: TIdIRCChannel; Command, Args: string);
+begin
+  ReMainChat.AddFormatedString(TAG_COLOR + '5CTCP ' + Command + ' ответ от ' +
+    AUser.Nick + ' [' + AUser.Address + ']: ' + Args);
 end;
 
 end.
