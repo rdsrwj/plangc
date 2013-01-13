@@ -29,6 +29,7 @@ type
   procedure SetIEOffline(Value: Boolean);
   function TextExtent(const Text: string; const Font: TFont): TSize;
   function MakeHash(const S: string): Integer;
+  function Parse(var S: string; const Delimiter: Char = ' '): string;
 
 type
   TWindowsVersion = (wv31, wv95, wv98, wvME, wvNT, wvY2K, wvXP, wvServer2003,
@@ -202,44 +203,71 @@ begin
   end;
 end;
 
-function GetBuildInfoString: string;
+function GetBuildInfoString(var Major, Minor, Rev, Build: Word): string;
 var
   VerInfoSize: DWORD;
   VerInfo: Pointer;
   VerValueSize: DWORD;
   VerValue: PVSFixedFileInfo;
-  V1, V2, {V3,} V4: Word;
   Dummy: DWORD;
 begin
+  Major := 0;
+  Minor := 0;
+  Rev := 0;
+  Build := 0;
   Result := '';
   VerInfoSize := GetFileVersionInfoSize(PChar(Application.ExeName), Dummy);
   if (VerInfoSize > 0) then
   begin
     GetMem(VerInfo, VerInfoSize);
     try
-      GetFileVersionInfo(PChar(Application.ExeName), 0, VerInfoSize, VerInfo);
-      VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
-      with VerValue^ do
+      if GetFileVersionInfo(PChar(Application.ExeName), 0, VerInfoSize,
+        VerInfo) then
       begin
-        V1 := dwFileVersionMS shr 16;
-        V2 := dwFileVersionMS and $FFFF;
-        //V3 := dwFileVersionLS shr 16;
-        V4 := dwFileVersionLS and $FFFF;
+        if VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize) then
+        begin
+          with VerValue^ do
+          begin
+            Major := dwFileVersionMS shr 16;
+            Minor := dwFileVersionMS and $FFFF;
+            Rev   := dwFileVersionLS shr 16;
+            Build := dwFileVersionLS and $FFFF;
+          end;
+          //Result := Format('%d.%d.%d.%d', [Major, Minor, Rev, Build]);
+          Result := Format('%d.%d build %d', [Major, Minor, Build]);
+        end;
       end;
-      //Result := Format('%d.%d.%d.%d', [V1, V2, V3, V4]);
-      Result := Format('%d.%d.%d', [V1, V2, V4]);
     finally
       FreeMem(VerInfo, VerInfoSize);
     end;
   end;
 end;
 
+function Parse(var S: string; const Delimiter: Char = ' '): string;
+var
+  P: Integer;
+begin
+  P := Pos(Delimiter, S);
+  if (P <> 0) then
+  begin
+    Result := Copy(S, 1, P - 1);
+    S := Copy(S, P + 1, Length(S));
+  end
+  else
+  begin
+    Result := S;
+    S := '';
+  end;
+end;
+
+var
+  Major, Minor, Rev, Build: Word;
+
 initialization
 
-  AppVersion := GetBuildInfoString;
+  AppVersion := GetBuildInfoString(Major, Minor, Rev, Build);
 
-  AppBuild := StringReplace(ExtractFileExt(AppVersion), '.', '',
-    [rfReplaceAll]);
+  AppBuild := IntToStr(Build);
 
   AppPath := IncludeTrailingBackSlash(ExtractFilePath(Application.ExeName));
 

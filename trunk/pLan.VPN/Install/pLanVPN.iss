@@ -1,21 +1,27 @@
-#define AppName			"pLan OpenVPN Edition"
-#define AppExeName		"pLan_openvpn.exe"
-#define AppVersion		GetFileVersion('..\Release\pLan_openvpn.exe')
-#define OpenVPNExeName	"openvpn-2.2.2-install.exe"
+#define AppName		"pLan OpenVPN Edition"
+#define AppExe		"pLan_openvpn.exe"
+#define AppExePath	'..\Release\' + AppExe
+#define AppVersion	GetFileVersion(AppExePath);
+
+#define MyGetSuffix() \
+	ParseVersion(AppExePath, Local[0], Local[1], Local[2], Local[3]), \
+	Str(Local[0]) + "." + Str(Local[1]) + "." + Str(Local[3]);
+
+#define OpenVPNExe	"openvpn-2.2.2-install.exe"
 
 [Setup]
-;AppId={{9847EA48-5214-49CE-8A54-F027FDA37F05}
+AppId={{9847EA48-5214-49CE-8A54-F027FDA37F05}
 AppName="{#AppName}"
 AppPublisher="pLan DevTeam"
 AppPublisherURL="http://plangc.ru/"
 AppVerName="{#AppName}"
 DefaultDirName="{pf}\pLan"
 DefaultGroupName="{#AppName}"
-OutputBaseFilename="pLanVPN-{#AppVersion}"
+OutputBaseFilename="pLanVPN-{#MyGetSuffix()}"
 OutputDir="."
 SetupIconFile="setup-icon.ico"
 Uninstallable="yes"
-UninstallDisplayIcon="{app}\{#AppExeName}"
+UninstallDisplayIcon="{app}\{#AppExe}"
 UninstallFilesDir="{app}"
 UsePreviousLanguage="no"
 VersionInfoCopyright="pLan DevTeam"
@@ -49,16 +55,16 @@ Source: "..\Release\Skins\*"; DestDir: "{app}\Skins"; Components: "skins"; Flags
 Source: "..\Release\BindIP.dll"; DestDir: "{sys}"; Components: "program"; Flags: onlyifdoesntexist
 Source: "..\Release\ForceBindIP.exe"; DestDir: "{app}"; Components: "program"; Flags: ignoreversion
 Source: "..\Release\pLan_openvpn.exe"; DestDir: "{app}"; Components: "program"; Flags: ignoreversion
-Source: "{#OpenVPNExeName}"; DestDir: "{tmp}"; Flags: dontcopy
+Source: "{#OpenVPNExe}"; DestDir: "{tmp}"; Flags: dontcopy
 Source: "openvpn.cer"; DestDir: "{tmp}"; Flags: dontcopy
 Source: "isxdl.dll"; DestDir: "{tmp}"; Flags: dontcopy
 
 [Icons]
-Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"
-Name: "{userdesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"; Tasks: "desktopicon"
+Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExe}"; WorkingDir: "{app}"
+Name: "{userdesktop}\{#AppName}"; Filename: "{app}\{#AppExe}"; WorkingDir: "{app}"; Tasks: "desktopicon"
 
 [Run]
-Filename: "{app}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: postinstall nowait skipifsilent
+Filename: "{app}\{#AppExe}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: postinstall nowait skipifsilent
 
 [Code]
 function isxdl_Download(hWnd: Integer; URL, Filename: PAnsiChar): Integer;
@@ -104,8 +110,8 @@ begin
 				Exec('certutil.exe', '-addstore TrustedPublisher "' + ExpandConstant('{tmp}\openvpn.cer') + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 			end;
 			// Install OpenVPN.
-			ExtractTemporaryFile(ExpandConstant('{#OpenVPNExeName}'));
-			Exec(ExpandConstant('{tmp}\{#OpenVPNExeName}'), '/S', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+			ExtractTemporaryFile(ExpandConstant('{#OpenVPNExe}'));
+			Exec(ExpandConstant('{tmp}\{#OpenVPNExe}'), '/S', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 		end;
 		// Download and install TeamSpeak 3.
 		if (Pos('teamspeak', WizardSelectedTasks(False)) > 0) then
