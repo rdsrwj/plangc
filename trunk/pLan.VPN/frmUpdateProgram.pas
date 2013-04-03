@@ -156,23 +156,10 @@ end;
 
 procedure TUpdateForm.HTTPGet1DoneFile(Sender: TObject; FileName: string;
   FileSize: Integer);
-var
-  ExeFile, BakFile, NewFile: string;
 begin
   ProgressBar1.Position := 100;
 
-  ExeFile := Application.ExeName;
-  BakFile := ChangeFileExt(Application.ExeName, '.bak');
-  NewFile := ChangeFileExt(Application.ExeName, '.ex_');
-
-  MoveFileEx(PChar(ExeFile), PChar(BakFile), MOVEFILE_WRITE_THROUGH +
-    MOVEFILE_REPLACE_EXISTING);
-
-  MoveFileEx(PChar(NewFile), PChar(ExeFile), MOVEFILE_WRITE_THROUGH +
-    MOVEFILE_REPLACE_EXISTING);
-
-  //WinExec(PChar('"' + ExeFile + '" FetchUpdate'), SW_SHOW);
-  ShellExecute(Application.Handle, 'open', PChar(ExeFile), 'FetchUpdate', nil,
+  ShellExecute(Application.Handle, 'open', PChar(FileName), nil, nil,
     SW_NORMAL);
 
   Requesting := False;
@@ -202,7 +189,7 @@ begin
     Label1.Caption := Language.msgUpdatingProgram;
     HTTPGet1.URL := UGlobal.URLUpdateExe;
     HTTPGet1.BinaryData := True;
-    HTTPGet1.FileName := ChangeFileExt(Application.ExeName, '.ex_');
+    HTTPGet1.FileName := DataPath + 'pLanVPN.exe';
     HTTPGet1.GetFile;
   end
   else

@@ -46,7 +46,7 @@ begin
       SetLength(S, MAX_PATH);
       Sz := GetModuleBaseName(PH, 0, @S[1], MAX_PATH);
       SetLength(S, Sz);
-      if (Pos('pLan_openvpn.exe', S) <> 0) or (Pos('pLanVPN.exe', S) <> 0) then
+      if (Pos('pLan_openvpn.exe', S) <> 0) then
       begin
         TerminateProcess(PH, 0);
         WaitForSingleObject(PH, INFINITE);

@@ -18,7 +18,7 @@ const
   // URL's
   URLTracker     = 'http://tracker.plangc.ru/index.php';
   URLGamelist    = 'http://tracker.plangc.ru/updates/planvpn/gamelist.txt';
-  URLUpdateExe   = 'http://tracker.plangc.ru/updates/planvpn/pLan_openvpn.exe';
+  URLUpdateExe   = 'http://plangc.googlecode.com/files/pLanVPN.exe';
 
 type
   TChatMessage = (cmNormal, cmPrivate, cmSystem, cmMyMessage);
