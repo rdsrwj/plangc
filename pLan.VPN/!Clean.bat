@@ -10,4 +10,7 @@ DEL "DLL\*.ncb"
 DEL "DLL\*.user"
 DEL "Temp\*.dcu"
 DEL "*.ddp"
+DEL "*.~ddp"
+DEL "*.~dfm"
+DEL "*.~pas"
 PAUSE
