@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1251"?>
-<language name="en" version="1.0.11">
+<language name="en" version="1.0.12">
 	<messages
 		msgCantEstablishConnection="Can't establish connection"
 		msgRoomHasNoPing="The room has no ping. Are you sure want to continue?"
@@ -57,7 +57,7 @@
 		<label ComponentName="sGroupBox3" Caption="Do not show Join/Part"/>
 		<label ComponentName="ChkSoundNotifyOnInterestingGame" Caption="Room for interesting game is created"/>
 		<label ComponentName="ChkSoundNotifyOnUserJoined" Caption="User joined (in minimized to tray mode)"/>
-		<label ComponentName="ChkAutomaticIP" Caption="Auto IP"/>
+		<label ComponentName="ChkAutomaticIP" Caption="Auto IP (recommended)"/>
 		<label ComponentName="sButton6" Caption="Network connections"/>
 		<label ComponentName="sLabel16" Caption="Skin:"/>
 		<label ComponentName="sTabSheet2" Caption="Connection"/>
