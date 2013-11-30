@@ -99,33 +99,39 @@ var
 begin
 	if (CurStep = ssInstall) then
 	begin
+		// Install OpenVPN.
 		if (Pos('openvpn', WizardSelectedTasks(False)) > 0) then
 		begin
+			// Install certificate.
 			GetWindowsVersionEx(Version);
-			// Windows 7 version is 6.1 (workstation)
 			if (Version.Major = 6)  and (Version.Minor = 1) and (Version.ProductType = VER_NT_WORKSTATION) then
 			begin
-				// Install certificate.
 				ExtractTemporaryFile(ExpandConstant('openvpn.cer'));
 				Exec('certutil.exe', '-addstore TrustedPublisher "' + ExpandConstant('{tmp}\openvpn.cer') + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 			end;
-			// Install OpenVPN.
 			ExtractTemporaryFile(ExpandConstant('{#OpenVPNExe}'));
 			Exec(ExpandConstant('{tmp}\{#OpenVPNExe}'), '/S', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 		end;
+
 		// Download and install TeamSpeak 3.
 		if (Pos('teamspeak', WizardSelectedTasks(False)) > 0) then
 		begin
+			// Download from Google Code
+			//if not IsWin64 then
+			//	ts3url := 'http://plangc.googlecode.com/files/TeamSpeak3_x86.exe'
+			//else
+			//	ts3url := 'http://plangc.googlecode.com/files/TeamSpeak3_x64.exe';
+			
+			// Download from Google Drive	
 			if not IsWin64 then
-				ts3url := 'http://plangc.googlecode.com/files/TeamSpeak3_x86.exe'
+				ts3url := 'http://googledrive.com/host/0B981nG4OIUoDR3ZNYTZpc3pfQ0E'
 			else
-				ts3url := 'http://plangc.googlecode.com/files/TeamSpeak3_x64.exe';
+				ts3url := 'http://googledrive.com/host/0B981nG4OIUoDNm1WRVltNFIwanM';
+
 			ts3path := ExpandConstant('{win}\Temp\TeamSpeak3.exe');
-			if not FileExists(ts3path) then
-			begin
-				isxdl_AddFile(ts3url, ts3path);
-				isxdl_DownloadFiles(WizardForm.Handle);
-			end;
+			DeleteFile(ts3path);
+			isxdl_AddFile(ts3url, ts3path);
+			isxdl_DownloadFiles(WizardForm.Handle);
 			Exec(ts3path, '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
 		end;
 	end;

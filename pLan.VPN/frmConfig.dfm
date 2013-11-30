@@ -106,7 +106,7 @@ object ConfigForm: TConfigForm
         end
         object sLabel22: TsLabel
           Left = 5
-          Top = 133
+          Top = 205
           Width = 51
           Height = 13
           Caption = 'Language:'
@@ -120,7 +120,7 @@ object ConfigForm: TConfigForm
         end
         object sLabel16: TsLabel
           Left = 5
-          Top = 181
+          Top = 245
           Width = 24
           Height = 13
           Caption = 'Skin:'
@@ -155,8 +155,8 @@ object ConfigForm: TConfigForm
           ImgUnchecked = 0
         end
         object sGroupBox3: TsGroupBox
-          Left = 200
-          Top = 47
+          Left = 8
+          Top = 111
           Width = 151
           Height = 76
           Caption = 'Do not show Join/Part'
@@ -188,7 +188,7 @@ object ConfigForm: TConfigForm
         end
         object ComboLanguage: TsComboBox
           Left = 5
-          Top = 148
+          Top = 220
           Width = 170
           Height = 21
           Alignment = taLeftJustify
@@ -218,7 +218,7 @@ object ConfigForm: TConfigForm
         end
         object ComboSkin: TsComboBox
           Left = 5
-          Top = 196
+          Top = 260
           Width = 170
           Height = 21
           Alignment = taLeftJustify
@@ -294,7 +294,7 @@ object ConfigForm: TConfigForm
             ParentFont = False
             OnMouseDown = FormMouseDown
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
+            Font.Color = 16182738
             Font.Height = -11
             Font.Name = 'MS Sans Serif'
             Font.Style = []
@@ -308,7 +308,7 @@ object ConfigForm: TConfigForm
             ParentFont = False
             OnMouseDown = FormMouseDown
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
+            Font.Color = 16182738
             Font.Height = -11
             Font.Name = 'MS Sans Serif'
             Font.Style = []
@@ -322,7 +322,7 @@ object ConfigForm: TConfigForm
             ParentFont = False
             OnMouseDown = FormMouseDown
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
+            Font.Color = 16182738
             Font.Height = -11
             Font.Name = 'MS Sans Serif'
             Font.Style = []
@@ -336,7 +336,7 @@ object ConfigForm: TConfigForm
             ParentFont = False
             OnMouseDown = FormMouseDown
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
+            Font.Color = 16182738
             Font.Height = -11
             Font.Name = 'MS Sans Serif'
             Font.Style = []
@@ -350,7 +350,7 @@ object ConfigForm: TConfigForm
             ParentFont = False
             OnMouseDown = FormMouseDown
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
+            Font.Color = 16182738
             Font.Height = -11
             Font.Name = 'MS Sans Serif'
             Font.Style = []
@@ -364,7 +364,7 @@ object ConfigForm: TConfigForm
             ParentFont = False
             OnMouseDown = FormMouseDown
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
+            Font.Color = 16182738
             Font.Height = -11
             Font.Name = 'MS Sans Serif'
             Font.Style = []
@@ -372,9 +372,9 @@ object ConfigForm: TConfigForm
           object ChkAutomaticIP: TsCheckBox
             Left = 10
             Top = 70
-            Width = 60
+            Width = 140
             Height = 19
-            Caption = 'Auto IP'
+            Caption = 'Auto IP (recommended)'
             TabOrder = 0
             OnClick = ChkAutomaticIPClick
             SkinData.SkinSection = 'CHECKBOX'
@@ -386,7 +386,7 @@ object ConfigForm: TConfigForm
             Top = 40
             Width = 131
             Height = 21
-            Color = clWhite
+            Color = 15855332
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
             Font.Height = -11
@@ -394,7 +394,7 @@ object ConfigForm: TConfigForm
             Font.Style = []
             ParentFont = False
             TabOrder = 1
-            Text = '1097'
+            Text = '1'#160'097'
             SkinData.SkinSection = 'EDIT'
             BoundLabel.Indent = 0
             BoundLabel.Font.Charset = DEFAULT_CHARSET
@@ -422,7 +422,7 @@ object ConfigForm: TConfigForm
             Top = 40
             Width = 131
             Height = 21
-            Color = clWhite
+            Color = 15855332
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
             Font.Height = -11
@@ -430,7 +430,7 @@ object ConfigForm: TConfigForm
             Font.Style = []
             ParentFont = False
             TabOrder = 3
-            Text = '1098'
+            Text = '1'#160'098'
             SkinData.SkinSection = 'EDIT'
             BoundLabel.Indent = 0
             BoundLabel.Font.Charset = DEFAULT_CHARSET
@@ -485,7 +485,7 @@ object ConfigForm: TConfigForm
             Top = 155
             Width = 291
             Height = 21
-            Color = clWhite
+            Color = 15855332
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
             Font.Height = -11
@@ -522,7 +522,7 @@ object ConfigForm: TConfigForm
             Top = 210
             Width = 161
             Height = 21
-            Color = clWhite
+            Color = 15855332
             EditMask = '000.000.000.000;1;'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
@@ -549,7 +549,7 @@ object ConfigForm: TConfigForm
             Top = 210
             Width = 156
             Height = 21
-            Color = clWhite
+            Color = 15855332
             EditMask = '000.000.000.000;1;'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
@@ -598,7 +598,7 @@ object ConfigForm: TConfigForm
           ParentFont = False
           OnMouseDown = FormMouseDown
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = 16182738
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = []
@@ -611,7 +611,7 @@ object ConfigForm: TConfigForm
           Caption = 'Notification list:'
           ParentFont = False
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = 16182738
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = []
@@ -625,7 +625,7 @@ object ConfigForm: TConfigForm
           ParentFont = False
           OnMouseDown = FormMouseDown
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = 16182738
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = []
@@ -633,7 +633,7 @@ object ConfigForm: TConfigForm
         object ChkAutoNotifies: TsCheckBox
           Left = 5
           Top = 5
-          Width = 117
+          Width = 121
           Height = 19
           Caption = 'Enable notifications'
           TabOrder = 0
@@ -646,7 +646,7 @@ object ConfigForm: TConfigForm
           Top = 27
           Width = 40
           Height = 21
-          Color = clWhite
+          Color = 15855332
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -722,7 +722,7 @@ object ConfigForm: TConfigForm
           object ChkSoundNotifyOnInterestingGame: TsCheckBox
             Left = 5
             Top = 20
-            Width = 197
+            Width = 201
             Height = 19
             Caption = 'Room for interesting game is created'
             TabOrder = 0
@@ -733,7 +733,7 @@ object ConfigForm: TConfigForm
           object ChkSoundNotifyOnUserJoined: TsCheckBox
             Left = 5
             Top = 45
-            Width = 204
+            Width = 208
             Height = 19
             Caption = 'User joined (in minimized to tray mode)'
             TabOrder = 1

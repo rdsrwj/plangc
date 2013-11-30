@@ -189,7 +189,7 @@ begin
     Label1.Caption := Language.msgUpdatingProgram;
     HTTPGet1.URL := UGlobal.URLUpdateExe;
     HTTPGet1.BinaryData := True;
-    HTTPGet1.FileName := DataPath + 'pLanVPN.exe';
+    HTTPGet1.FileName := DataPath + 'pLanVPN-setup.exe';
     HTTPGet1.GetFile;
   end
   else
