@@ -2280,8 +2280,11 @@ end;
 
 procedure TMainForm.MiTeamSpeakClick(Sender: TObject);
 begin
-  ShellExecute(Application.Handle, 'open',
+  {ShellExecute(Application.Handle, 'open',
     PChar('ts3server://plangc.nanoloop.ru?port=9987&nickname=' +
+    Settings.UserName), nil, nil, SW_NORMAL);}
+  ShellExecute(Application.Handle, 'open',
+    PChar('ts3server://ts-plangc.tk?port=9987&nickname=' +
     Settings.UserName), nil, nil, SW_NORMAL);
 end;
 

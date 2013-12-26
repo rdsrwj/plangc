@@ -1,6 +1,6 @@
 #define AppName		"pLan OpenVPN Edition"
 #define AppExe		"pLan_openvpn.exe"
-#define AppExePath	'..\Release\' + AppExe
+#define AppExePath	"..\Release\" + AppExe
 #define AppVersion	GetFileVersion(AppExePath);
 
 #define MyGetSuffix() \
@@ -122,7 +122,7 @@ begin
 			//else
 			//	ts3url := 'http://plangc.googlecode.com/files/TeamSpeak3_x64.exe';
 			
-			// Download from Google Drive	
+			// Download from Google Drive
 			if not IsWin64 then
 				ts3url := 'http://googledrive.com/host/0B981nG4OIUoDR3ZNYTZpc3pfQ0E'
 			else

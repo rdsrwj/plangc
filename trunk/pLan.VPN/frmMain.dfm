@@ -10265,6 +10265,7 @@ object MainForm: TMainForm
     ThirdParty.ThirdScrollControl = ' '#13#10
     ThirdParty.ThirdUpDown = ' '#13#10
     ThirdParty.ThirdScrollBar = ' '
+    ThirdParty.ThirdStaticText = ' '
     Left = 161
     Top = 150
   end
