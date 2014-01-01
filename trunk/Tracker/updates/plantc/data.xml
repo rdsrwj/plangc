@@ -1,0 +1,472 @@
+<root>
+	<config>
+		<version def="50" dll="20" exe="13" />
+	</config>
+
+	<!-- Test -->
+	<game name="Test" desc="Test Case" utilitary="1">
+		<identification>
+			<datamask start="3F0000" length="45000" mask="xxxxxxxx" data="2061206D65676120" />
+			<appname name="test.exe" />
+		</identification>
+		<patches>
+			<patch start="3F0000" length="45000" mask="xxxxxxxx" data="2061206D65676120" patch="20202020616161612020" />
+		</patches>
+	</game>
+
+	<!-- FEAR -->
+	<game name="FEAR" desc="F.E.A.R.">
+		<identification>
+			<appname name="fear.exe" />
+		</identification>
+		<server>
+			<packet request="FEFD020000000000" reply="050000000000" />
+		</server>
+	</game>
+	<game name="FEAR" desc="F.E.A.R. Dedicated Server">
+		<identification>
+			<appname name="fearserver.exe" />
+		</identification>
+		<server>
+			<packet request="FEFD020000000000" reply="050000000000" />
+		</server>
+	</game>
+
+	<!-- Quake 4 -->
+	<game name="Quake4" desc="Quake 4 Dedicated Server">
+		<identification>
+			<appname name="quake4ded.exe" />
+		</identification>
+		<server>
+			<packet request="FFFF676574496E666F0003000000" reply="FFFF696E666F526573706F6E7365" />
+		</server>
+	</game>
+	<game name="Quake4" desc="Quake 4">
+		<identification>
+			<appname name="quake4.exe" />
+		</identification>
+		<server>
+			<packet request="FFFF676574496E666F0003000000" reply="FFFF696E666F526573706F6E7365" />
+		</server>
+	</game>
+
+	<!-- SWBF2 -->
+	<game name="SWBF2" desc="StarWars: BattleFront 2">
+		<identification>
+			<appname name="BattlefrontII.exe" />
+		</identification>
+		<server>
+			<packet request="00FFFF000032F4A17C00100000" reply="01FFFF0000" />
+			<bind port="3656" />
+			<broadcast emulation="1" send="1" forceport="0" tunnel="1" /> 
+		</server>
+		<hook name="SWBF2">
+			<sockbroadcast start="5F0000" length="10000" mask="x????xxx????x" data="A100000000568B350000000050" />
+			<sockreceive start="5F0000" length="20000" mask="xx????xxx" data="8B0D0000000051C705" />
+			<sockclose start="5F0000" length="20000" mask="x????xxx????xxxxx" data="A100000000568B350000000050FFD68B0D" />
+		</hook>
+		<patches>
+			<patch start="500000" length="100000" mask="xxxx????xxx" data="5150FF1500000000890424" patch="B801000000C3" />
+		</patches>
+	</game>
+
+	<!-- SSAM2 -->
+	<game name="SSAM2" desc="Serious Sam 2">
+		<identification>
+			<appname name="Sam2.exe" />
+		</identification>
+		<server>
+			<packet request="062F2F9B2861EE843E6108A6785B4EE84FF0AB" reply="072F2F9B28" />
+			<broadcast emulation="1" />
+		</server>
+	</game>
+
+	<!-- COD2 -->
+	<game name="COD2" desc="Call of Duty 2">
+		<identification>
+			<appname name="CoD2MP_s.exe" />
+		</identification>
+		<server>
+			<packet request="FFFFFFFF676574696E666F20787878" reply="FFFFFFFF696E666F526573706F6E73650A" />
+			<broadcast clientforceport="1" addressemu="1" />
+		</server>
+	</game>
+
+ 	<!-- CCTW -->
+	<game name="CCTCW" desc="Creature Conflict: The Clan Wars">
+		<identification>
+			<appname name="cc.exe" />
+		</identification>
+		<server>
+			<packet request="C900000001000000281C00000001010001000101000001010000010100000101000001010000010100000101000001010000010100000101000001010000010100000101000001010000010100000101000001010000" reply="CA000000" />
+			<broadcast clientforceport="1" />
+		</server>
+	</game>
+
+	<!-- RGKF -->
+	<game name="RGKF" desc="Rag Doll Kung Fu">
+		<identification>
+			<appname name="Rag_Doll_Kung_Fu_Steam.exe" />
+		</identification>
+		<server>
+			<packet broadcast="43D0070000" />
+			<broadcast emulation="1" tunnel="1" notify="1" addressemu="1" addfakeaddr="1" />
+		</server>
+	</game>
+
+	<!-- STALKER beta -->
+	<game name="stalkerbeta" desc="S.T.A.L.K.E.R.: Oblivion Lost (beta)">
+		<identification>
+			<appname name="Stalker_net.exe" />
+		</identification>
+	</game>
+	<game name="stalkerbeta" desc="STALKER">
+		<identification>
+			<appname name="xr_3da.exe" />
+		</identification>
+		<server>
+			<packet request="FEFD020000000000" reply="050000000000" />
+		</server>
+	</game>
+
+	<!-- Starship Troopers -->
+	<game name="sstroopers" desc="Starship Troopers">
+		<identification>
+			<appname name="STGame.exe" />
+		</identification>
+		<server>
+			<packet request="08" reply="09" />
+		</server>
+	</game>
+
+	<!-- NFS Most Wanted -->
+	<game name="nfsmw" desc="Need For Speed: Most Wanted">
+		<identification>
+			<appname name="speed.exe" />
+			<datamask start="8A0000" length="30000" mask="xxxxxxxxx" data="4E4653204D6F737420" />
+		</identification>
+		<server>
+			<packet request="67454100000000003F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" reply="67454103000000004E46534D57" replymask="xxxx????xxxxx" />
+			<broadcast emulation="1" tunnel="1" notify="1" bindforce="1" />
+		</server>
+	</game>
+
+	<!-- Need for Speed: Underground 2 -->
+	<game name="nfsu2" desc="Need for Speed: Underground 2">
+		<identification>
+			<appname name="speed2.exe" />
+			<datamask start="789000" length="10000" mask="xxxxxxxxxxxxx" data="556E64657267726F756E64203220" />
+		</identification>
+		<server>
+			<packet request="67454100000000003F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" reply="67454103000000004E46535532" replymask="xxxx????xxxxx" />
+			<broadcast emulation="1" tunnel="1" notify="1" bindforce="1" />
+		</server>
+		<patches>
+			<patch module="server.dll" start="17000" length="10000" mask="xxxxxxxxxxxxx" data="8B5424108B4C240C568B74240C" patch="B800000000C3" delayed="1" />
+		</patches>
+	</game>
+
+	<!-- NFS Most Wanted Dedicated server-->
+	<game name="nfsmw" desc="NFS Most Wanted" utilitary="1" >
+		<identification>
+			<appname name="nfs_mw_dedicated.exe" />
+			</identification>
+		<server>
+			<packet request="67454100000000003F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" reply="67454103000000004E46534D57" replymask="xxxx????xxxxx" />
+			<broadcast emulation="1" tunnel="1" notify="1" bindforce="1" />
+		</server>
+	</game>
+
+	<!-- Need for Speed: Underground 2 -->
+	<game name="nfsu2" desc="Need for Speed: Underground 2" utilitary="1">
+		<identification>
+			<appname name="nfs_u2_dedicated.exe" />
+		</identification>
+		<server>
+			<packet request="67454100000000003F000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" reply="67454103000000004E46535532" replymask="xxxx????xxxxx" />
+			<broadcast emulation="1" tunnel="1" notify="1" bindforce="1" />
+		</server>
+		<patch module="server.dll" start="17000" length="10000" mask="xxxxxxxxxxxxx" data="8B5424108B4C240C568B74240C" patch="B800000000C3" delayed="1" />
+	</game>
+
+	<!-- Operation Flashpoint -->
+	<game name="opfpres196" desc="Operation Flashpoint: Resistance Patch 1.96">
+		<identification>
+			<appname name="flashpointresistance.exe" />
+		</identification>
+		<server>
+			<packet request="200081084A90AE6117070000010000000000000000000000Ae91E1EE00000000" reply="B20101" />
+		</server>
+	</game>
+
+	<!-- Warhammer 40000: Dawn of War -->
+	<game name="w40kdow" desc="Warhammer 40000: Dawn of War">
+		<identification>
+			<appname name="w40k.exe" />
+		</identification>
+		<server>
+			<packet request="0701" reply="0801" />
+		</server>
+	</game>
+
+	<!-- Flatout -->
+	<game name="flatout" desc="FlatOut">
+		<identification>
+			<appname name="flatout.exe" />
+		</identification>
+		<server>
+			<packet request="120C464F30311360EA8FBAD7F721" reply="1368464F3031" />
+			<broadcast emulation="1" tunnel="1" notify="1" />
+		</server>
+	</game>
+
+	<!-- Quake 3 -->
+	<game name="Quake3" desc="Quake 3">
+		<identification>
+			<appname name="quake3.exe" />
+		</identification>
+		<server>
+			<packet request="FFFFFFFF676574696E666F20787878" reply="FFFFFFFF696E666F526573706F6E73" />
+		</server>
+	</game>
+
+	<!-- Warcraft 3 -->
+	<game name="Warcraft3" desc="Warcraft 3">
+		<identification>
+			<appname name="war3.exe" />
+		</identification>
+		<server>
+			<packet request="F72F1000505833571400000000000000" reply="F730" />
+		</server>
+	</game>
+
+	<!-- Starcraft Brood War -->
+	<game name="SCBW" desc="Starctaft: Brood War">
+		<identification>
+			<appname name="starcraft.exe" />
+		</identification>
+		<server>
+			<packet request="974314000200000050584553CD00000000000000" reply="000000000000000050584553CD" replymask="????????xxxxx" />
+		</server>
+	</game>
+
+	<!-- OpenTTD -->
+	<game name="OpenTTD" desc="Open Transport Tycoon Deluxe">
+		<identification>
+			<appname name="openttd.exe" />
+		</identification>
+		<server>
+ 			<packet request="030000" reply="000001" replymask="??x"/>
+		</server>
+	</game>
+
+	<!-- Pro Evolution Soccer 4 -->
+	<game name="PES4" desc="Pro Evolution Soccer 4">
+		<identification>
+			<appname name="pes4.exe" />
+		</identification>
+		<server>
+ 			<packet request="E70300000000000002000000080000000000000002000000" reply="00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000" replymask="????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????x???"/>
+		</server>
+	</game>
+
+	<!-- Unreal Tournament 2004 -->
+	<game name="UT2004" desc="Unreal Tournament 2004">
+		<identification>
+			<appname name="ut2004.exe" />
+		</identification>
+		<server>
+			<packet request="8000000000" reply="800000000000" />
+			<bind port="10777" />
+		</server>
+	</game>
+
+	<!-- Duke3dNetLauncher -->
+	<game name="Duke3dNetLauncher" desc="Duke Nukem Network Launcher">
+		<identification>
+			<appname name="Duke3dNetLauncher.exe" />
+		</identification>
+		<server>
+			<packet request="006012D50447495645204D452053455256455221" reply="01" />
+		</server>
+	</game>
+
+	<!-- Unreal Tournament -->
+	<game name="UnrealTournament" desc="Unreal Tournament">
+		<identification>
+			<appname name="UnrealTournament.exe" />
+		</identification>
+		<server>
+			<packet request="5245504F52545155455259" reply="757420" />
+		</server>
+	</game>
+
+	<!-- Far Cry -->
+	<game name="FarCry" desc="Far Cry">
+		<identification>
+			<appname name="FarCry.exe" />
+		</identification>
+		<server>
+			<packet request="7fffffff737461747573" reply="7fffffff5369" />
+			<broadcast clientforceport="1" addressemu="1" />
+		</server>
+	</game>
+
+	<!-- FIFA 2006 -->
+	<game name="FIFA06" desc="FIFA 2006">
+		<identification>
+			<appname name="fifa06.exe" />
+		</identification>
+		<server>
+ 			<packet request="674541FA4552D8C464946410000000000000000000000000000444B54696772613A613031303130323A333635383A3100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005544503A7E313A30000000000000000000000000000000000000000000000000000000000000000000000000000000004D42018D000C0D1736ECC47360000000000000000" reply="674541000000000046494641" replymask="xxx?????xxxx"/>
+			<broadcast emulation="1" tunnel="1" notify="1" />
+		</server>
+	</game>
+
+	<!-- Vietcong 2 -->
+	<game name="vietcong2" desc="Vietcong 2">
+		<identification>
+			<appname name="vietcong2.exe" />
+		</identification>
+		<server>
+			<packet request="7C" reply="EFBE" />
+			<broadcast clientforceport="1" />
+		</server>
+	</game>
+	<game name="vietcong2" desc="Vietcong 2 Dedicated Server" util="1">
+		<identification>
+			<appname name="vc2ded.exe" />
+		</identification>
+		<server>
+			<packet request="7C" reply="EFBE" />
+		</server>
+	</game>
+
+	<!-- Worms World Party -->
+	<game name="WWP" desc="Worms World Party">
+		<identification>
+			<appname name="wwp.exe" />
+		</identification>
+		<server>
+			<packet request="08000000D1077D01" reply="00000000d0070000" />
+		</server>
+	</game>
+
+	<!-- Wolfenstein Enemy Territory -->
+	<game name="WolfET" desc="Wolfenstein Enemy Territory">
+		<identification>
+			<appname name="ET.EXE" />
+		</identification>
+		<server>
+			<packet request="FFFFFFFF676574696E666F20787878" reply="ffffffff696e666f526573706f6e" />
+		</server>
+	</game>
+
+	<!-- F1 Challenge 99-02 -->
+	<game name="F199-02" desc="Formula 1 Challenge 99-02">
+		<identification>
+			<appname name="f1 challenge 99-02.exe" />
+		</identification>
+		<server>
+			<packet request="5C7374617475735C" reply="5c67616d656e616d655c6631636f6d70" />
+		</server>
+	</game>
+
+	<!-- Half-Life Family -->
+	<game name="HLFAM" desc="Half Life 1">
+		<identification>
+			<appname name="hl.exe" />
+		</identification>
+		<server>
+			<packet request="FFFFFFFF696E666F737472696E6700" reply="ffffffff696e666f737472696e677265" />
+		</server>
+	</game>
+
+	<!-- Home World 2 -->
+	<game name="HW2" desc="Home World 2">
+		<identification>
+			<appname name="Homeworld2.exe" />
+		</identification>
+		<server>
+			<packet request="0002F14E0123F8D27790DD664ABA056E2825DB2FA1" reply="0003f14e68000000c40000005000" />
+		</server>
+	</game>
+
+	<!-- Emperor: Battle for Dune -->
+	<game name="EB4D" desc="Emperor: Battle for Dune">
+		<identification>
+			<appname name="game.exe" />
+		</identification>
+		<server>
+			<packet request="CC008CA946A025259B4797B30000001001200000" reply="CC0055DEA3AA5A25EB4FAD8A000000100220000001" replymask="xx??????????????????x"/>
+		</server>
+	</game>
+
+	<!-- C&C Generals Zero Hour -->
+	<game name="CCGZH" desc="Command & Conquer: Generals Zero Hour">
+		<identification>
+			<appname name="game.dat" />
+			<datamask start="9C0000" length="300000" mask="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" data="436F6D6D616E6420616E6420436F6E717565722047656E6572616C73205A65726F20486F757200" />
+		</identification>
+		<server>
+			<packet request="CC008CA946A025259B4797B30000001001200000" reply="47DAF5290001" replymask="?????x"/>
+			<broadcast emulation="1" tunnel="1" notify="1" bindforce="1" />
+		</server>
+	</game>
+
+	<!-- C&C Generals -->
+	<game name="CCG" desc="Command & Conquer: Generals">
+		<identification>
+			<appname name="game.dat" />
+			<datamask start="8F9000" length="300000" mask="xxxxxxxxxxxxxxxxxxxxxxxxxxxxx" data="436F6D6D616E6420616E6420436F6E717565722047656E6572616C7300" />
+		</identification>
+		<server>
+			<packet request="CC008CA946A025259B4797B30000001001200000" reply="47DAF5290001" replymask="?????x" />
+			<broadcast emulation="1" tunnel="1" notify="1" bindforce="1" />
+		</server>
+	</game>
+
+	<!-- Star Wars Empire at War -->
+	<game name="sweaw" desc="Star Wars Empire at War">
+		<identification>
+			<appname name="sweaw.exe" />
+		</identification>
+		<server>
+			<packet request="00" reply="ABD638945F00404866E06B59C0C405800B8008200C800E200C800B2008400E80" replymask="??????????????????????????x?????" />
+			<broadcast emulation="1" tunnel="1" notify="1" addressemu="1" addfakeaddr="1" bindforce="0" guessfwdaddr="1" enableglobaltunnel="1"/>
+		</server>
+	</game>
+
+	<!-- Rainbow Six Lockdown -->
+	<game name="rb6l" desc="Rainbow Six: Lockdown">
+		<identification>
+			<appname name="lockdown.exe" />
+		</identification>
+		<server>
+			<packet request="F00C000000000000000000F303FBFB460600E90317270000" reply="000102030405060708090a0b0c0d0e0f000102030405060708090a0b52363a4c6f636b646f776e" replymask="????????????????????????????xxxxxxxxxxx" />
+		</server>
+	</game>
+
+	<!-- SWAT 4 -->
+	<game name="SWAT4" desc="SWAT 4">
+		<identification>
+			<appname name="Swat4.exe" />
+		</identification>
+		<server>
+			<packet request="FEFD020000000000" reply="050000000000"/>
+			<bind port="10481" />
+		</server>
+	</game>
+
+	<!-- Lord of the Rings Battle for Middle Earth 2 -->
+	<game name="BFME2" desc="Lord of the Rings Battle for Middle Earth 2">
+		<identification>
+			<appname name="game.dat" />
+			<datamask start="E20000" length="300000" mask="xxxxxxxxx" data="4C4F545242464D4532" />
+		</identification>
+		<server>
+			<packet request="CC00" reply="C935778FB99FF2D5" replymask="???????x"/>
+			<broadcast emulation="1" tunnel="1" notify="1" bindforce="1" />
+		</server>
+	</game>
+</root>
