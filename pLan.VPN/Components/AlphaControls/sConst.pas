@@ -4,16 +4,15 @@ unit sConst;
 
 interface
 
-uses Messages, Graphics, Windows, comctrls, ExtCtrls, controls, classes, Buttons,
-  StdCtrls, Consts, Dialogs;
+uses Graphics, Windows, comctrls, controls, classes, Forms, StdCtrls;
 
 {$R SRES.RES}
 
 {$IFNDEF NOTFORHELP}
 const
-  CompatibleSkinVersion = 7.00;     // Version of supported skins in current version of the package
+  CompatibleSkinVersion = 7.00; // Version of supported skins in current version of the package
   MaxCompSkinVersion = 8.99;
-  ExceptTag = -98;                  // Mask for the tag value in 3rd-party controls which will not be skinned automatically
+  ExceptTag = -98;              // Mask for the tag value in 3rd-party controls which will not be skinned automatically
 
   // Data chars for skins
   TexChar   = '~';
@@ -56,27 +55,27 @@ type
   ACChar   = Char;
   PACChar  = PChar;
 {$ELSE} // UNICODE
-{$IFDEF TNTUNICODE}
-  ACString = WideString;
-  ACChar   = WideChar;
-  PACChar  = PWideChar;
-{$ELSE}
-  ACString = AnsiString;
-  ACChar   = AnsiChar;
-  PACChar  = PAnsiChar;
-{$ENDIF}
+  {$IFDEF TNTUNICODE}
+    ACString = WideString;
+    ACChar   = WideChar;
+    PACChar  = PWideChar;
+  {$ELSE}
+    ACString = AnsiString;
+    ACChar   = AnsiChar;
+    PACChar  = PAnsiChar;
+  {$ENDIF}
 {$ENDIF} // UNICODE
 
 {$IFDEF DELPHI_XE2}
-  ACLongInt    = NativeInt;
+  ACLongInt = NativeInt;
 {$ELSE}
-  ACLongInt    = LongInt;
+  ACLongInt = LongInt;
 {$ENDIF}
 
 {$IFDEF DELPHI_XE2}
-  ACUInt    = NativeUInt;
+  ACUInt = NativeUInt;
 {$ELSE}
-  ACUInt    = Cardinal;
+  ACUInt = Cardinal;
 {$ENDIF}
 
 {$IFNDEF D2007}
@@ -84,6 +83,10 @@ type
 {$IFDEF BCB}
   {$NODEFINE LONG_PTR}
 {$ENDIF}
+{$ENDIF}
+
+{$IFNDEF D2005}
+  TVerticalAlignment = (taAlignTop, taAlignBottom, taVerticalCenter);
 {$ENDIF}
 
   OldChar = AnsiChar;
@@ -144,21 +147,23 @@ type
   PacBGInfo = ^TacBGInfo;
   TacBGType = (btUnknown, btFill, btCache, btNotReady); // Returned by control type of BG
   TacBGInfo = record
-    Bmp : Graphics.TBitmap;
-    Color : TColor;         // Color returned if btFill is used
-    Offset : TPoint;        // Offset of bg, used with Cache
-    R : TRect;              // Rectangle used if PlsDraw is True
-    BgType : TacBGType;     // btUnknown, btFill, btCache
-    PleaseDraw : boolean;   // Parent must fill rectangle(R) 
-    DrawDC : hdc;           // Device context for drawing, if PleaseDraw is True
+    Bmp       : Graphics.TBitmap;
+    Color     : TColor;      // Color returned if btFill is used
+    Offset    : TPoint;      // Offset of bg, used with Cache
+    R         : TRect;       // Rectangle used if PlsDraw is True
+    FillRect  : TRect;       // Rect of part without borders
+    BgType    : TacBGType;   // btUnknown, btFill, btCache
+    PleaseDraw: boolean;     // Parent must fill rectangle(R)
+    DrawDC    : hdc;         // Device context for drawing, if PleaseDraw is True
   end;
 
   TCacheInfo = record
-    Bmp : Graphics.TBitmap;
-    X : integer;
-    Y : integer;
-    FillColor : TColor; 
-    Ready : boolean;
+    Bmp: Graphics.TBitmap;
+    X: integer;
+    Y: integer;
+    FillColor: TColor;
+    FillRect: TRect;       // Rect of part without borders
+    Ready: boolean;
   end;
   { Pointer to @link(TPoints)}
   PPoints = ^TPoints;
@@ -194,20 +199,20 @@ type
 
   TsColor = record
     case integer of
-      0  : (C : TColor);
-      1  : (R, G, B, A : Byte);
-      2  : (I : integer);
-      3  : (sBGRA : TsRGBA);
-      4  : (RGB : TsRGB; MASK : Byte);
+      0: (C: TColor);
+      1: (R, G, B, A: Byte);
+      2: (I: integer);
+      3: (sBGRA: TsRGBA);
+      4: (RGB: TsRGB; MASK: Byte);
     end;
 
   TsColor_ = record // Bytes inverted (for fast calcs)
     case integer of
-      0  : (C : TColor);
-      1  : (B, G, R, A : Byte);
-      2  : (I : integer);
-      3  : (sBGRA : TsRGBA);
-      4  : (BGR : TsRGB; MASK : Byte);
+      0: (C: TColor);
+      1: (B, G, R, A: Byte);
+      2: (I: integer);
+      3: (sBGRA: TsRGBA);
+      4: (BGR: TsRGB; MASK: Byte);
     end;
 
   PRGBAArray = ^TRGBAArray;
@@ -221,30 +226,30 @@ type
   PsDisabledKind = ^TsDisabledKind;
 
   TsGradPie = record
-    Color1 : TColor;
-    Color2 : TColor;
-    Percent : TPercent;
-    Mode1 : integer;
-    Mode2 : integer;
+    Color1: TColor;
+    Color2: TColor;
+    Percent: TPercent;
+    Mode1: integer;
+    Mode2: integer;
   end;
 
   TsGradArray = array of TsGradPie;
 
 // Scrollbars HitTest results
 const
-{$IFNDEF DISABLEPREVIEWMODE}
-  // <<< Used with ASKinEditor
-  s_PreviewKey   = '/acpreview';
-  s_EditorCapt   = 'AlphaSkins Editor';
   s_RegName      = 'AlphaSkins';
   s_IntSkinsPath = 'IntSkinsPath';
+{$IFNDEF DISABLEPREVIEWMODE} // Used with ASKinEditor
+
+  s_PreviewKey   = '/acpreview';
+  s_EditorCapt   = 'AlphaSkins Editor';
   ASE_CLOSE  = 1;
   ASE_UPDATE = 2;
   ASE_HELLO  = 3;
   ASE_ALIVE  = 4; // Must return 1
 
-  ASE_MSG    = $A400;
-  // >>>
+  ASE_MSG    = $A06A + 918; // $A400;
+
 {$ENDIF}
 
   MasterBmpName  = 'Master.bmp';
@@ -258,23 +263,23 @@ const
   s_FalseStr     = 'FALSE';
   s_NewFolder    = 'New folder';             // Name for new created forlder in the PathDialog
   s_SkinSelectItemName = 'SkinSelectItem';   // "Available skins" Menu item
-  s_Slash = '\';
-  s_Space = ' ';
-  s_Comma = ',';
+  s_Slash        = '\';
+  s_Space        = ' ';
+  s_Comma        = ',';
 
   // Borders draw modes
-  BDM_STRETCH = 1;
+  BDM_STRETCH    = 1;
   BDM_ACTIVEONLY = 2;
-  BDM_FILL = 4;
+  BDM_FILL       = 4;
 
-  HTSB_LEFT_BUTTON = 100;
-  HTSB_RIGHT_BUTTON = 101;
-  HTSB_TOP_BUTTON = 102;
+  HTSB_LEFT_BUTTON   = 100;
+  HTSB_RIGHT_BUTTON  = 101;
+  HTSB_TOP_BUTTON    = 102;
   HTSB_BOTTOM_BUTTON = 103;
-  HTSB_H_SCROLL = 104;
-  HTSB_HB_SCROLL = 105;
-  HTSB_V_SCROLL = 106;
-  HTSB_VB_SCROLL = 107;
+  HTSB_H_SCROLL      = 104;
+  HTSB_HB_SCROLL     = 105;
+  HTSB_V_SCROLL      = 106;
+  HTSB_VB_SCROLL     = 107;
 
   { WM_NCHITTEST and MOUSEHOOKSTRUCT Mouse Position Codes for MDI form}
   HTCHILDCLOSE       = 101;
@@ -284,130 +289,132 @@ const
   EmptyRgn = 0;
   acTimerInterval = 12;
 
-  acImgTypes : array [0..4] of TacImgType = (itisaBorder, itisaTexture, itisaGlyph, itisaGlow, itisaPngGlyph);
-  acFillModes : array [0..14] of TacFillMode = (fmTiled, fmStretched, fmTiledHorz, fmTiledVert, fmStretchHorz,
+  acImgTypes: array [0..4] of TacImgType = (itisaBorder, itisaTexture, itisaGlyph, itisaGlow, itisaPngGlyph);
+  acFillModes: array [0..14] of TacFillMode = (fmTiled, fmStretched, fmTiledHorz, fmTiledVert, fmStretchHorz,
     fmStretchVert, fmTileHorBtm, fmTileVertRight, fmStretchHorBtm, fmStretchVertRight, fmDisTiled,
     fmDiscHorTop, fmDiscVertLeft, fmDiscHorBottom, fmDiscVertRight
   );
-  aScrollCodes : array [0..8] of TScrollCode = (scLineUp, scLineDown, scPageUp, scPageDown, scPosition, scTrack, scTop, scBottom, scEndScroll);
-  aHintStyles : array [0..5] of TsHintStyle = (hsSimply, hsComics, hsEllipse, hsBalloon, hsStandard, hsNone);
-  acBtnEvents : array [TacAnimatEvent] of TacBtnEvent = (beMouseEnter, beMouseLeave, beMouseDown, beMouseUp, beMouseUp);
+  aScrollCodes: array [0..8] of TScrollCode = (scLineUp, scLineDown, scPageUp, scPageDown, scPosition, scTrack, scTop, scBottom, scEndScroll);
+  aHintStyles: array [0..5] of TsHintStyle = (hsSimply, hsComics, hsEllipse, hsBalloon, hsStandard, hsNone);
+  acBtnEvents: array [TacAnimatEvent] of TacBtnEvent = (beMouseEnter, beMouseLeave, beMouseDown, beMouseUp, beMouseUp);
 
-  COC_TsCustom              = 1;
+  COC_TsCustom           = 1;
 
-  COC_TsSpinEdit            = 2;
-  COC_TsEdit                = 3;
-  COC_TsCustomMaskEdit      = 4;
-  COC_TsMemo                = 7;
-  COC_TsCustomListBox       = 8;
-  COC_TsListBox             = 8;
-  COC_TsColorBox            = 9;
-  COC_TsListView            = 10;
-  COC_TsCustomComboBox      = 11;
-  COC_TsComboBox            = 13;
-  COC_TsComboBoxEx          = 18;
+  COC_TsSpinEdit         = 2;
+  COC_TsEdit             = 3;
+  COC_TsCustomMaskEdit   = 4;
+  COC_TsMemo             = 7;
+  COC_TsCustomListBox    = 8;
+  COC_TsListBox          = 8;
+  COC_TsColorBox         = 9;
+  COC_TsListView         = 10;
+  COC_TsCustomComboBox   = 11;
+  COC_TsComboBox         = 13;
+  COC_TsComboBoxEx       = 18;
 
-  COC_TsFrameBar            = 19;
-  COC_TsBarTitle            = 20;
-  COC_TsCheckBox            = 32;
-  COC_TsDBCheckBox          = 32;
-  COC_TsRadioButton         = 33;
+  COC_TsFrameBar         = 19;
+  COC_TsBarTitle         = 20;
+  COC_TsCheckBox         = 32;
+  COC_TsDBCheckBox       = 32;
+  COC_TsRadioButton      = 33;
 
-  COC_TsCurrencyEdit        = 41;
+  COC_TsCurrencyEdit     = 41;
 
-  COC_TsPanel               = 51;
-  COC_TsPanelLow            = 52;
-  COC_TsCoolBar             = 53;
-  COC_TsToolBar             = 54;
-  COC_TsDragBar             = 56;
-  COC_TsTabSheet            = 57;
-  COC_TsScrollBox           = 58;
-  COC_TsMonthCalendar       = 59;
-  COC_TsDBNavigator         = 60;
-  COC_TsCustomPanel         = 68;
-  COC_TsGrip                = 73;
-  COC_TsGroupBox            = 74;
-  COC_TsSplitter            = 75;
+  COC_TsImage            = 50;
+  COC_TsPanel            = 51;
+  COC_TsPanelLow         = 52;
+  COC_TsCoolBar          = 53;
+  COC_TsToolBar          = 54;
+  COC_TsDragBar          = 56;
+  COC_TsTabSheet         = 57;
+  COC_TsScrollBox        = 58;
+  COC_TsMonthCalendar    = 59;
+  COC_TsDBNavigator      = 60;
+  COC_TsCustomPanel      = 68;
+  COC_TsGrip             = 73;
+  COC_TsGroupBox         = 74;
+  COC_TsSplitter         = 75;
   // DB-aware controls
-  COC_TsDBEdit              = 76;
-  COC_TsDBMemo              = 78;
-  COC_TsDBComboBox          = 81;
-  COC_TsDBLookupComboBox    = 82;
-  COC_TsDBListBox           = 83;
-  COC_TsDBLookupListBox     = 84;
-  COC_TsDBGrid              = 85;
+  COC_TsDBEdit           = 76;
+  COC_TsDBMemo           = 78;
+  COC_TsDBComboBox       = 81;
+  COC_TsDBLookupComboBox = 82;
+  COC_TsDBListBox        = 83;
+  COC_TsDBLookupListBox  = 84;
+  COC_TsDBGrid           = 85;
   // -------------- >>
-  COC_TsSpeedButton         = 92;
-  COC_TsButton              = 93;
-  COC_TsBitBtn              = 94;
-  COC_TsColorSelect         = 95;
-  COC_TsTreeView            = 96;
+  COC_TsSpeedButton      = 92;
+  COC_TsButton           = 93;
+  COC_TsBitBtn           = 94;
+  COC_TsColorSelect      = 95;
+  COC_TsTreeView         = 96;
 
-  COC_TsNavButton           = 98;
-  COC_TsBevel               = 110;
-  COC_TsCustomComboEdit     = 131;
-  COC_TsFileDirEdit         = 132;
-  COC_TsFilenameEdit        = 133;
-  COC_TsDirectoryEdit       = 134;
-  COC_TsCustomDateEdit      = 137;
-  COC_TsComboEdit           = 138;
-  COC_TsDateEdit            = 140;
-  COC_TsPageControl         = 141;
-  COC_TsScrollBar           = 142;
-  COC_TsTabControl          = 143;
-  COC_TsStatusBar           = 151;
-  COC_TsHeaderControl       = 152;
-  COC_TsGauge               = 161;
-  COC_TsTrackBar            = 165;
-  COC_TsHintManager         = 211;
-  COC_TsSkinProvider        = 224;
-  COC_TsMDIForm             = 225;
-  COC_TsFrameAdapter        = 226;
-  COC_TsAdapter             = 227;
+  COC_TsNavButton        = 98;
+  COC_TsBevel            = 110;
+  COC_TsCustomComboEdit  = 131;
+  COC_TsFileDirEdit      = 132;
+  COC_TsFilenameEdit     = 133;
+  COC_TsDirectoryEdit    = 134;
+  COC_TsCustomDateEdit   = 137;
+  COC_TsComboEdit        = 138;
+  COC_TsDateEdit         = 140;
+  COC_TsPageControl      = 141;
+  COC_TsScrollBar        = 142;
+  COC_TsTabControl       = 143;
+  COC_TsStatusBar        = 151;
+  COC_TsHeaderControl    = 152;
+  COC_TsGauge            = 161;
+  COC_TsTrackBar         = 165;
+  COC_TsHintManager      = 211;
+  COC_TsSkinProvider     = 224;
+  COC_TsMDIForm          = 225;
+  COC_TsFrameAdapter     = 226;
 
-  COC_Unknown               = 250;
+  COC_TsAdapter          = 230;
+  COC_TsAdapterEdit      = 231;
+
+  COC_Unknown            = 250;
 
   // Codes of components, who don't catch mouse events
-  sForbidMouse : TsCodes = [COC_TsFrameBar, COC_TsPanel..COC_TsGroupBox, COC_TsBevel, COC_TsPageControl..COC_TsGauge];
+  sForbidMouse: TsCodes = [COC_TsFrameBar, COC_TsPanel..COC_TsGroupBox, COC_TsBevel, COC_TsPageControl..COC_TsGauge];
 
   // Contols that can have one state only
-  sCanNotBeHot : TsCodes = [COC_TsPanel, COC_TsPanelLow, COC_TsToolBar, COC_TsDragBar, COC_TsTabSheet,
+  sCanNotBeHot: TsCodes = [COC_TsPanel, COC_TsPanelLow, COC_TsToolBar, COC_TsDragBar, COC_TsTabSheet,
                             COC_TsScrollBox, COC_TsMonthCalendar, COC_TsDBNavigator, COC_TsCustomPanel,
                             COC_TsGrip, COC_TsGroupBox, COC_TsBevel, COC_TsPageControl, COC_TsTabControl,
                             COC_TsStatusBar, COC_TsGauge, COC_TsFrameAdapter];
 
-  sEditCtrls : TsCodes = [COC_TsSpinEdit..COC_TsComboBoxEx, COC_TsCurrencyEdit, COC_TsDBEdit..COC_TsDBLookupListBox,
-                          COC_TsTreeView, COC_TsCustomComboEdit..COC_TsDateEdit];
+  sEditCtrls: TsCodes = [COC_TsSpinEdit..COC_TsComboBoxEx, COC_TsCurrencyEdit, COC_TsDBEdit..COC_TsDBLookupListBox,
+                          COC_TsTreeView, COC_TsCustomComboEdit..COC_TsDateEdit, COC_TsAdapterEdit];
 
-  sBoolArray : array [False..True] of string = (s_FalseStr, s_TrueStr);
+  sBoolArray: array [False..True] of string = (s_FalseStr, s_TrueStr);
 
 var
+  sPopupCalendar: TForm;
+
 {$IFDEF LOGGED}
-  acDebugCount : integer = 0;
+  acDebugCount: integer = 0;
 {$ENDIF}
 
 {$IFNDEF DISABLEPREVIEWMODE}
-  acPreviewHandle : THandle = 0;
-  acPreviewNeeded : boolean = False;
-  acSkinPreviewUpdating : boolean = False;
+  acPreviewHandle: THandle = 0;
+  acPreviewNeeded: boolean = False;
+  acSkinPreviewUpdating: boolean = False;
 {$ENDIF}
+  acScrollBtnLength: integer = 16;
 
-  acScrollBtnLength : integer = 16;
-  AppShowHint : boolean;
-  ShowHintStored : boolean = False;
-  EmptyCI : TCacheInfo;
-  FadingForbidden : boolean = False;
-  acAnimCount : integer = 0;
-  TempControl : pointer;
-  x64woAero : boolean = False;
+  AppShowHint: boolean;
+  ShowHintStored: boolean = False;
+  EmptyCI: TCacheInfo;
+  FadingForbidden: boolean = False;
+  acAnimCount: integer = 0;
+  TempControl: pointer;
+  x64woAero: boolean = False;
 
-  LargeShellImages, SmallShellImages : TImageList;
+  fGlobalFlag: boolean = False;
+  acMagnForm: TWinControl;
+  sFuchsia: TsColor;   // FF00FF; Const value of transparent color
 
-  fGlobalFlag : boolean = False;
-  acMagnForm : TWinControl;
-  sFuchsia : TsColor;   // FF00FF; Const value of transparent color
-
-procedure InitShellImageLists(Large, Small : boolean);
 {$ENDIF} // NOTFORHELP
 
 type
@@ -415,28 +422,30 @@ type
   TsCaptionLayout = (sclLeft, sclTopLeft, sclTopCenter, sclTopRight, sclLeftTop, sclBottomLeft, sclBottomCenter, sclBottomRight);
   { Set of days of week.}
   TDaysOfWeek = set of TCalDayOfWeek;
-  { Order of date representation - (doMDY, doDMY, doYMD).}
+  { Order of date representation - (doMDY, doDMY, doYMD)}
   TDateOrder = (doMDY, doDMY, doYMD);
-  { Set of popup window alignes - (pwaRight, pwaLeft).}
+  { Set of popup window alignes - (pwaRight, pwaLeft)}
   TPopupWindowAlign = (pwaRight, pwaLeft);
 
 var
   // Variables that can change a mode of the package work
-  ac_UseSysCharSet       : boolean = True;   // Use system character set in form titles (if False then character set from Form.Font.Charset property will be used)
-  ac_KeepOwnFont         : boolean = False;  // If true then fonts will not be changed in standard ot 3rd-party controls
-  ac_ChangeThumbPreviews : boolean = False;  // Allow a changing of Aero preview window by AlphaControls (is not ready currently)
-  ac_OptimizeMemory      : boolean = True;   // Cache is cleared always when control is invisible
-  ac_DialogsLevel        : integer = 2;      // Deep of system dialogs skinning
-  ac_NoExtBordersIfMax   : boolean = False;  // Do not use Extended borders when form is maximized
-  ac_CheckEmptyAlpha     : boolean = False;   // Checking of an empty alpha-channel in glyphs is required
+  ac_UseSysCharSet     : boolean = True;    // Use system character set in form titles (if False then character set from Form.Font.Charset property will be used)
+  ac_KeepOwnFont       : boolean = False;   // If true then fonts will not be changed in standard ot 3rd-party controls
+  ac_NoExtBordersIfMax : boolean = False;   // Do not use Extended borders when form is maximized
+  ac_CheckEmptyAlpha   : boolean = False;   // Checking of an empty alpha-channel in glyphs is required
 
-  StdTransparency : boolean = False;        // Set this variable to True for a standard mechanism of GraphicControls repainting
-  MouseForbidden : boolean = False;         // If true then mouse hot events are forbidden
-  DrawSkinnedMDIWall : boolean = True;      // Use skinning for MDI area
-  DrawSkinnedMDIScrolls : boolean = True;   // Use skinning for MDI area scrolls
-  acOldGlyphsOrder : boolean = False;       // Used when NumGlyphs more than 1 and defines that second image must be used for disabled state (this image used for Hot state in new mode)
+  MouseForbidden       : boolean = False;   // If true then mouse hot events are forbidden
+  DrawSkinnedMDIWall   : boolean = True;    // Use skinning for MDI area
+  DrawSkinnedMDIScrolls: boolean = True;    // Use skinning for MDI area scrolls
+  acOldGlyphsOrder     : boolean = False;   // Used when NumGlyphs more than 1 and defines that second image must be used for disabled state (this image used for Hot state in new mode)
 
 {$IFNDEF NOTFORHELP}
+  ac_DialogsLevel        : integer = 2;     // Deep of system dialogs skinning
+  ac_ChangeThumbPreviews : boolean = False; // Allow a changing of Aero preview window by AlphaControls (is not ready currently)
+  ac_OptimizeMemory      : boolean = True;  // Cache is cleared always when control is invisible
+
+  StdTransparency        : boolean = False; // Set this variable to True for a standard mechanism of GraphicControls repainting
+
 const
   SC_DRAGMOVE = $F012;
 {$IFDEF DELPHI5}
@@ -455,6 +464,8 @@ const
 {$ENDIF}
 
 var
+//  LargeShellImages, SmallShellImages: TImageList;
+
   // These global string variables will be initialized by values from resource
   // and may be replaced for program localization at any time
 
@@ -535,25 +546,7 @@ var
 
 implementation
 
-uses SysUtils, Forms, ShellAPI, sStrings;
-
-procedure InitShellImageLists(Large, Small : boolean);
-var
-  sfi: TSHFileInfo;
-begin
-  if not Assigned(LargeShellImages) then begin
-    LargeShellimages := TImageList.Create(nil);
-    LargeShellImages.Handle := SHGetFileInfo('', 0, sfi, SizeOf(TSHFileInfo), SHGFI_SYSICONINDEX or SHGFI_LARGEICON or SHGFI_SHELLICONSIZE);
-    LargeShellImages.ShareImages := TRUE;
-    LargeShellImages.Name := 'sShellLargeImages';
-  end;
-  if not Assigned(SmallShellImages) then begin
-    SmallShellImages := TImageList.Create(nil);
-    SmallShellImages.Handle := SHGetFileInfo('', 0, sfi, SizeOf(TSHFileInfo), SHGFI_SYSICONINDEX or SHGFI_SMALLICON);
-    SmallShellImages.ShareImages := TRUE;
-    SmallShellImages.Name := 'sShellSmallImages';
-  end;
-end;
+uses SysUtils, ShellAPI, sStrings;
 
 initialization
   EmptyCI.Ready := False;
@@ -561,7 +554,7 @@ initialization
   EmptyCI.X := -99;
   EmptyCI.Bmp := nil;
   EmptyCI.FillColor := clFuchsia;
-  
+
   sFuchsia.C := $FF00FF;
   acScrollBtnLength := GetSystemMetrics(SM_CXHSCROLL);
 
@@ -635,15 +628,14 @@ initialization
   acs_Create               := LoadStr(s_Create);
 
   acs_InvalidDate          := LoadStr(s_InvalidDate);
-  if acs_InvalidDate = '' then acs_InvalidDate := 'Invalid date';
+  if acs_InvalidDate = '' then
+    acs_InvalidDate := 'Invalid date';
 
   acs_DirWithSkins         := s_DirWithSkins;
   acs_SelectSkinTitle      := s_SelectSkinTitle;
   acs_SkinPreview          := s_SkinPreview;
 
 finalization
-  if Assigned(SmallShellImages) then FreeAndNil(SmallShellImages);
-  if Assigned(LargeShellImages) then FreeAndNil(LargeShellImages);
 
 end.
 

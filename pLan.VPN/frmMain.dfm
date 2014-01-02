@@ -10851,6 +10851,7 @@ object MainForm: TMainForm
     OnError = IdIRC1Error
     OnSystem = IdIRC1System
     OnRaw = IdIRC1Raw
+    OnCTCPQuery = IdIRC1CTCPQuery
     OnCTCPReply = IdIRC1CTCPReply
     Left = 432
     Top = 34

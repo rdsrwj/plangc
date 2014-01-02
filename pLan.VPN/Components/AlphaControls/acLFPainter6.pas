@@ -1,7 +1,9 @@
 unit acLFPainter6;
 {$I sDefs.inc}
+// Support of old versions of DevExpress
 
 // Defining of used version of the DevExpress (compatible versions from 6.43 up to 6.53)
+
 {$DEFINE VER653}   // Enable this key if DevEx version 6.53 or newer is used
 {$DEFINE VER650}   // ........................ version 6.50 or newer
 {$DEFINE VER645}   // ........................ version 6.45, 6.50 or newer
@@ -389,7 +391,7 @@ end;
 function Skinned : boolean;
 begin
   DefManager := DefaultManager;
-  if DefManager <> nil then Result := DefManager.SkinData.Active else Result := False
+  if DefManager <> nil then Result := DefManager.CommonSkinData.Active else Result := False
 end;
 
 { TcxACLookAndFeelPainter }
@@ -514,13 +516,12 @@ end;
 
 class function TcxACLookAndFeelPainter.DefaultContentEvenColor: TColor;
 begin // +
-  if Skinned then Result := DefaultManager.GetActiveEditColor else Result := inherited DefaultContentEvenColor;
+  if Skinned then Result := DefaultManager.Palette[pcEditBG_EvenRow] else Result := inherited DefaultContentEvenColor;
 end;
 
 class function TcxACLookAndFeelPainter.DefaultContentOddColor: TColor;
 begin // +
-  if Skinned then Result := MixColors(DefaultManager.GetActiveEditColor, DefaultManager.GetActiveEditFontColor, {DefaultManager.GetGlobalColor,} 0.92) else Result := inherited DefaultContentOddColor;
-//  if Skinned then Result := MixColors(DefaultManager.GetActiveEditColor, DefaultManager.GetGlobalColor, 0.8) else Result := inherited DefaultContentOddColor;
+  if Skinned then Result := DefaultManager.Palette[pcEditBG_OddRow] else Result := inherited DefaultContentOddColor;
 end;
 
 class function TcxACLookAndFeelPainter.DefaultContentTextColor: TColor;
@@ -589,7 +590,7 @@ end;
 
 class function TcxACLookAndFeelPainter.DefaultSchedulerBorderColor: TColor;
 begin
-  if Skinned then Result := DefaultManager.SkinData.BorderColor else Result := inherited DefaultSchedulerBorderColor;
+  if Skinned then Result := DefaultManager.Palette[pcBorder] else Result := inherited DefaultSchedulerBorderColor;
 end;
 
 class function TcxACLookAndFeelPainter.DefaultSchedulerControlColor: TColor;
@@ -644,7 +645,7 @@ end;
 
 class function TcxACLookAndFeelPainter.DefaultFixedSeparatorColor: TColor;
 begin
-  if Skinned then Result := MixColors(DefaultManager.SkinData.BorderColor, DefaultManager.GetActiveEditColor, 0.5) else Result := inherited DefaultFixedSeparatorColor;
+  if Skinned then Result := MixColors(DefaultManager.Palette[pcBorder], DefaultManager.GetActiveEditColor, 0.5) else Result := inherited DefaultFixedSeparatorColor;
 end;
 
 class function TcxACLookAndFeelPainter.DefaultFooterColor: TColor;
@@ -1250,9 +1251,9 @@ begin
       cxgpLeft : aBord := aBord - [bRight];
       cxgpRight : aBord := aBord - [bLeft];
     end;
-    ACanvas.FillRect(ACaptionRect, MixColors(DefaultManager.GetGlobalColor, DefaultManager.SkinData.BorderColor, 0.7));
-    ACanvas.FrameRect(ACaptionRect, DefaultManager.SkinData.BorderColor, 1, aBord);
-    ACanvas.FrameRect(ACaptionRect, MixColors(DefaultManager.GetGlobalColor, DefaultManager.SkinData.BorderColor, 0.4), 1, cxBordersAll - aBord);
+    ACanvas.FillRect(ACaptionRect, MixColors(DefaultManager.GetGlobalColor, DefaultManager.Palette[pcBorder], 0.7));
+    ACanvas.FrameRect(ACaptionRect, DefaultManager.Palette[pcBorder], 1, aBord);
+    ACanvas.FrameRect(ACaptionRect, MixColors(DefaultManager.GetGlobalColor, DefaultManager.Palette[pcBorder], 0.4), 1, cxBordersAll - aBord);
   end
   else inherited;
 end;
@@ -1270,7 +1271,7 @@ begin
       cxgpRight : aBord := aBord - [bRight];
     end;
     ACanvas.FillRect(ABorderRect, DefaultManager.GetGlobalColor);
-    ACanvas.FrameRect(ABorderRect, DefaultManager.SkinData.BorderColor, 1, aBord);
+    ACanvas.FrameRect(ABorderRect, DefaultManager.Palette[pcBorder], 1, aBord);
   end
   else inherited;
 end;
@@ -1420,7 +1421,7 @@ end;
 
 class procedure TcxACLookAndFeelPainter.DrawHeaderSeparator(ACanvas: TcxCanvas; const ABounds: TRect; AIndentSize: Integer; AColor: TColor; AViewParams: TcxViewParams);
 begin // +
-  if Skinned then AColor := {MixColors(DefaultManager.GetGlobalColor,} DefaultManager.SkinData.BorderColor{, 0.5)};
+  if Skinned then AColor := {MixColors(DefaultManager.GetGlobalColor,} DefaultManager.Palette[pcBorder]{, 0.5)};
   inherited;
 end;
 
@@ -1984,7 +1985,7 @@ class procedure TcxACLookAndFeelPainter.DrawWindowContent(ACanvas: TcxCanvas; co
 begin // +
   if Skinned then begin
     FillDC(ACanvas.Handle, Rect(ARect.Left + 1, ARect.Top + 1, ARect.Right - 1, ARect.Bottom - 1), DefaultManager.GetGlobalColor);
-    FillDCBorder(ACanvas.Handle, ARect, 1, 1, 1, 1, DefaultManager.SkinData.BorderColor);
+    FillDCBorder(ACanvas.Handle, ARect, 1, 1, 1, 1, DefaultManager.Palette[pcBorder]);
   end
   else inherited;
 end;
@@ -2085,7 +2086,7 @@ end;
 
 class function TcxACLookAndFeelPainter.GetContainerBorderColor(AIsHighlightBorder: Boolean): TColor;
 begin
-  if Skinned then Result := DefaultManager.SkinData.BorderColor else Result := inherited GetContainerBorderColor(AIsHighlightBorder)
+  if Skinned then Result := DefaultManager.Palette[pcBorder] else Result := inherited GetContainerBorderColor(AIsHighlightBorder)
 end;
 
 class function TcxACLookAndFeelPainter.GetSplitterSize(AHorizontal: Boolean): TSize;
@@ -2309,10 +2310,11 @@ begin
         RootLookAndFeel.SkinName := s_AlphaSkins;
       end
     end
-    else if GetExtendedStylePainters.GetPainterByName(s_AlphaSkins, vPainter) then begin
-      RootLookAndFeel.SkinName := '';
-      GetExtendedStylePainters.Unregister(s_AlphaSkins);
-    end
+    else
+      if GetExtendedStylePainters.GetPainterByName(s_AlphaSkins, vPainter) then begin
+        RootLookAndFeel.SkinName := '';
+        GetExtendedStylePainters.Unregister(s_AlphaSkins);
+      end
   end;
 end;
 
