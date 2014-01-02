@@ -1,4 +1,5 @@
 unit sSkinProps;
+{$I sDefs.inc}
 
 interface
 
@@ -45,7 +46,7 @@ const
   s_TickVert                              = 'TICKVERT';
   s_TickHorz                              = 'TICKHORZ';
 
-// General properties
+  // Common properties
   // Text and text contours colors
   s_FontColor                             = 'FONTCOLOR';
   s_TCLeft                                = 'TCLEFT';
@@ -82,11 +83,35 @@ const
   s_BorderColor2                          = 'BORDERCOLOR2';
   s_BorderWidth                           = 'BORDERWIDTH';
   s_TitleHeight                           = 'TITLEHEIGHT';
-  s_FormOffset                            = 'FORMOFFSET';   // Content offset
-  s_ShadowOffset                          = 'ALIGNOFFSET'; // Additional offset for a shadow
+  s_FormOffset                            = 'FORMOFFSET';         // Content offset
+
+  s_ShadowOffset                          = 'ALIGNOFFSET';        // Additional offset for a shadow
+  s_ShadowOffsetR                         = 'ALIGNOFFSETR';
+  s_ShadowOffsetT                         = 'ALIGNOFFSETT';
+  s_ShadowOffsetB                         = 'ALIGNOFFSETB';
+
   s_CenterOffset                          = 'CENTEROFFSET';
   s_MaxTitleHeight                        = 'MAXHEIGHT';
   s_BorderMode                            = 'BORDERMODE';
+
+  // Global Colors
+  s_BorderColor                           = 'BORDERCOLOR';
+
+  s_EditTextOk                            = 'EDITTEXT_OK';
+  s_EditTextWarning                       = 'EDITTEXT_WARN';
+  s_EditTextAlert                         = 'EDITTEXT_ALERT';
+  s_EditTextHighlight1                    = 'EDITTEXT_H1';
+  s_EditTextHighlight2                    = 'EDITTEXT_H2';
+  s_EditTextHighlight3                    = 'EDITTEXT_H3';
+
+  s_EditText_Inverted                     = 'EDITTEXT_INV';
+  s_EditBG_Inverted                       = 'EDITBG_INV';
+  s_EditBG_OddRow                         = 'EDITBG_ODD';
+  s_EditBG_EvenRow                        = 'EDITBG_EVEN';
+
+  s_EditBGOk                              = 'EDITBG_OK';
+  s_EditBGWarning                         = 'EDITBG_WARN';
+  s_EditBGAlert                           = 'EDITBG_ALERT';
 
   // Standard SkinSections
   s_Caption                               = 'CAPTION';
@@ -114,6 +139,7 @@ const
   s_Divider                               = 'DIVIDER';
   s_DividerV                              = 'DIVIDERV';
   s_ColHeader                             = 'COLHEADER';
+  s_ColHeaderA                            = 'COLHEADERA'; // Alone column skin
   s_ColHeaderL                            = 'COLHEADERL';
   s_ColHeaderR                            = 'COLHEADERR';
   s_ProgressH                             = 'PROGRESSH';
@@ -162,8 +188,6 @@ const
 
   // Title bar items
   s_TBBTN                                 = 'TB_BTN';
-//  s_TBBUTTON_L                            = 'TB_BUTTONLEFT';
-//  s_TBBUTTON_R                            = 'TB_BUTTONRIGHT';
   s_TBMENUBTN                             = 'TB_MENUBTN';
   s_TBTAB                                 = 'TB_TAB';
 
@@ -203,12 +227,9 @@ const
   s_HOTGLOWSIZE                         = 'HGSIZE';
   s_GLOWSIZE                            = 'GSIZE';
 
-  s_BorderColor                         = 'BORDERCOLOR';
-
   s_States                              = 'STATES';
 
   s_UseAeroBluring                      = 'AEROBLUR';
-  s_ExtShadowColor                      = 'EXTSHADOW';
 
 implementation
 

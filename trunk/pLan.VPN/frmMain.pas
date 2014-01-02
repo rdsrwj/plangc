@@ -201,7 +201,10 @@ type
     procedure MiAboutClick(Sender: TObject);
     procedure MiTeamSpeakClick(Sender: TObject);
     procedure IdIRC1CTCPReply(Sender: TObject; AUser: TIdIRCUser;
-      AChannel: TIdIRCChannel; Command, Args: String);
+      AChannel: TIdIRCChannel; Command, Args: string);
+    procedure IdIRC1CTCPQuery(Sender: TObject; User: TIdIRCUser;
+      AChannel: TIdIRCChannel; Command, Args: string;
+      var ASuppress: Boolean);
   private
     FWorkMode: TWorkMode;
     FMyGamesList: TFileLauncherList;
@@ -226,6 +229,7 @@ var
   ProcUnhooker: TDLLProc;
   ProcVersion: TDLLProc;
   ReconnectNum: Integer = 0; // Начальное значение количества переподключений.
+  LastCTCPReply: Cardinal;   // Время последнего ответа на CTCP-запрос.
 
 implementation
 
@@ -2323,6 +2327,16 @@ procedure TMainForm.IdIRC1CTCPReply(Sender: TObject; AUser: TIdIRCUser;
 begin
   ReMainChat.AddFormatedString(TAG_COLOR + '5CTCP ' + Command + ' ответ от ' +
     AUser.Nick + ' [' + AUser.Address + ']: ' + Args);
+end;
+
+procedure TMainForm.IdIRC1CTCPQuery(Sender: TObject; User: TIdIRCUser;
+  AChannel: TIdIRCChannel; Command, Args: string; var ASuppress: Boolean);
+var
+  T: Cardinal;
+begin
+  T := GetTickCount;
+  ASuppress := (T <= LastCTCPReply + 15000); // Игнорируем CTCP-запрос, если не прошло ~15 секунд.
+  LastCTCPReply := T;
 end;
 
 end.

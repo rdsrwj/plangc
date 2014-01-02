@@ -1,27 +1,19 @@
 object Form3rdPartyEditor: TForm3rdPartyEditor
-  Left = 251
-  Top = 231
+  Left = 260
+  Top = 125
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = '3rd-party controls names'
   ClientHeight = 524
-  ClientWidth = 730
+  ClientWidth = 746
   Color = clBtnFace
   Constraints.MinHeight = 140
   Constraints.MinWidth = 440
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'MS Sans Serif'
-  Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   Scaled = False
   ShowHint = True
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
   object sBitBtn2: TsSpeedButton
     Left = 26
     Top = 487
@@ -53,54 +45,8 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
     OnClick = sSpeedButton1Click
     SkinData.SkinSection = 'SPEEDBUTTON'
   end
-  object sSpeedButton2: TsSpeedButton
-    Left = 364
-    Top = 196
-    Width = 35
-    Height = 61
-    Hint = 'Add package to the list'
-    Caption = '<<'
-    Enabled = False
-    Flat = True
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = 21
-    Font.Name = 'Small Fonts'
-    Font.Style = [fsBold]
-    ParentFont = False
-    OnClick = sSpeedButton2Click
-    SkinData.SkinSection = 'SPEEDBUTTON'
-  end
-  object sSpeedButton3: TsSpeedButton
-    Left = 364
-    Top = 292
-    Width = 35
-    Height = 57
-    Hint = 'Remove package from list'
-    Caption = '>>'
-    Enabled = False
-    Flat = True
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = 21
-    Font.Name = 'Small Fonts'
-    Font.Style = [fsBold]
-    ParentFont = False
-    OnClick = sSpeedButton3Click
-    SkinData.SkinSection = 'SPEEDBUTTON'
-  end
-  object sBitBtn4: TsSpeedButton
-    Left = 298
-    Top = 487
-    Width = 99
-    Height = 25
-    Caption = 'Default settings'
-    Visible = False
-    OnClick = sBitBtn4Click
-    SkinData.SkinSection = 'SPEEDBUTTON'
-  end
   object sSpeedButton4: TsSpeedButton
-    Left = 405
+    Left = 380
     Top = 487
     Width = 85
     Height = 25
@@ -110,7 +56,7 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
     SkinData.SkinSection = 'SPEEDBUTTON'
   end
   object sSpeedButton5: TsSpeedButton
-    Left = 495
+    Left = 470
     Top = 487
     Width = 85
     Height = 25
@@ -144,6 +90,7 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
     BoundLabel.MaxWidth = 0
     BoundLabel.UseSkinColor = True
     SkinData.SkinSection = 'EDIT'
+    Color = clWhite
     Columns = <
       item
         Caption = 'Control class name'
@@ -167,7 +114,7 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
     OnDblClick = sListView1DblClick
   end
   object sBitBtn1: TsBitBtn
-    Left = 648
+    Left = 664
     Top = 487
     Width = 59
     Height = 25
@@ -178,30 +125,43 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
     SkinData.SkinSection = 'BUTTON'
   end
   object sPanel1: TsPanel
-    Left = 404
+    Left = 380
     Top = 24
-    Width = 305
+    Width = 343
     Height = 453
     TabOrder = 2
     SkinData.SkinSection = 'GROUPBOX'
-    object sLabel1: TsLabel
-      Left = 167
-      Top = 424
-      Width = 73
-      Height = 13
-      Caption = 'Change group :'
-      ParentFont = False
+    object sSpeedButton2: TsSpeedButton
+      Left = 176
+      Top = 416
+      Width = 145
+      Height = 25
+      Caption = 'Add selected items'
+      Enabled = False
+      OnClick = sSpeedButton2Click
+      SkinData.SkinSection = 'SPEEDBUTTON'
+    end
+    object sCheckBox1: TsCheckBox
+      Tag = 1
+      Left = 177
+      Top = 12
+      Width = 20
+      Height = 20
+      AutoSize = False
+      Checked = True
+      State = cbChecked
+      TabOrder = 2
+      OnClick = sCheckBox1Click
+      SkinData.SkinSection = 'CHECKBOX'
+      ImgChecked = 0
+      ImgUnchecked = 0
     end
     object sListBox1: TsListBox
       Left = 16
-      Top = 28
-      Width = 129
-      Height = 405
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
+      Top = 32
+      Width = 150
+      Height = 409
+      Color = clWhite
       ItemHeight = 13
       Items.Strings = (
         'Standard VCL'
@@ -218,26 +178,24 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
         'mxEdits'
         'RichViews'
         'Raize')
+      ParentFont = False
       TabOrder = 0
       OnClick = sListBox1Click
       BoundLabel.Active = True
-      BoundLabel.Caption = 'Packages :'
-      BoundLabel.Indent = 0
-      BoundLabel.Font.Charset = DEFAULT_CHARSET
-      BoundLabel.Font.Height = -11
-      BoundLabel.Font.Name = 'MS Sans Serif'
-      BoundLabel.Font.Style = []
+      BoundLabel.Caption = '  Packages :'
+      BoundLabel.Indent = 2
       BoundLabel.Layout = sclTopLeft
       BoundLabel.MaxWidth = 0
       BoundLabel.UseSkinColor = True
       SkinData.SkinSection = 'EDIT'
     end
     object sListBox2: TsCheckListBox
-      Left = 160
-      Top = 28
-      Width = 129
-      Height = 387
+      Left = 175
+      Top = 32
+      Width = 150
+      Height = 377
       BorderStyle = bsSingle
+      Color = clWhite
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -247,54 +205,24 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
       ParentFont = False
       TabOrder = 1
       BoundLabel.Active = True
-      BoundLabel.Caption = 'Supported controls :'
-      BoundLabel.Indent = 0
+      BoundLabel.Caption = '         Supported controls :'
+      BoundLabel.Indent = 2
       BoundLabel.Layout = sclTopLeft
       BoundLabel.MaxWidth = 0
       BoundLabel.UseSkinColor = True
       SkinData.SkinSection = 'EDIT'
     end
-    object sCheckBox1: TsCheckBox
-      Tag = 1
-      Left = 246
-      Top = 423
-      Width = 21
-      Height = 19
-      Checked = True
-      State = cbChecked
-      TabOrder = 2
-      OnClick = sCheckBox1Click
-      SkinData.SkinSection = 'CHECKBOX'
-      ImgChecked = 0
-      ImgUnchecked = 0
-    end
-    object sCheckBox2: TsCheckBox
-      Left = 268
-      Top = 423
-      Width = 21
-      Height = 19
-      TabOrder = 3
-      OnClick = sCheckBox1Click
-      SkinData.SkinSection = 'CHECKBOX'
-      ImgChecked = 0
-      ImgUnchecked = 0
-    end
   end
   object sPanel2: TsPanel
-    Left = 412
+    Left = 388
     Top = 12
-    Width = 289
+    Width = 327
     Height = 21
     Caption = 'Predefined controls sets'
     TabOrder = 3
     SkinData.SkinSection = 'TOOLBAR'
   end
   object sSkinProvider1: TsSkinProvider
-    AddedTitle.Font.Charset = DEFAULT_CHARSET
-    AddedTitle.Font.Color = clNone
-    AddedTitle.Font.Height = -11
-    AddedTitle.Font.Name = 'Tahoma'
-    AddedTitle.Font.Style = []
     SkinData.SkinSection = 'FORM'
     TitleButtons = <>
     Left = 368
@@ -322,7 +250,6 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
     object Defaultsettings1: TMenuItem
       Caption = 'Default settings'
       Visible = False
-      OnClick = sBitBtn4Click
     end
     object N1: TMenuItem
       Caption = '-'
@@ -336,13 +263,14 @@ object Form3rdPartyEditor: TForm3rdPartyEditor
   object SaveDialog1: TSaveDialog
     DefaultExt = 'ini'
     Filter = 'Ini-files (*.ini)|*.ini|All files|*.*'
-    Left = 420
-    Top = 452
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
+    Left = 220
+    Top = 308
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = 'ini'
     Filter = 'Ini-files (*.ini)|*.ini|All files|*.*'
-    Left = 448
-    Top = 452
+    Left = 248
+    Top = 308
   end
 end

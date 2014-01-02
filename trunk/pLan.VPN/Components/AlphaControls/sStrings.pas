@@ -1,4 +1,5 @@
 unit sStrings;
+{$I sDefs.inc}
 
 interface
 

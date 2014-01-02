@@ -17,7 +17,6 @@ object sPopupCalendar: TsPopupCalendar
   Scaled = False
   OnClose = FormClose
   OnDeactivate = FormDeactivate
-  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13

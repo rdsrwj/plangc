@@ -3,9 +3,9 @@ package acntD7_R;
 {$ALIGN 8}
 {$ASSERTIONS OFF}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
-{$IMPORTEDDATA ON}
+{$IMPORTEDDATA OFF}
 {$IOCHECKS ON}
 {$LOCALSYMBOLS OFF}
 {$LONGSTRINGS ON}
@@ -32,6 +32,7 @@ requires
   rtl;
 
 contains
+  acTinyJPG in 'acTinyJPG.pas',
   sEdit in 'sEdit.pas',
   sMemo in 'sMemo.pas',
   sComboBoxes in 'sComboBoxes.pas',
@@ -120,6 +121,8 @@ contains
   acThdTimer in 'acThdTimer.pas',
   acGlow in 'acGlow.pas',
   acZLibEx in 'acZLibEx.pas',
+  acImage in 'acImage.pas',
+  acSlider in 'acSlider.pas',
   acTitleBar in 'acTitleBar.pas';
 
 end.

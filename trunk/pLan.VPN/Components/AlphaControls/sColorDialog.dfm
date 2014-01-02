@@ -8,33 +8,33 @@ object sColorDialogForm: TsColorDialogForm
   ClientWidth = 532
   Color = clBtnFace
   Constraints.MaxHeight = 416
-  Constraints.MaxWidth = 541
-  Constraints.MinHeight = 416
+  Constraints.MaxWidth = 545
+  Constraints.MinHeight = 413
   Constraints.MinWidth = 235
   ParentFont = True
   OldCreateOrder = False
   Position = poScreenCenter
-  Scaled = False
-  OnDestroy = FormDestroy
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnMouseDown = FormMouseDown
   OnMouseMove = FormMouseMove
   OnMouseUp = FormMouseUp
   OnPaint = FormPaint
   OnShow = FormShow
+  Scaled = True
   PixelsPerInch = 96
   TextHeight = 13
   object sLabel1: TsLabel
     Left = 8
     Top = 8
-    Width = 64
+    Width = 66
     Height = 13
     Caption = 'Main palette :'
   end
   object sLabel2: TsLabel
     Left = 8
     Top = 192
-    Width = 83
+    Width = 85
     Height = 13
     Caption = 'Additional colors :'
   end
@@ -42,20 +42,20 @@ object sColorDialogForm: TsColorDialogForm
     Left = 430
     Top = 276
     Width = 6
-    Height = 14
+    Height = 13
     Caption = 'o'
   end
   object sLabel5: TsLabel
     Left = 429
     Top = 304
-    Width = 8
+    Width = 11
     Height = 13
     Caption = '%'
   end
   object sLabel6: TsLabel
     Left = 429
     Top = 328
-    Width = 8
+    Width = 11
     Height = 13
     Caption = '%'
   end
@@ -93,6 +93,14 @@ object sColorDialogForm: TsColorDialogForm
       00000000000000FF00FF}
     OnClick = sSpeedButton1Click
     SkinData.SkinSection = 'SPEEDBUTTON'
+  end
+  object SelectedPanel: TShape
+    Left = 234
+    Top = 276
+    Width = 131
+    Height = 69
+    Brush.Color = clGreen
+    Pen.Style = psInsideFrame
   end
   object sBitBtn1: TsBitBtn
     Left = 7
@@ -153,20 +161,20 @@ object sColorDialogForm: TsColorDialogForm
     SkinData.SkinSection = 'CHECKBOX'
     OnPaint = GradPanelPaint
   end
-  object SelectedPanel: TShape
-    Left = 234
-    Top = 276
-    Width = 131
-    Height = 69
-    Brush.Color = clGreen
-    Pen.Style = psInsideFrame
-  end
   object sREdit: TsCurrencyEdit
     Left = 494
     Top = 276
     Width = 33
     Height = 19
+    Alignment = taLeftJustify
     AutoSize = False
+    Color = clWhite
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 5
     OnChange = sREditChange
     BoundLabel.Active = True
@@ -176,8 +184,8 @@ object sColorDialogForm: TsColorDialogForm
     BoundLabel.MaxWidth = 0
     BoundLabel.UseSkinColor = True
     SkinData.SkinSection = 'EDIT'
+    GlyphMode.Blend = 0
     GlyphMode.Grayed = False
-    Alignment = taLeftJustify
     DecimalPlaces = 0
     DisplayFormat = '0'
   end
@@ -186,7 +194,15 @@ object sColorDialogForm: TsColorDialogForm
     Top = 300
     Width = 33
     Height = 19
+    Alignment = taLeftJustify
     AutoSize = False
+    Color = clWhite
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 6
     OnChange = sREditChange
     BoundLabel.Active = True
@@ -196,8 +212,8 @@ object sColorDialogForm: TsColorDialogForm
     BoundLabel.MaxWidth = 0
     BoundLabel.UseSkinColor = True
     SkinData.SkinSection = 'EDIT'
+    GlyphMode.Blend = 0
     GlyphMode.Grayed = False
-    Alignment = taLeftJustify
     DecimalPlaces = 0
     DisplayFormat = '0'
   end
@@ -206,7 +222,15 @@ object sColorDialogForm: TsColorDialogForm
     Top = 324
     Width = 33
     Height = 19
+    Alignment = taLeftJustify
     AutoSize = False
+    Color = clWhite
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 7
     OnChange = sREditChange
     BoundLabel.Active = True
@@ -216,8 +240,8 @@ object sColorDialogForm: TsColorDialogForm
     BoundLabel.MaxWidth = 0
     BoundLabel.UseSkinColor = True
     SkinData.SkinSection = 'EDIT'
+    GlyphMode.Blend = 0
     GlyphMode.Grayed = False
-    Alignment = taLeftJustify
     DecimalPlaces = 0
     DisplayFormat = '0'
   end
@@ -249,7 +273,15 @@ object sColorDialogForm: TsColorDialogForm
     Top = 276
     Width = 33
     Height = 19
+    Alignment = taLeftJustify
     AutoSize = False
+    Color = clWhite
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 2
     OnChange = sHEditChange
     BoundLabel.Active = True
@@ -259,8 +291,8 @@ object sColorDialogForm: TsColorDialogForm
     BoundLabel.MaxWidth = 0
     BoundLabel.UseSkinColor = True
     SkinData.SkinSection = 'EDIT'
+    GlyphMode.Blend = 0
     GlyphMode.Grayed = False
-    Alignment = taLeftJustify
     DecimalPlaces = 0
     DisplayFormat = '0'
   end
@@ -269,7 +301,15 @@ object sColorDialogForm: TsColorDialogForm
     Top = 300
     Width = 33
     Height = 19
+    Alignment = taLeftJustify
     AutoSize = False
+    Color = clWhite
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 3
     OnChange = sHEditChange
     BoundLabel.Active = True
@@ -279,8 +319,8 @@ object sColorDialogForm: TsColorDialogForm
     BoundLabel.MaxWidth = 0
     BoundLabel.UseSkinColor = True
     SkinData.SkinSection = 'EDIT'
+    GlyphMode.Blend = 0
     GlyphMode.Grayed = False
-    Alignment = taLeftJustify
     DecimalPlaces = 0
     DisplayFormat = '0'
   end
@@ -289,7 +329,15 @@ object sColorDialogForm: TsColorDialogForm
     Top = 324
     Width = 33
     Height = 19
+    Alignment = taLeftJustify
     AutoSize = False
+    Color = clWhite
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 4
     OnChange = sHEditChange
     BoundLabel.Active = True
@@ -299,8 +347,8 @@ object sColorDialogForm: TsColorDialogForm
     BoundLabel.MaxWidth = 0
     BoundLabel.UseSkinColor = True
     SkinData.SkinSection = 'EDIT'
+    GlyphMode.Blend = 0
     GlyphMode.Grayed = False
-    Alignment = taLeftJustify
     DecimalPlaces = 0
     DisplayFormat = '0'
   end
@@ -404,7 +452,15 @@ object sColorDialogForm: TsColorDialogForm
     Top = 323
     Width = 70
     Height = 19
+    Alignment = taLeftJustify
     AutoSize = False
+    Color = clWhite
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 1
     OnChange = sEditDecimalChange
     BoundLabel.Active = True
@@ -414,8 +470,8 @@ object sColorDialogForm: TsColorDialogForm
     BoundLabel.MaxWidth = 0
     BoundLabel.UseSkinColor = True
     SkinData.SkinSection = 'EDIT'
+    GlyphMode.Blend = 0
     GlyphMode.Grayed = False
-    Alignment = taLeftJustify
     DecimalPlaces = 0
     DisplayFormat = '0'
   end
@@ -425,8 +481,15 @@ object sColorDialogForm: TsColorDialogForm
     Width = 70
     Height = 21
     CharCase = ecUpperCase
+    Color = clWhite
     EditMask = 'AAAAAA;1; '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
     MaxLength = 6
+    ParentFont = False
     TabOrder = 0
     Text = '      '
     OnChange = sEditHexChange

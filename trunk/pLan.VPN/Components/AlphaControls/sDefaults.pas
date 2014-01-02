@@ -9,10 +9,10 @@ uses sConst, ComCtrls;
 type // Do not change types
   TacThirdPartyTypes = (tpEdit, tpButton, tpBitBtn, tpCheckBox, tpComboBox, tpGrid, tpGroupBox, tpListView,
     tpPanel, tpTreeView, tpwwEdit, tpGridEh, tpVirtualTree, tpPageControl, tpTabControl, tpToolBar,
-    tpStatusBar, tpSpeedButton, tpScrollControl, tpUpDownBtn, {$IFDEF ADDWEBBROWSER} tpWebBrowser, {$ENDIF}tpScrollBar);
+    tpStatusBar, tpSpeedButton, tpScrollControl, tpUpDownBtn, {$IFDEF ADDWEBBROWSER} tpWebBrowser, {$ENDIF}tpScrollBar, tpStaticText);
 
 const
-  acLastSupportedType = tpScrollBar; // Do not change this line
+  acLastSupportedType = tpStaticText; // Do not change this line
 
 // Names of standard and 3rd-party controls for automatic skinning (may be changed before recompiling of the package)
   
@@ -40,6 +40,7 @@ const
   sl_Third_UpDownBtn = ' ';
   sl_Third_ScrollBar = ' ';
   sl_Third_WebBrowser = ' ';
+  sl_Third_StaticText = ' ';
 
 {$ELSE}
 
@@ -173,17 +174,20 @@ const
 
   sl_Third_WebBrowser =
     'TWebBrowser';
+
+  sl_Third_StaticText =
+    'TStaticText';
 {$ENDIF}
 
   // Do not change
-  acThirdNames : array[0..ord(acLastSupportedType)] of string = (sl_Third_Edit, sl_Third_Button, sl_Third_BitBtn, sl_Third_CheckBox,
+  acThirdNames: array[0..ord(acLastSupportedType)] of string = (sl_Third_Edit, sl_Third_Button, sl_Third_BitBtn, sl_Third_CheckBox,
     sl_Third_ComboBox, sl_Third_Grid, sl_Third_GroupBox, sl_Third_ListView, sl_Third_Panel, sl_Third_TreeView, sl_Third_wwEdit,
     sl_Third_GridEh, sl_Third_VirtualTree, sl_Third_PageControl, sl_Third_TabControl, sl_Third_ToolBar, sl_Third_StatusBar,
-    sl_Third_SpeedButton, sl_Third_ScrollControl, sl_Third_UpDownBtn, {$IFDEF ADDWEBBROWSER} sl_Third_WebBrowser, {$ENDIF} sl_Third_ScrollBar);
+    sl_Third_SpeedButton, sl_Third_ScrollControl, sl_Third_UpDownBtn, {$IFDEF ADDWEBBROWSER} sl_Third_WebBrowser, {$ENDIF} sl_Third_ScrollBar, sl_Third_StaticText);
 
-  acThirdCaptions : array[0..ord(acLastSupportedType)] of string = ('Edit', 'Button', 'BitBtn', 'CheckBox', 'ComboBox', 'Grid', 'GroupBox',
+  acThirdCaptions: array[0..ord(acLastSupportedType)] of string = ('Edit', 'Button', 'BitBtn', 'CheckBox', 'ComboBox', 'Grid', 'GroupBox',
     'ListView', 'Panel', 'TreeView', 'wwEdit', 'GridEh', 'VirtualTree', 'PageControl', 'TabControl', 'ToolBar', 'StatusBar', 'SpeedButton',
-    'ScrollControl', 'UpDownBtn', {$IFDEF ADDWEBBROWSER}'WebBrowser', {$ENDIF}'ScrollBar');
+    'ScrollControl', 'UpDownBtn', {$IFDEF ADDWEBBROWSER}'WebBrowser', {$ENDIF}'ScrollBar', 'StaticText');
 
 {$ENDIF}
 
@@ -191,22 +195,25 @@ const
   // Skins
   DefSkinsDir = 'c:\Skins';             // Default directory with skins
   // Buttons
-  DefNumGlyphs = 1;                     // Default number of glyphs in image
+//  DefNumGlyphs = 1;                     // Default number of glyphs in image
   DefDisabledGlyphKind = [dgBlended];
   DefDisabledKind = [dkBlended];
-  DefDisabledBlend = 0.4;
-  DefMakeSkinMenu = False; // True; Changed in the v5.44 after many requests from AC users
-  // Glyphs
-  DefGlyphBlend = 0;
-
-{$IFNDEF NOTFORHELP}
+  DefMakeSkinMenu = False;
   // Calendar
   DefWeekends = [dowSunday];
-{$IFDEF CHANGEFORMSINDESIGN}
-  ChangeFormsInDesign = True;
-{$ELSE}
-  ChangeFormsInDesign = False;
-{$ENDIF}
+
+var
+  DefDisabledBlend: real = 0.4;         // 0 .. 1
+  DefDisabledSaturation: integer = -90; // -100 .. 100
+  // Glyphs
+//  DefGlyphBlend: real = 0;
+
+{$IFNDEF NOTFORHELP}
+//{$IFDEF CHANGEFORMSINDESIGN}
+//  ChangeFormsInDesign: boolean = True;
+//{$ELSE}
+//  ChangeFormsInDesign: boolean = False;
+//{$ENDIF}
 
 {$ENDIF}
 

@@ -166,9 +166,6 @@ object FormInternalSkins: TFormInternalSkins
       BevelOuter = bvNone
       TabOrder = 1
       SkinData.SkinSection = 'CHECKBOX'
-      DesignSize = (
-        125
-        26)
       object sBitBtn1: TsButton
         Left = 19
         Top = 1

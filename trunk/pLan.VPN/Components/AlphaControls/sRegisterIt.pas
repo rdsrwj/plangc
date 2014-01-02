@@ -10,7 +10,7 @@ uses
   sHintManager, sToolBar, sColorSelect, sDialogs, sCurrencyEdit, sSpinEdit, sRadioButton,
   sComboEdit, sPageControl, sCurrEdit, sToolEdit, sMonthCalendar, sBevel, sGroupBox, sStatusBar,
   sTrackBar, sCalculator, sMaskEdit, sComboBoxes, sSplitter, sTabControl, sFontCtrls,
-  sScrollBox, sRichEdit, sFileCtrl, sTreeView, sFrameAdapter, sUpDown, 
+  sScrollBox, sRichEdit, sFileCtrl, sTreeView, sFrameAdapter, sUpDown, acSlider, acImage,
   sFrameBar, acShellCtrls, acCoolBar, acProgressBar, acNotebook, acAlphaHints, acHeaderControl, acMagn,
 {$ENDIF}
   sListView, sGauge, sEdit, sSkinManager, sSkinProvider, sComboBox, sCheckBox, acAlphaImageList, sMemo, sCheckListBox;
@@ -40,10 +40,10 @@ begin
 {$ELSE}
       'Lite Edition',
 {$ENDIF}
-      '(version ' + sSkinManager.CurrentVersion + ')');
-  except on E : Exception do
+      '(version ' + sSkinManager.acCurrentVersion + ')');
+  finally
+    Bmp.Free;
   end;
-  Bmp.Free;
 end;
 {$ENDIF}
 
@@ -59,20 +59,21 @@ begin
     TsListBox, TsComboBox, TsScrollBar, TsGroupBox, TsRadioGroup, TsPanel, TsBitBtn,
     TsSpeedButton, TsMaskEdit, TsBevel, TsScrollBox, TsCheckListBox, TsSplitter,
     TsTabControl, TsPageControl, TsRichEdit, TsTrackBar, TsProgressBar, TsUpDown, TsTreeView,
-    TsListView, TsHeaderControl, TsStatusBar, TsToolBar, TsGauge, TsSpinEdit, TsCoolBar, TsNotebook]);
+    TsListView, TsHeaderControl, TsStatusBar, TsToolBar, TsGauge, TsSpinEdit, TsCoolBar, 
+    TsNotebook, TsImage]);
 
   RegisterComponents('AlphaAdditional', [
     TsWebLabel, TsDecimalSpinEdit, TsColorSelect, TsDragBar, TsComboBoxEx, TsColorBox,
     TsMonthCalendar, TsComboEdit, TsCurrencyEdit, TsDateEdit, TsCalcEdit, TsDirectoryEdit,
     TsFileNameEdit, TsFilterComboBox, TsFontComboBox, TsFontListBox, TsLabelFX,
     TsFrameBar, TsColorsPanel, TsStickyLabel, TsShellTreeView, TsShellComboBox,
-    TsShellListView, TsTimePicker]);
+    TsShellListView, TsTimePicker, TsSlider, TsHTMLLabel]);
 
   RegisterComponents('AlphaTools', [
-    TsSkinManager, TsSkinProvider, TsFrameAdapter, TsHintManager,
-    TsCalculator, TsOpenDialog, TsSaveDialog, TsOpenPictureDialog,
-    TsSavePictureDialog, TsMagnifier, TsColordialog,
-    TsPathDialog, TsAlphaImageList, TsAlphaHints, TsTitleBar]);
+    TsSkinManager, TsSkinProvider, TsFrameAdapter, TsCalculator, TsOpenDialog, 
+    TsSaveDialog, TsOpenPictureDialog, TsSavePictureDialog, TsMagnifier, 
+    TsColordialog, TsPathDialog, TsAlphaImageList, TsVirtualImageList, 
+    TsAlphaHints, TsTitleBar, TsHintManager]);
 
   RegisterNoIcon([TsTabSheet]);
   RegisterClasses([TsTabSheet, TsEditLabel, TsStdColorsPanel, TsDlgShellListView, TsPage]);

@@ -1,22 +1,26 @@
 object PathDialogForm: TPathDialogForm
   Left = 434
   Top = 310
-  Width = 350
-  Height = 420
   Caption = 'Select directory'
-  Constraints.MinHeight = 250
-  Constraints.MinWidth = 275
+  ClientHeight = 415
+  ClientWidth = 370
+  Color = clBtnFace
+  Constraints.MinHeight = 415
+  Constraints.MinWidth = 370
+  OldCreateOrder = True
   Position = poScreenCenter
-  Scaled = False
+  Scaled = True
+  PixelsPerInch = 96
+  TextHeight = 13
   object sLabel1: TsLabel
-    Left = 8
+    Left = 18
     Top = 3
     Width = 3
     Height = 13
   end
   object sBitBtn1: TsBitBtn
-    Left = 173
-    Top = 344
+    Left = 204
+    Top = 376
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -28,8 +32,8 @@ object PathDialogForm: TPathDialogForm
     ShowFocus = False
   end
   object sBitBtn2: TsBitBtn
-    Left = 250
-    Top = 344
+    Left = 281
+    Top = 376
     Width = 75
     Height = 25
     Cancel = True
@@ -41,8 +45,8 @@ object PathDialogForm: TPathDialogForm
     ShowFocus = False
   end
   object sBitBtn3: TsBitBtn
-    Left = 12
-    Top = 344
+    Left = 19
+    Top = 376
     Width = 75
     Height = 25
     Caption = 'Create'
@@ -53,11 +57,18 @@ object PathDialogForm: TPathDialogForm
     ShowFocus = False
   end
   object sShellTreeView1: TsShellTreeView
-    Left = 8
+    Left = 15
     Top = 20
-    Width = 321
-    Height = 319
+    Width = 345
+    Height = 349
+    Color = clWhite
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
     Indent = 19
+    ParentFont = False
     ShowRoot = False
     TabOrder = 0
     OnChange = sShellTreeView1Change
@@ -66,6 +77,7 @@ object PathDialogForm: TPathDialogForm
     BoundLabel.Indent = 4
     BoundLabel.Layout = sclTopLeft
     BoundLabel.MaxWidth = 0
+    BoundLabel.UseSkinColor = True
     SkinData.SkinSection = 'EDIT'
     ObjectTypes = [otFolders, otHidden]
     Root = 'rfDesktop'
@@ -74,10 +86,10 @@ object PathDialogForm: TPathDialogForm
     ShowExt = seSystem
   end
   object sScrollBox1: TsScrollBox
-    Left = 8
+    Left = 15
     Top = 20
     Width = 101
-    Height = 318
+    Height = 349
     VertScrollBar.Tracking = True
     TabOrder = 4
     Visible = False
@@ -88,12 +100,12 @@ object PathDialogForm: TPathDialogForm
     GripMode = gmRightBottom
     ShowAppIcon = False
     TitleButtons = <>
-    Left = 212
+    Left = 219
     Top = 168
   end
   object ImageList1: TsAlphaImageList
     ShareImages = True
-    Left = 180
+    Left = 187
     Top = 168
   end
 end

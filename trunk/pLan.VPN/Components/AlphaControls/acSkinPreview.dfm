@@ -57,8 +57,8 @@ object FormSkinPreview: TFormSkinPreview
       object sCheckBox1: TsCheckBox
         Left = 24
         Top = 20
-        Width = 78
-        Height = 17
+        Width = 76
+        Height = 20
         Caption = 'CheckBox 1'
         TabOrder = 0
         SkinData.SkinManager = PreviewManager
@@ -69,8 +69,8 @@ object FormSkinPreview: TFormSkinPreview
       object sCheckBox2: TsCheckBox
         Left = 128
         Top = 20
-        Width = 78
-        Height = 17
+        Width = 76
+        Height = 20
         Caption = 'CheckBox 2'
         TabOrder = 1
         SkinData.SkinManager = PreviewManager
@@ -120,9 +120,10 @@ object FormSkinPreview: TFormSkinPreview
     Top = 40
   end
   object PreviewManager: TsSkinManager
+    ExtendedBorders = True
     AnimEffects.DialogShow.Active = False
-    AnimEffects.FormShow.Active = False
     AnimEffects.FormShow.Time = 100
+    AnimEffects.FormHide.Time = 100
     AnimEffects.PageChange.Active = False
     AnimEffects.SkinChanging.Active = False
     AnimEffects.SkinChanging.Time = 200
@@ -155,6 +156,15 @@ object FormSkinPreview: TFormSkinPreview
       'TVirtualStringTree'#13#10'TVirtualStringTreeDB'#13#10'TEasyListview'#13#10'TVirtua' +
       'lExplorerListView'#13#10'TVirtualExplorerTreeView'#13#10'TVirtualDrawTree'
     ThirdParty.ThirdGridEh = 'TDBGridEh'
+    ThirdParty.ThirdPageControl = ' '
+    ThirdParty.ThirdTabControl = ' '
+    ThirdParty.ThirdToolBar = ' '
+    ThirdParty.ThirdStatusBar = ' '
+    ThirdParty.ThirdSpeedButton = ' '
+    ThirdParty.ThirdScrollControl = ' '
+    ThirdParty.ThirdUpDown = ' '
+    ThirdParty.ThirdScrollBar = ' '
+    ThirdParty.ThirdStaticText = ' '
     Left = 272
     Top = 8
   end
