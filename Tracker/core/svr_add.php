@@ -1,11 +1,11 @@
 <?php
 defined('INCLUDED') or die('Restricted access');
 
-# Filter
+# Фильтр
 if (empty($_REQUEST['port']) || !is_numeric($_REQUEST['port']) || empty($_REQUEST['game'])) die('Not enough data to create a server');
 
 //$addr = @$_REQUEST['addr'];
-$addr = $Client['ip'];
+$addr = $Client['client_ip'];
 $port = $_REQUEST['port'];
 $game = (string)$_REQUEST['game'];
 $mod  = (string)@$_REQUEST['mod'];
@@ -13,7 +13,7 @@ $mod  = (string)@$_REQUEST['mod'];
 $db = new Database($Config['db_host'], $Config['db_username'], $Config['db_password'], $Config['db_name']);
 $db->query('SET NAMES '.$Config['db_encoding']) or die('Database error');
 
-# Escape special characters
+# Экранируем специальные символы
 $game = $db->escape($game);
 $mod  = $db->escape($mod);
 

@@ -1,13 +1,13 @@
 <?php
 defined('INCLUDED') or die('Restricted access');
 
-# Disable cache in Internet Explorer for gadget
+# Запрещаем кэширование страницы в Internet Explorer (для гаджета)
 //header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 //header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
 //header('Cache-Control: no-store, no-cache, must-revalidate');
 //header('Pragma: no-cache');
 
-# Rooms list format
+# Формат списка комнат
 $format = (string)@$_REQUEST['format'];
 switch ($format) {
 	case 'json':
@@ -19,22 +19,22 @@ switch ($format) {
 		$cache_key = 'vpn_get';
 }
 
-# Load data from cache
+# Загружаем данные из кэша
 $cache = new Cache(PATH_BASE.'/cache');
 $data = $cache->get($cache_key, 20);
 
-# Get data from database
+# Получить данные из кэша
 if ($data === false) {
 	$db = new SafeMySQL($opts);
 
-	# Clean tracker
+	# Очищаем трекер
 	$db->query('DELETE FROM tracker WHERE (last_update < NOW() - INTERVAL 1 MINUTE) AND (static = 0)') or die('Database error');
 
 	switch ($format) {
 		case 'json':
 			$json = array(
 				'time' => strtoupper(dechex(time())),
-				'clientip' => $Client['ip'],
+				'clientip' => $Client['client_ip'],
 				'rooms' => array()
 			);
 			$query = $db->getAll(
@@ -53,7 +53,6 @@ if ($data === false) {
 				//$json['rooms'][] = array_values($row);
 				$json['rooms'][] = $row;
 			}
-			//$data = json_encode($json);
 			$data = json_safe_encode($json);
 			break;
 		default:
@@ -77,7 +76,7 @@ if ($data === false) {
 			}
 	}
 
-	# Save data into cache
+	# Сохраняем данные в кэш
 	$cache->set($cache_key, $data);
 }
 
@@ -85,32 +84,9 @@ switch ($format) {
 	case 'json':
 		break;
 	default:
-		# Add tracker time and IP address of client
-		$data = strtoupper(dechex(time())).'$'.$Client['ip']."\n".$data;
+		# Добавляем время на трекере и IP-адрес клиента
+		$data = strtoupper(dechex(time())).'$'.$Client['client_ip']."\n".$data;
 }
 
-# Output
+# Выводим данные
 echo $data;
-
-////////////////////////////////////////////////////////////////////////
-function json_fix_cyr($var) {
-	if (is_array($var)) {
-		$new = array();
-		foreach ($var as $k => $v) {
-			$new[json_fix_cyr($k)] = json_fix_cyr($v);
-		}
-		$var = $new;
-	} elseif (is_object($var)) {
-		$vars = get_object_vars($var);
-		foreach ($vars as $m => $v) {
-			$var->$m = json_fix_cyr($v);
-		}
-	} elseif (is_string($var)) {
-		$var = iconv('cp1251', 'utf-8', $var);
-	}
-	return $var;
-}
-
-function json_safe_encode($var) {
-	return json_encode(json_fix_cyr($var));
-}

@@ -26,20 +26,20 @@ if (file_exists($filename)) {
 	}
 }
 
-# Set HTTP-headers to cache image in browser for 5 minutes
+# Устанавливаем HTTP-заголовки для кэширования картинки в браузере на 5 минут
 header('Last-Modified: '.gmdate('D, d M Y H:i:s', time()).' GMT');
 header('Cache-control: max-age=300, must-revalidate');
 header('Expires: '.gmdate('D, d M Y H:i:s', time() + 300).' GMT');
 
 if ((file_exists($filename)) && (time() - filemtime($filename) <= 300)) {
-	# Loading cached image
+	# Загружаем сохранённую картинку
 	$img = @imagecreatefrompng($filename);
 	//imagealphablending($img, true);
 	imagesavealpha($img, true);
 	imagepng($img);
 	imagedestroy($img);
 } else {
-	# Paint image and save to file
+	# Рисуем картинку и сохраняем в файл
 	$data = array(
 		'vpn' => array(
 			'name' => 'XXXXXXXXX',

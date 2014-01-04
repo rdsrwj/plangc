@@ -1,5 +1,5 @@
 <?php
-# Filter
+# Фильтр
 if (empty($_SERVER['HTTP_USER_AGENT'])) die();
 
 define('INCLUDED', true);
@@ -7,15 +7,14 @@ define('PATH_BASE', dirname(__FILE__));
 
 require_once PATH_BASE.'/includes/functions.php';
 
-# Global variables
+# Глобальные переменные
 $Client = array();
-$Client['ip'] = GetClientIP();
+$Client['client_ip'] = GetClientIP();
 $Client['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 
-# Filter
-if (!IsIP($Client['ip'])) die('Forbidden access');
+# Фильтр
+if (!IsIP($Client['client_ip'])) die('Forbidden access');
 
-# Includes
 require_once PATH_BASE.'/includes/config.php';
 require_once PATH_BASE.'/includes/class.database.php';
 
@@ -24,10 +23,10 @@ global $Config;
 require_once PATH_BASE.'/includes/safemysql.class.php';
 require_once PATH_BASE.'/includes/class.cache.php';
 
-# Requesting command
+# Запрашиваемая команда
 $do = (string)@$_REQUEST['do'];
 
-# Permitted commands
+# Разрешённые команды
 $allow_do = array(
 	'svr_add',
 	'svr_get',
@@ -41,7 +40,7 @@ $allow_do = array(
 	'status'
 );
 
-# Check entry
+# Проверяем вхождение
 if (in_array($do, $allow_do))
 	$sub = $do;
 else
