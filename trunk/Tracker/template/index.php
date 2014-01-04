@@ -12,7 +12,7 @@ $cache = new Cache(PATH_BASE.'/cache');
 <link rel="stylesheet" href="template/style.css">
 </head>
 <body>
-<p style="font-weight:bold">Your address: <font color="#00F"><?php echo $Client['ip']; ?></font></p>
+<p style="font-weight:bold">Your address: <font color="#00F"><?php echo $Client['client_ip']; ?></font></p>
 <h2>pLan OpenVPN Edition rooms</h2>
 <p>Format: <a href="/?do=vpn_get&format=json">JSON</a></p>
 <table class="tracker" style="width:100%">
@@ -33,7 +33,7 @@ if ($data === false) {
 	if ($query) {
 		$i = 1;
 		foreach ($query as $row) {
-			//$row['players'] = implode(', ', array_map('trim', explode(',', $row['players'])));
+			$row['players'] = implode(', ', array_map('trim', explode(',', $row['players'])));
 			$data .=
 <<< HERE
 <tr>

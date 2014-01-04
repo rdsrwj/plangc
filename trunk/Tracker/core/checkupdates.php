@@ -2,12 +2,16 @@
 defined('INCLUDED') or die('Restricted access');
 header('Content-Type: text/plain; charset=windows-1251');
 
-# Actual build of pLan_openvpn.exe
-$actual_build = '65';
+# Актуальный билд pLan_openvpn.exe
+if ($_SERVER['REMOTE_ADDR'] == '213.176.225.168') {
+	$actual_build = '66';
+} else {
+	$actual_build = '66';
+}
 
 echo $actual_build."\n";
 
-# Actual version of gamelist.txt
+# Актуальная версия gamelist.txt
 echo "15\n\n";
 
 /* ToDo:
