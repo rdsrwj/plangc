@@ -55,4 +55,4 @@
 
 #include "pLan.h"
 
-#define	LAUNCHER_VERSION	13
+#define	LAUNCHER_VERSION	14

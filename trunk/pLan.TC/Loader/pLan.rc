@@ -250,7 +250,7 @@ BEGIN
     IDS_TRACKER_HOST        "plangc.ru"
     IDS_TRACKER_PATH        "/tracker/"
     IDS_TRACKER_PORT        "80"
-    IDS_LOCATION            "1"
+    IDS_LOCATION            "0"
     IDS_CLIENT_RESTART_REQUIRED "Loader was updated. Restart is required."
     IDS_RECEIVING_UPDATED_LOADER "Receiving updated loader..."
     IDS_FAILED_TO_RESTART_LOADER 
@@ -292,8 +292,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,3
- PRODUCTVERSION 1,0,0,3
+ FILEVERSION 1,0,0,4
+ PRODUCTVERSION 1,0,0,4
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -310,11 +310,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "pLan Team"
             VALUE "FileDescription", "pLan Tracker Client"
-            VALUE "FileVersion", "1.0.0.3"
+            VALUE "FileVersion", "1.0.0.4"
             VALUE "InternalName", "pLan.exe"
             VALUE "OriginalFilename", "pLan.exe"
             VALUE "ProductName", "pLan Tracker Client"
-            VALUE "ProductVersion", "1.0.0.3"
+            VALUE "ProductVersion", "1.0.0.4"
         END
     END
     BLOCK "VarFileInfo"

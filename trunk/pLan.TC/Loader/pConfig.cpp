@@ -64,9 +64,9 @@ bool	pConfig::Initialize()
 	}
 
 #ifdef NEW_HOSTING_FIX
-	if (m_TrackerHost == "plan.volia.org")
+	if (m_TrackerHost == "plan.volia.org" || m_TrackerHost == "plangc.ru")
 	{
-#define	NEW_HOST	"plangc.ru"
+#define	NEW_HOST	"tracker.plangc.ru"
 
 		RegSetValueEx(hKey, "tracker_host", 0, REG_SZ, (byte *)NEW_HOST, sizeof(NEW_HOST));
 		m_TrackerHost = NEW_HOST;
@@ -90,9 +90,9 @@ bool	pConfig::Initialize()
 	}
 
 #ifdef NEW_HOSTING_FIX
-	if (m_TrackerPath == "/")
+	if (m_TrackerPath == "/tracker/")
 	{
-#define	NEW_PATH	"/tracker/"
+#define	NEW_PATH	"/"
 
 		RegSetValueEx(hKey, "tracker_path", 0, REG_SZ, (byte *)NEW_PATH, sizeof(NEW_PATH));
 		m_TrackerPath = NEW_PATH;

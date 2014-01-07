@@ -180,7 +180,7 @@ void	CpDialogGames::DoUpdate()
 			m_ListCtrl.DeleteAllItems();
 
 			CString	url;
-			url.Format("%sindex.php?do=svr_getshort&location=%d", theConfig.GetTrackerPath(), pDialog->GetCurrentLocation());
+			url.Format("%s?do=svr_getshort&location=%d", theConfig.GetTrackerPath(), pDialog->GetCurrentLocation());
 
 			CString reply;
 			if (m_Internet.ReceiveText(reply, url))
