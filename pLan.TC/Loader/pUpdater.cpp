@@ -36,7 +36,7 @@ bool	pUpdater::GetNews(CEdit & edit)
 	CString result;
 
 	CString req;
-	req.Format("%sindex.php?do=getnews&lang=en", theConfig.GetTrackerPath());
+	req.Format("%s?do=getnews&lang=en", theConfig.GetTrackerPath());
 
 	SetInfo(_X(IDS_RECEIVING_NEWS));
 
@@ -78,7 +78,7 @@ bool	pUpdater::DoUpdate()
 
 	GetVersionInfo(localCfg.GetString(), defLocalVersion, dllLocalVersion, exeLocalVersion);
 
-	if (defLocalVersion != remoteVersion)
+	if (defLocalVersion < remoteVersion)
 	{
 		// Download update
 		file.Format("%s\\data.xml_", theConfig.GetDataPath());
@@ -98,7 +98,7 @@ bool	pUpdater::DoUpdate()
 	int defReqVersion, dllReqVersion, exeReqVersion;
 	GetVersionInfo(localCfg.GetString(), defReqVersion, dllReqVersion, exeReqVersion);
 
-	if (LAUNCHER_VERSION != exeReqVersion)
+	if (LAUNCHER_VERSION < exeReqVersion)
 	{
 		if (!theConfig.IsAutoStarted() && UpdateLoader())
 		{
@@ -128,7 +128,7 @@ bool	pUpdater::DoUpdate()
 	// Update DLL file
 	file.Format("%s\\data.xml", theConfig.GetDataPath());
 	int dllVersion = GetDllVersion();
-	if (dllVersion != dllReqVersion)
+	if (dllVersion < dllReqVersion)
 	{
 		// Download update
 		file.Format("%s\\pLan.dll_", theConfig.GetDataPath());
