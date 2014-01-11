@@ -53,7 +53,8 @@ begin
     MS.Free;
   end;
 
-  sLabel1.Caption := UGlobal.AppTitle +  ' v' + UGlobal.AppVersion;
+  sLabel1.Caption := UGlobal.AppTitle +  ' v' + UGlobal.AppVersion +
+    ' Revision ' + UGlobal.Revision;
 end;
 
 procedure TAboutForm.sButton1Click(Sender: TObject);
