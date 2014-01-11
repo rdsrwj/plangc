@@ -21,6 +21,8 @@ const
   //URLUpdateExe   = 'http://plangc.googlecode.com/files/pLanVPN.exe';
   URLUpdateExe   = 'http://googledrive.com/host/0B981nG4OIUoDUUlpVFFOMVRuZ2c';
 
+{$I Revision.inc}
+
 type
   TChatMessage = (cmNormal, cmPrivate, cmSystem, cmMyMessage);
 
