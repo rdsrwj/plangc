@@ -1,0 +1,9 @@
+= pLan Gaming Client Downloads =
+
+==pLan OpenVPN Edition==
+
+[https://docs.google.com/file/d/0B981nG4OIUoDUUlpVFFOMVRuZ2c/edit pLan OpenVPN Edition v0.6.66 ]
+
+==pLan Tracker Client==
+
+[http://plangc.googlecode.com/files/pLan.exe pLan Tracker Client 1.0.0.4  ]
